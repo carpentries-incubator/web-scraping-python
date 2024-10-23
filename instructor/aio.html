@@ -244,7 +244,7 @@
 <div class="accordion accordion-flush" id="accordionFlush2">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading2">
-        <a href="introduction.html">1. Using Markdown</a>
+        <a href="introduction.html">1. Hello-Scraping</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -308,12 +308,12 @@
     <main id="main-content" class="main-content"><div class="container lesson-content">
         
         
-<section id="aio-introduction"><p>Content from <a href="introduction.html">Using Markdown</a></p>
+<section id="aio-introduction"><p>Content from <a href="introduction.html">Hello-Scraping</a></p>
 <hr>
-<p>Last updated on 2024-09-23 |
+<p>Last updated on 2024-10-23 |
 
         <a href="https://github.com/josenino95/web-scraping-python/edit/main/episodes/introduction.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
-<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 12 minutes</p>
+<p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 60 minutes</p>
 <div class="text-end">
           <button role="button" aria-pressed="false" tabindex="0" id="expand-code" class="pull-right" data-expand="Expand All Solutions " data-collapse="Collapse All Solutions "> Expand All Solutions <i aria-hidden="true" data-feather="plus"></i></button>
         </div>
@@ -346,6 +346,54 @@ challenge blocks</li>
 </div>
 </div>
 <section><h2 class="section-heading" id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+</h2>
+<hr class="half-width">
+<p>This is part 2 of an Introduction to Web Scraping workshop we offered
+on February 2024. You can refer to those <a href="https://ucsbcarpentry.github.io/2024-02-27-ucsb-webscraping/" class="external-link">workshop
+materials</a> to have a more gentle introduction to scraping using XPath
+and the <code>Scraper</code> Chrome extension.</p>
+<p>We’ll refresh some of the concepts covered there to have a practical
+understanding of how content/data is structured in a website. For that
+purpose, we’ll see what Hypertext Markup Language (HTML) is and how it
+structures and formats the content using <code>tags</code>. From there,
+we’ll use the BeautifulSoup library to parse the HTML content so we can
+easily search and access elements of the website we are interested in.
+Starting from basic examples, we’ll move to scrape more complex,
+real-life websites.</p>
+</section><section><h2 class="section-heading" id="html-quick-overview">HTML quick overview<a class="anchor" aria-label="anchor" href="#html-quick-overview"></a>
+</h2>
+<hr class="half-width">
+<p>All websites have Hypertext Markup Language (HTML) behind them. The
+following text is HTML for a very simple website, with only three
+sentences. If you read it, can you imagine how that website looks?</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">HTML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode html" tabindex="0"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="dt">&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>Sample web page<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>h1 Header #1<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>This is a paragraph tag<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>h2 Sub-header<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>A new paragraph, now in the <span class="dt">&lt;</span><span class="kw">b</span><span class="dt">&gt;</span>sub-header<span class="dt">&lt;/</span><span class="kw">b</span><span class="dt">&gt;&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>h1 Header #2<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>This other paragraph has two  hyperlinks,</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>one to <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">"https://carpentries.org/"</span><span class="dt">&gt;</span>The Carpentries homepage<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>and another to the</span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">"https://carpentries.org/past_workshops/"</span><span class="dt">&gt;</span>past workshops<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span> page.</span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre>
+</div>
+<p>Well, if you put that text in a file with a .html extension, the job
+of your web browser when opening the file will be to interpret that
+(markup) language and display a nicely formatted website.</p>
+<figure><img src="../fig/simple_website.PNG" alt="Screenshot of a simple website with the previews HTML" class="figure mx-auto d-block"></figure><p>HTML is composed of tags</p>
+</section><section><h2 class="section-heading" id="introduction-1">Introduction<a class="anchor" aria-label="anchor" href="#introduction-1"></a>
 </h2>
 <hr class="half-width">
 <p>This is a lesson created via The Carpentries Workbench. It is written
@@ -389,7 +437,7 @@ View”</p>
 <h3 class="callout-title">Challenge 1: Can you do it?</h3>
 <div class="callout-content">
 <p>What is the output of this command?</p>
-<div class="codewrapper sourceCode" id="cb1">
+<div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -540,8 +588,8 @@ any links that you are not going to use.
   "url": "https://josenino95.github.io/web-scraping-python/instructor/aio.html",
   "identifier": "https://josenino95.github.io/web-scraping-python/instructor/aio.html",
   "dateCreated": "2024-09-23",
-  "dateModified": "2024-10-22",
-  "datePublished": "2024-10-22"
+  "dateModified": "2024-10-23",
+  "datePublished": "2024-10-23"
 }
 
   </script><script>
