@@ -218,7 +218,7 @@
       <div class="accordion-body">
         <ul><li><a href="#introduction">Introduction</a></li>
 <li><a href="#html-quick-overview">HTML quick overview</a></li>
-<li><a href="#introduction-1">Introduction</a></li>
+<li><a href="#parsing-html-with-beautifulsoup">Parsing HTML with BeautifulSoup</a></li>
 <li><a href="#figures">Figures</a></li>
 <li><a href="#math">Math</a></li>
         </ul></div><!--/div.accordion-body-->
@@ -285,7 +285,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Hello-Scraping</h1>
-        <p>Last updated on 2024-10-23 |
+        <p>Last updated on 2024-10-26 |
 
         <a href="https://github.com/josenino95/web-scraping-python/edit/main/episodes/introduction.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -335,9 +335,10 @@ easily search and access elements of the website we are interested in.
 Starting from basic examples, we’ll move to scrape more complex,
 real-life websites.</p>
 </section><section><h2 class="section-heading" id="html-quick-overview">HTML quick overview<a class="anchor" aria-label="anchor" href="#html-quick-overview"></a></h2>
-<hr class="half-width"><p>All websites have Hypertext Markup Language (HTML) behind them. The
-following text is HTML for a very simple website, with only three
-sentences. If you read it, can you imagine how that website looks?</p>
+<hr class="half-width"><p>All websites have a Hypertext Markup Language (HTML) document behind
+them. The following text is HTML for a very simple website, with only
+three sentences. If you read it, can you imagine how that website
+looks?</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">HTML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -347,13 +348,13 @@ sentences. If you read it, can you imagine how that website looks?</p>
 <span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>Sample web page<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
 <span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
 <span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>h1 Header #1<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h1</span><span class="ot"> id</span><span class="op">=</span><span class="st">"head1"</span><span class="dt">&gt;</span>h1 Header #1<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
 <span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>This is a paragraph tag<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>h2 Sub-header<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h2</span><span class="ot"> id</span><span class="op">=</span><span class="st">"subhead1"</span><span class="dt">&gt;</span>h2 Sub-header<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
 <span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>A new paragraph, now in the <span class="dt">&lt;</span><span class="kw">b</span><span class="dt">&gt;</span>sub-header<span class="dt">&lt;/</span><span class="kw">b</span><span class="dt">&gt;&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>h1 Header #2<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h1</span><span class="ot"> id</span><span class="op">=</span><span class="st">"head2"</span><span class="dt">&gt;</span>h1 Header #2<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
 <span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span></span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>This other paragraph has two  hyperlinks,</span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>This other paragraph has two hyperlinks,</span>
 <span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>one to <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">"https://carpentries.org/"</span><span class="dt">&gt;</span>The Carpentries homepage<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span>,</span>
 <span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>and another to the</span>
 <span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">"https://carpentries.org/past_workshops/"</span><span class="dt">&gt;</span>past workshops<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span> page.</span>
@@ -364,9 +365,69 @@ sentences. If you read it, can you imagine how that website looks?</p>
 <p>Well, if you put that text in a file with a .html extension, the job
 of your web browser when opening the file will be to interpret that
 (markup) language and display a nicely formatted website.</p>
-<figure><img src="fig/simple_website.PNG" alt="Screenshot of a simple website with the previews HTML" class="figure mx-auto d-block"></figure><p>HTML is composed of tags</p>
-</section><section><h2 class="section-heading" id="introduction-1">Introduction<a class="anchor" aria-label="anchor" href="#introduction-1"></a></h2>
-<hr class="half-width"><p>This is a lesson created via The Carpentries Workbench. It is written
+<figure><img src="fig/simple_website.PNG" alt="Screenshot of a simple website with the previews HTML" class="figure mx-auto d-block"></figure><p>An HTML document is composed of elements, which can be identified by
+tags written inside angle brackets (<code>&lt;</code> and
+<code>&gt;</code>). For example, the HTML root element, which delimits
+the beginning and end of an HTML document, is identified by the
+<code>&lt;html&gt;</code> tag.</p>
+<p>Most elements have both a opening and a closing tag, determining the
+span of the element. In the previous simple website, we see a head
+element that goes from the opening tag <code>&lt;head&gt;</code> up to
+the closing tag <code>&lt;/head&gt;</code>. Given than an element can be
+inside another element, an HTML document has a tree structure, where
+every element is a node that can contain child nodes, like the following
+image shows.</p>
+<figure><img src="https://upload.wikimedia.org/wikipedia/commons/5/5a/DOM-model.svg" alt="Screenshot of a simple website with the previews HTML" class="figure mx-auto d-block"><div class="figcaption">The Document Object Model (DOM) that represents
+an HTML document with a tree structure. Source: Wikipedia. Author:
+Birger Eriksson</div>
+</figure><p>Finally, we can define or modify the behavior, appeareance, or
+functionality of an element by using attributes. Attributes are inside
+the opening tag, and consist of a name and a value, formatted as
+<code>name="value"</code>. For example, we can give an unique id to any
+element using the <code>id</code> attribute.</p>
+<p>Here is a non-exhaustive list of elements you’ll find in HTML and
+their purpose:</p>
+<ul><li>
+<code>&lt;hmtl&gt;...&lt;/html&gt;</code> The root, which contains
+the entirety of the document.</li>
+<li>
+<code>&lt;head&gt;...&lt;/head&gt;</code> Contains metadata, for
+example, the title that the web browser displays.</li>
+<li>
+<code>&lt;body&gt;...&lt;/body&gt;</code> The content that is going
+to be displayed.</li>
+<li>
+<code>&lt;h1&gt;...&lt;/h1&gt;, &lt;h2&gt;...&lt;/h2&gt;, &lt;h3&gt;...&lt;/h3&gt;</code>
+Defines headers of level 1, 2, 3, etc.</li>
+<li>
+<code>&lt;p&gt;...&lt;/p&gt;</code> A paragraph.</li>
+<li>
+<code>&lt;a href=""&gt;...&lt;/a&gt;</code> Creates a hyperlink, and
+we provide the destination URL with the <code>href</code>
+attribute.</li>
+<li>
+<code>&lt;img src="" alt=""&gt;</code> Embedds an image, giving a
+source to the image with the <code>src</code> attribute and specifying
+alternate text with <code>alt</code>.</li>
+<li>
+<code>&lt;table&gt;...&lt;/table&gt;, &lt;th&gt;...&lt;/th&gt;, &lt;tr&gt;...&lt;/tr&gt;, &lt;td&gt;...&lt;/td&gt;</code>
+Defines a table, that as children will have a header (defined inside
+<code>th</code>), rows (defined inside <code>tr</code>), and a cell
+inside a row (as <code>td</code>).</li>
+<li>
+<code>&lt;div&gt;...&lt;/div&gt;</code> Is used to group sections of
+HTML content.</li>
+<li>
+<code>&lt;script&gt;...&lt;/script&gt;</code> Embeds or references
+JavaScript code.</li>
+</ul><p>To summarize, an <em>element</em> is identified by <em>tags</em> ,
+and we can assign properties to an element by using <em>attributes</em>.
+Knowing this about HTML will make our lifes easier when trying to get
+some specific data from a website.</p>
+</section><section><h2 class="section-heading" id="parsing-html-with-beautifulsoup">Parsing HTML with BeautifulSoup<a class="anchor" aria-label="anchor" href="#parsing-html-with-beautifulsoup"></a></h2>
+<hr class="half-width"><p>Now that we know how a website is structured, we can start extracting
+information from it</p>
+<p>This is a lesson created via The Carpentries Workbench. It is written
 in <a href="https://pandoc.org/MANUAL.txt" class="external-link">Pandoc-flavored Markdown</a>
 for static files and <a href="https://rmarkdown.rstudio.com/" class="external-link">R
 Markdown</a> for dynamic files that can render code into output. Please
@@ -405,7 +466,7 @@ reinforce the objectives.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Output </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -432,7 +493,7 @@ reinforce the objectives.</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>You can add a line with at least three colons and a
 <code>solution</code> tag.</p>
@@ -546,8 +607,8 @@ any links that you are not going to use.
   "url": "https://josenino95.github.io/web-scraping-python/introduction.html",
   "identifier": "https://josenino95.github.io/web-scraping-python/introduction.html",
   "dateCreated": "2024-09-23",
-  "dateModified": "2024-10-23",
-  "datePublished": "2024-10-23"
+  "dateModified": "2024-10-26",
+  "datePublished": "2024-10-26"
 }
 
   </script><script>
