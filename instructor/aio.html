@@ -334,7 +334,7 @@
         
 <section id="aio-hello-scraping"><p>Content from <a href="hello-scraping.html">Hello-Scraping</a></p>
 <hr>
-<p>Last updated on 2024-10-28 |
+<p>Last updated on 2024-11-01 |
 
         <a href="https://github.com/josenino95/web-scraping-python/edit/main/episodes/hello-scraping.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 35 minutes</p>
@@ -389,7 +389,7 @@ real-life websites.</p>
 <hr class="half-width">
 <p>All websites have a Hypertext Markup Language (HTML) document behind
 them. The following text is HTML for a very simple website, with only
-three sentences. If you read it, can you imagine how that website
+three sentences. If you look at it, can you imagine how that website
 looks?</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">HTML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -705,7 +705,7 @@ HTML of our example.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>One way of completing the exercise is as follows.</p>
 <div class="codewrapper sourceCode" id="cb13">
@@ -772,6 +772,100 @@ elements, that we can transform to a Pandas dataframe.</p>
 <p>You’ll find more useful information about the BeautifulSoup package
 and how to use all its methods in the <a href="https://beautiful-soup-4.readthedocs.io/en/latest/" class="external-link">Beautiful Soup
 Documentation website</a>.</p>
+</section><section><h2 class="section-heading" id="the-rights-wrongs-and-legal-barriers-to-scraping">The rights, wrongs, and legal barriers to scraping<a class="anchor" aria-label="anchor" href="#the-rights-wrongs-and-legal-barriers-to-scraping"></a>
+</h2>
+<hr class="half-width">
+<p>The internet is no longer what it used to be. Once an open and
+boundless source of information, the web has become an invaluable pool
+of data, widely used by companies to train machine learning and
+generative AI models. Now, social media platforms and other website
+owners have either recognized the potential for profit and licensed
+their data or have become overwhelmed by bots crawling their sites and
+straining their server resources.</p>
+<p>For this reason, it’s now more common to see that a website’s Terms
+of Service (TOS) explicitly prohibits web scraping. If we want to avoid
+getting into trouble, we need to carefully check the TOS of your website
+of interest as well as its ‘robots.txt’ file. You should be able to find
+both using your preferred search engine, but you may directly go to the
+latter by appending ‘/robots.txt’ at the root URL of the website
+(e.g. for Facebook you’ll find it in ‘<a href="https://facebook.com/robots.txt" class="external-link uri">https://facebook.com/robots.txt</a>’, not in any other URL
+like ‘<a href="https://facebook.com/user/robots.txt" class="external-link uri">https://facebook.com/user/robots.txt</a>’).</p>
+<div id="discussion1" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<div class="callout-inner">
+<h3 class="callout-title">Challenge</h3>
+<div class="callout-content">
+<p>Visit <a href="https://www.facebook.com/terms.php" class="external-link">Facebook’s Terms
+of Service</a> and its <a href="https://facebook.com/robots.txt" class="external-link">robots.txt file</a>. What do they
+say about web scraping or collecting data using automated means? Compare
+it to <a href="https://redditinc.com/policies/user-agreement-september-25-2023" class="external-link">Reddit’s
+TOS</a> and <a href="https://www.reddit.com/robots.txt" class="external-link">Reddit’s
+robots.txt</a>.</p>
+</div>
+</div>
+</div>
+<p>Besides checking the website’s policies, you should also be aware of
+the legislation applicable to your location regarding copyright and data
+privacy laws. If you plan to start harvesting a large amount of data for
+research or commercial purposes, you should probably seek legal advice
+first. If you work in a university, chances are it has a copyright
+office that will help you sort out the legal aspects of your project.
+The university library is often the best place to start looking for help
+on copyright.</p>
+<p>To conclude, here is a brief code of conduct you should consider when
+doing web scraping:</p>
+<ol style="list-style-type: decimal">
+<li>
+<strong>Ask nicely if you can access the data in another
+way</strong>. If your project requires data from a particular
+organisation, you can try asking them directly if they could provide you
+what you are looking for, or check if they have an API to access the
+data. With some luck, they will have the primary data that they used on
+their website in a structured format, saving you the trouble.</li>
+<li>
+<strong>Don’t download copies of documents that are clearly not
+public</strong>. For example, academic journal publishers often have
+very strict rules about what you can and what you cannot do with their
+databases. Mass downloading article PDFs is probably prohibited and can
+put you (or at the very least your friendly university librarian) in
+trouble. If your project requires local copies of documents (e.g. for
+text mining projects), special agreements can be reached with the
+publisher. The library is a good place to start investigating something
+like that.</li>
+<li>
+<strong>Check your local legislation</strong>. For example, certain
+countries have laws protecting personal information such as email
+addresses and phone numbers. Scraping such information, even from
+publicly avaialable web sites, can be illegal (e.g. in Australia).</li>
+<li>
+<strong>Don’t share downloaded content illegally</strong>. Scraping
+for personal purposes is usually OK, even if it is copyrighted
+information, as it could fall under the fair use provision of the
+intellectual property legislation. However, sharing data for which you
+don’t hold the right to share is illegal.</li>
+<li>
+<strong>Share what you can</strong>. If the data you scraped is in
+the public domain or you got permission to share it, then put it out
+there for other people to reuse it (e.g. on datahub.io). If you wrote a
+web scraper to access it, share its code (e.g. on GitHub) so that others
+can benefit from it.</li>
+<li>
+<strong>Publish your own data in a reusable way</strong>. Don’t
+force others to write their own scrapers to get at your data. Use open
+and software-agnostic formats (e.g. JSON, XML), provide metadata (data
+about your data: where it came from, what it represents, how to use it,
+etc.) and make sure it can be indexed by search engines so that people
+can find it.</li>
+<li>
+<strong>Don’t break the Internet</strong>. Not all web sites are
+designed to withstand thousands of requests per second. If you are
+writing a recursive scraper (i.e. that follows hyperlinks), test it on a
+smaller dataset first to make sure it does what it is supposed to do.
+Adjust the settings of your scraper to allow for a delay between
+requests. More on this topic in the next episode.</li>
+</ol>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -798,7 +892,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-a-real-website"><p>Content from <a href="a-real-website.html">Scraping a real website</a></p>
 <hr>
-<p>Last updated on 2024-10-29 |
+<p>Last updated on 2024-11-01 |
 
         <a href="https://github.com/josenino95/web-scraping-python/edit/main/episodes/a-real-website.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 55 minutes</p>
@@ -1198,7 +1292,7 @@ held?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>We can reuse directly the code we wrote before, changing only the URL
 we got the HTML from.</p>
@@ -1271,7 +1365,7 @@ hosts the workshop.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>To start, we can see in the HTML document that the world icon is in
 the second data cell of a row. Additionally, for those workshops that
@@ -1361,13 +1455,20 @@ understand, display, and index the page. Each of this
 of workshops, for example, a well formatted start and end date, the
 exact location of the workshop with latitude and longitude (for those
 not online), the language in which it will be taught, and a more
-structured way of listing instructors and helpers. This is precisely the
-information we will extract with the following code.</p>
+structured way of listing instructors and helpers. Each of these data
+points can be identified by the the “name” attribute in the
+<code>&lt;meta&gt;</code> tags, and the information we want to extract
+is the value in the “content” attribute.</p>
+<p>The following code automates the process of getting this data from
+each website, for the first five workshops in our
+<code>upcomingworkshops_df</code> dataframe. We will only do it for five
+workshops to not send too many requests overwhelming the server, but we
+could also do it for all the workshops.</p>
 <div class="codewrapper sourceCode" id="cb22">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" tabindex="-1"></a><span class="co"># List of URLs in our dataframe</span></span>
-<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>urls <span class="op">=</span> <span class="bu">list</span>(upcomingworkshops_df.loc[:, <span class="st">'link'</span>])</span>
+<span id="cb22-2"><a href="#cb22-2" tabindex="-1"></a>urls <span class="op">=</span> <span class="bu">list</span>(upcomingworkshops_df.loc[:<span class="dv">5</span>, <span class="st">'link'</span>])</span>
 <span id="cb22-3"><a href="#cb22-3" tabindex="-1"></a></span>
 <span id="cb22-4"><a href="#cb22-4" tabindex="-1"></a><span class="co"># Start an empty list to store the different dictionaries with our data</span></span>
 <span id="cb22-5"><a href="#cb22-5" tabindex="-1"></a>list_of_workshops <span class="op">=</span> []</span>
@@ -1385,14 +1486,14 @@ information we will extract with the following code.</p>
 <span id="cb22-17"><a href="#cb22-17" tabindex="-1"></a>    dict_w[<span class="st">'link'</span>] <span class="op">=</span> item</span>
 <span id="cb22-18"><a href="#cb22-18" tabindex="-1"></a></span>
 <span id="cb22-19"><a href="#cb22-19" tabindex="-1"></a>    <span class="co"># Use the find function to search for the &lt;meta&gt; tag that </span></span>
-<span id="cb22-20"><a href="#cb22-20" tabindex="-1"></a>    <span class="co"># has each specific name attribute and get the value in the</span></span>
-<span id="cb22-21"><a href="#cb22-21" tabindex="-1"></a>    <span class="co"># content attribute</span></span>
-<span id="cb22-22"><a href="#cb22-22" tabindex="-1"></a>    dict_w[<span class="st">'startdate'</span>] <span class="op">=</span> soup.find(<span class="st">'meta'</span>, attrs <span class="op">=</span>{<span class="st">'name'</span>: <span class="st">'startdate'</span>})[<span class="st">'content'</span>]</span>
-<span id="cb22-23"><a href="#cb22-23" tabindex="-1"></a>    dict_w[<span class="st">'enddate'</span>] <span class="op">=</span> soup.find(<span class="st">'meta'</span>, attrs <span class="op">=</span>{<span class="st">'name'</span>: <span class="st">'enddate'</span>})[<span class="st">'content'</span>]</span>
-<span id="cb22-24"><a href="#cb22-24" tabindex="-1"></a>    dict_w[<span class="st">'language'</span>] <span class="op">=</span> soup.find(<span class="st">'meta'</span>, attrs <span class="op">=</span>{<span class="st">'name'</span>: <span class="st">'language'</span>})[<span class="st">'content'</span>]</span>
-<span id="cb22-25"><a href="#cb22-25" tabindex="-1"></a>    dict_w[<span class="st">'latlng'</span>] <span class="op">=</span> soup.find(<span class="st">'meta'</span>, attrs <span class="op">=</span>{<span class="st">'name'</span>: <span class="st">'latlng'</span>})[<span class="st">'content'</span>]</span>
-<span id="cb22-26"><a href="#cb22-26" tabindex="-1"></a>    dict_w[<span class="st">'instructor'</span>] <span class="op">=</span> soup.find(<span class="st">'meta'</span>, attrs <span class="op">=</span>{<span class="st">'name'</span>: <span class="st">'instructor'</span>})[<span class="st">'content'</span>]</span>
-<span id="cb22-27"><a href="#cb22-27" tabindex="-1"></a>    dict_w[<span class="st">'helper'</span>] <span class="op">=</span> soup.find(<span class="st">'meta'</span>, attrs <span class="op">=</span>{<span class="st">'name'</span>: <span class="st">'helper'</span>})[<span class="st">'content'</span>]</span>
+<span id="cb22-20"><a href="#cb22-20" tabindex="-1"></a>    <span class="co"># has each specific 'name' attribute and get the value in the</span></span>
+<span id="cb22-21"><a href="#cb22-21" tabindex="-1"></a>    <span class="co"># 'content' attribute</span></span>
+<span id="cb22-22"><a href="#cb22-22" tabindex="-1"></a>    dict_w[<span class="st">'startdate'</span>] <span class="op">=</span> soup.find(<span class="st">'meta'</span>, attrs <span class="op">=</span> {<span class="st">'name'</span>: <span class="st">'startdate'</span>})[<span class="st">'content'</span>]</span>
+<span id="cb22-23"><a href="#cb22-23" tabindex="-1"></a>    dict_w[<span class="st">'enddate'</span>] <span class="op">=</span> soup.find(<span class="st">'meta'</span>, attrs <span class="op">=</span> {<span class="st">'name'</span>: <span class="st">'enddate'</span>})[<span class="st">'content'</span>]</span>
+<span id="cb22-24"><a href="#cb22-24" tabindex="-1"></a>    dict_w[<span class="st">'language'</span>] <span class="op">=</span> soup.find(<span class="st">'meta'</span>, attrs <span class="op">=</span> {<span class="st">'name'</span>: <span class="st">'language'</span>})[<span class="st">'content'</span>]</span>
+<span id="cb22-25"><a href="#cb22-25" tabindex="-1"></a>    dict_w[<span class="st">'latlng'</span>] <span class="op">=</span> soup.find(<span class="st">'meta'</span>, attrs <span class="op">=</span> {<span class="st">'name'</span>: <span class="st">'latlng'</span>})[<span class="st">'content'</span>]</span>
+<span id="cb22-26"><a href="#cb22-26" tabindex="-1"></a>    dict_w[<span class="st">'instructor'</span>] <span class="op">=</span> soup.find(<span class="st">'meta'</span>, attrs <span class="op">=</span> {<span class="st">'name'</span>: <span class="st">'instructor'</span>})[<span class="st">'content'</span>]</span>
+<span id="cb22-27"><a href="#cb22-27" tabindex="-1"></a>    dict_w[<span class="st">'helper'</span>] <span class="op">=</span> soup.find(<span class="st">'meta'</span>, attrs <span class="op">=</span> {<span class="st">'name'</span>: <span class="st">'helper'</span>})[<span class="st">'content'</span>]</span>
 <span id="cb22-28"><a href="#cb22-28" tabindex="-1"></a></span>
 <span id="cb22-29"><a href="#cb22-29" tabindex="-1"></a>    <span class="co"># Append to our list</span></span>
 <span id="cb22-30"><a href="#cb22-30" tabindex="-1"></a>    list_of_workshops.append(dict_w)</span>
@@ -1412,8 +1513,9 @@ information we will extract with the following code.</p>
 <p>It is possible that you received an error when executing the previous
 block code, and the most probable reason is that the URL your tried to
 visit didn’t exist. This is known as 404 code error, that indicates the
-requested page cannot be found on the server. What would be your
-approach to work around this possible error?</p>
+requested page doesn’t exist, or more precisely, it cannot be found on
+the server. What would be your approach to work around this possible
+error?</p>
 </div>
 </div>
 </div>
@@ -1422,7 +1524,7 @@ approach to work around this possible error?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
 <div class="accordion-body">
 <p>A Pythonic crude way of working around any error for a given URL
 would be to use a <a href="https://docs.python.org/3/tutorial/errors.html" class="external-link">try and except
@@ -1469,7 +1571,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-dynamic-websites"><p>Content from <a href="dynamic-websites.html">Dynamic websites</a></p>
 <hr>
-<p>Last updated on 2024-10-29 |
+<p>Last updated on 2024-11-01 |
 
         <a href="https://github.com/josenino95/web-scraping-python/edit/main/episodes/dynamic-websites.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 35 minutes</p>
@@ -1504,10 +1606,411 @@ challenge blocks</li>
 </div>
 </div>
 </div>
-<section><h2 class="section-heading" id="to-do">To-do<a class="anchor" aria-label="anchor" href="#to-do"></a>
+<section><h2 class="section-heading" id="you-see-it-but-the-html-doesnt-have-it">You see it but the HTML doesn’t have it!<a class="anchor" aria-label="anchor" href="#you-see-it-but-the-html-doesnt-have-it"></a>
 </h2>
 <hr class="half-width">
-<p>To-do</p>
+<p>Visit the following webpage created by Hartley Brody for the purpose
+of learning and practicing web scraping: <a href="https://www.scrapethissite.com/pages/ajax-javascript/" class="external-link">https://www.scrapethissite.com/pages/ajax-javascript/</a>
+(read first the <a href="https://www.scrapethissite.com/faq/" class="external-link">terms of
+use</a>). Select “2015” to see that year’s Oscar winning films. Now look
+at the HTML behind it as we’ve learned, using the “View page source”
+tool on your browser or in Python using the requests and BeautifulSoup
+packages. Can you find in any place of the HTML the best picture winner
+“Spotlight”? Can you find any other of the movies or the data from the
+table? If you can’t, how could you scrape this page?</p>
+<p>When you explore a page like this, you’ll notice that the movie data,
+including the title “Spotlight,” isn’t actually in the initial HTML
+source. This is because the website uses JavaScript to load the
+information dynamically. JavaScript is a programming language that runs
+in your browser, allowing websites to fetch, process, and display
+content on the fly, often based on user actions like clicking a button.
+When you select “2015”, the browser executes JavaScript (called by one
+of the <code>&lt;script&gt;</code> elements you see in the HTML) to
+retrieve the relevant movie information from the web server and build a
+new HTML document with actual information in the table. This makes the
+page feel more interactive, but it also means the initial HTML you see
+doesn’t contain the movie data itself.</p>
+<p>Let’s explore a new way to view HTML elements in your browser to
+better understand the differences in an HTML document before and after
+JavaScript is executed. On the Oscar winners page you just visited,
+right-click (or Control key + Click on Mac) and select “Inspect” from
+the pop-up menu, as shown in the image below. This opens DevTools on the
+side of your browser, offering a range of features for inspecting,
+debugging, and analyzing web pages in real-time. For this workshop,
+however, we’ll focus on just the “Elements” tab. In the “Elements” tab,
+you’ll see an HTML document that actually includes the table element,
+unlike what you saw in “View Page Source”. This difference is because
+“View Page Source” displays the original HTML, before any JavaScript is
+run, while “Inspect” reveals the HTML as it appears after JavaScript has
+executed.</p>
+<figure><img src="../fig/inspect.png" alt="A screenshot of Google Chrome web browser, showing how to use Inspect from the Chrome DevTools" class="figure mx-auto d-block"></figure><p>As the <code>requests</code> package retrieves the source HTML, we
+need a different approach to scrape these types of websites. For this,
+we will use the <code>Selenium</code> package. But don’t forget about
+the “Inspect” tool we just learned, it will be handy when scraping.</p>
+</section><section><h2 class="section-heading" id="using-selenium-to-scrape-dynamic-websites">Using Selenium to scrape dynamic websites<a class="anchor" aria-label="anchor" href="#using-selenium-to-scrape-dynamic-websites"></a>
+</h2>
+<hr class="half-width">
+<p><a href="https://www.selenium.dev/" class="external-link">Selenium</a> is an open source
+project for web browser automation. It will be useful for our scraping
+tasks as it will act as a real user interacting with a webpage in a
+browser. This way, Selenium will render pages in a browser environment,
+allowing JavaScript to load dynamic content, and therefore giving us
+access to the website HTML after JavaScript has executed. Additionally,
+this package simulates real user interactions like filling in text
+boxes, clicking, scrolling, or selecting drop-down menus, which will be
+useful when we scrape dynamic websites.</p>
+<p>To use it, we’ll load “webdriver” and “By” from the
+<code>selenium</code> package. webdriver open or simulate a web browser,
+interacting with it based on the instructions we give. By will allow us
+to specify how we will select a given element in the HTML, by tag (using
+“By.TAG_NAME”) or by attributes like class (“By.CLASS_NAME”), id
+(“By.ID”), or name (“By.NAME”). We will also load the other packages we
+used in the previous episode.</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="im">from</span> time <span class="im">import</span> sleep</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="im">from</span> selenium <span class="im">import</span> webdriver</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="im">from</span> selenium.webdriver.common.by <span class="im">import</span> By</span></code></pre>
+</div>
+<p>Selenium can simulate multiple multiple browsers like Chrome,
+Firefox, Safari, etc. For now, we’ll use Chrome. When you run the
+following line of code, you’ll notice that a Google Chrome window opens
+up. Don’t close it, as this is how Selenium interacts with the browser.
+Later we’ll see how to do <em>headless</em> browser interactions,
+headless meaning that browser interactions will happen in the
+background, without opening a new browser window or user interface.</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a>driver <span class="op">=</span> webdriver.Chrome()</span></code></pre>
+</div>
+<p>Now, to tell the browser to visit our Oscar winners page, use the
+<code>.get()</code> method on the <code>driver</code> object we just
+created.</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>driver.get(<span class="st">"https://www.scrapethissite.com/pages/ajax-javascript/"</span>)</span></code></pre>
+</div>
+<p>How can we direct Selenium to click the text “2015” for the table of
+that year tho show up? First, we need to find that element, in a similar
+way to how we find elements with BeautifulSoup. Just like we used
+<code>.find()</code> in BeautifulSoup to find the first element that
+matched the specified criteria, in Selenium we have
+<code>.find_element()</code>. Likewise, as we used
+<code>.find_all()</code> in BeautifulSoup to return a list of all
+coincidences for our search criteria, we can use
+<code>.find_elements()</code> in Selenium. But the syntax of how we
+specify the search paramenters will be a little different.</p>
+<p>If we wanted to search a table element that has the
+<code>&lt;table&gt;</code> tag, we would run
+<code>driver.find_element(by=By.TAG_NAME, value="table")</code>. If we
+wanted to search an element with a specific value in the “class”
+attribute, for example an element like
+<code>&lt;tr class="film"&gt;</code> we would run
+<code>driver.find_element(by=By.CLASS_NAME, value="film")</code>. To
+know what element we need to click to open “2015” table of Oscar winners
+we can use the “Inspect” tool (remember you can do this in Google Chrome
+by pointing your mouse over the “2015” value, make a right-click, and
+select “Inspect” from the pop-up menu). In the DevTools window, you’ll
+see element
+<code>&lt;a href="#" class="year-link" id="2015"&gt;2015&lt;/a&gt;</code>.
+As the ID attribute is unique for only one element in the HTML, we can
+directly select the element by this attribute using the code you’ll find
+after the following image.</p>
+<figure><img src="../fig/inspect_element.PNG" alt="A screenshot of Google Chrome web browser, showing how to search a specific element by using Inspect from the Chrome DevTools" class="figure mx-auto d-block"></figure><div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>button_2015 <span class="op">=</span> driver.find_element(by<span class="op">=</span>By.ID, value<span class="op">=</span><span class="st">"2015"</span>)</span></code></pre>
+</div>
+<p>We’ve located the hyperlink element we want to click to get the table
+for that year, and on that element we will use the <code>.click()</code>
+method to interact with it. As the table takes a couple of seconds to
+load, we will also use the <code>sleep()</code> function from the “time”
+module to wait will the JavaScript runs and the table loads. Then, we
+use <code>driver.page_source</code> for Selenium to get the HTML
+document from the website, and we store it in a variable called
+<code>html_2015</code>. Finally, we close the web browser that Selenium
+was using with <code>driver.quit()</code>.</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a>button_2015.click()</span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>sleep(<span class="dv">3</span>)</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a>html_2015 <span class="op">=</span> driver.page_source</span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a>driver.quit()</span></code></pre>
+</div>
+<p>Importantly, the HTML document we stored in <code>html_2015</code>
+<strong>is the HTML after the dynamic content loaded</strong>, so it
+will contain the table values for 2015 that weren’t there originally and
+that we wouldn’t be able to see if we had used the <code>requests</code>
+package instead.</p>
+<p>We could continue using Selenium and its <code>.find_element()</code>
+and <code>.find_elements()</code> methods to to extract our data of
+interest. But instead, we will use BeautifulSoup to parse the HTML and
+find elements, as we already have some practice using it. If we search
+for the first element with class attribute equal to “film-title” and
+return the text inside it, we see that this HTML has the “Spotlight”
+movie.</p>
+<div class="codewrapper sourceCode" id="cb6">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(html_2015, <span class="st">'html.parser'</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="bu">print</span>(soup.find(class_<span class="op">=</span><span class="st">'film'</span>).prettify())</span></code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb7">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="op">&lt;</span>tr <span class="kw">class</span><span class="op">=</span><span class="st">"film"</span><span class="op">&gt;</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a> <span class="op">&lt;</span>td <span class="kw">class</span><span class="op">=</span><span class="st">"film-title"</span><span class="op">&gt;</span></span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>  Spotlight</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a> <span class="op">&lt;/</span>td<span class="op">&gt;</span></span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a> <span class="op">&lt;</span>td <span class="kw">class</span><span class="op">=</span><span class="st">"film-nominations"</span><span class="op">&gt;</span></span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>  <span class="dv">6</span></span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a> <span class="op">&lt;/</span>td<span class="op">&gt;</span></span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a> <span class="op">&lt;</span>td <span class="kw">class</span><span class="op">=</span><span class="st">"film-awards"</span><span class="op">&gt;</span></span>
+<span id="cb7-9"><a href="#cb7-9" tabindex="-1"></a>  <span class="dv">2</span></span>
+<span id="cb7-10"><a href="#cb7-10" tabindex="-1"></a> <span class="op">&lt;/</span>td<span class="op">&gt;</span></span>
+<span id="cb7-11"><a href="#cb7-11" tabindex="-1"></a> <span class="op">&lt;</span>td <span class="kw">class</span><span class="op">=</span><span class="st">"film-best-picture"</span><span class="op">&gt;</span></span>
+<span id="cb7-12"><a href="#cb7-12" tabindex="-1"></a>  <span class="op">&lt;</span>i <span class="kw">class</span><span class="op">=</span><span class="st">"glyphicon glyphicon-flag"</span><span class="op">&gt;</span></span>
+<span id="cb7-13"><a href="#cb7-13" tabindex="-1"></a>  <span class="op">&lt;/</span>i<span class="op">&gt;</span></span>
+<span id="cb7-14"><a href="#cb7-14" tabindex="-1"></a> <span class="op">&lt;/</span>td<span class="op">&gt;</span></span>
+<span id="cb7-15"><a href="#cb7-15" tabindex="-1"></a><span class="op">&lt;/</span>tr<span class="op">&gt;</span></span></code></pre>
+</div>
+<p>The following code repeats the process of clicking and loading the
+2015 data, but now using “headless” mode (i.e. without opening a browser
+window). Then, it extracts data from the table one column at a time,
+taking advantage that each column has a unique class attribute that
+identifies it. Instead of using for loops to extract data from each
+element that <code>.find_all()</code> finds, we use list comprehensions.
+You can learn more about them reading <a href="https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions" class="external-link">Python’s
+documentation for list comprehensions</a>, or with this <a href="https://www.programiz.com/python-programming/list-comprehension" class="external-link">Programiz
+short tutorial</a>.</p>
+<div class="codewrapper sourceCode" id="cb8">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># Create the Selenium webdriver and make it headless</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>options <span class="op">=</span> ChromeOptions()</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>options.add_argument(<span class="st">"--headless=new"</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>driver <span class="op">=</span> webdriver.Chrome(options<span class="op">=</span>options)</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co"># Load the website. Find and click 2015. Get post JavaScript execution HTML. Close webdriver</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>driver.get(<span class="st">"https://www.scrapethissite.com/pages/ajax-javascript/"</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>button_2015 <span class="op">=</span> driver.find_element(by<span class="op">=</span>By.ID, value<span class="op">=</span><span class="st">"2015"</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>button_2015.click()</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>sleep(<span class="dv">3</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>html_2015 <span class="op">=</span> driver.page_source</span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>driver.quit()</span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="co"># Parse HTML using BeautifulSoup and extract each column as a list of values ising list comprehensions</span></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(html_2015, <span class="st">'html.parser'</span>)</span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a>titles_lc <span class="op">=</span> [elem.get_text() <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(class_<span class="op">=</span><span class="st">"film-title"</span>)]</span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a>nominations_lc <span class="op">=</span> [elem.get_text() <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(class_<span class="op">=</span><span class="st">"film-nominations"</span>)]</span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a>awards_lc <span class="op">=</span> [elem.get_text() <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(class_<span class="op">=</span><span class="st">"film-awards"</span>)]</span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a></span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a><span class="co"># For the best picture column, we can't use .get_text() as there is no text</span></span>
+<span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a><span class="co"># Rather, we want to see if there is an &lt;i&gt; tag</span></span>
+<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a>best_picture_lc <span class="op">=</span> [<span class="st">"Yes"</span> <span class="cf">if</span> elem.find(<span class="st">"i"</span>) <span class="op">==</span> <span class="va">None</span> <span class="cf">else</span> <span class="st">"No"</span> <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(class_<span class="op">=</span><span class="st">"film-best-picture"</span>)]</span>
+<span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a><span class="co"># Create a dataframe based on the previous lists</span></span>
+<span id="cb8-25"><a href="#cb8-25" tabindex="-1"></a>movies_2015 <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb8-26"><a href="#cb8-26" tabindex="-1"></a>    {<span class="st">'titles'</span>: titles_lc, <span class="st">'nominations'</span>: nominations_lc, <span class="st">'awards'</span>: awards_lc, <span class="st">'best_picture'</span>: best_picture_lc}</span>
+<span id="cb8-27"><a href="#cb8-27" tabindex="-1"></a>)</span></code></pre>
+</div>
+<div id="challenge1" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<div class="callout-inner">
+<h3 class="callout-title">Challenge</h3>
+<div class="callout-content">
+<p>Based on what we’ve learned in this episode, write code for getting
+the data of all the years from 2010 to 2015 of <a href="https://www.scrapethissite.com/pages/ajax-javascript/" class="external-link">Hartley
+Brody’s website</a> with information of Oscar Winning Films. Hint:
+You’ll use the same code, but add loop through each year.</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div class="accordion-body">
+<p>Besides adding a loop for each year, the following solution is
+refactoring the code by creating two functions: one that finds and
+clicks a year returning the html after the data shows up, and another
+that gets the html and parses it to extract the data and create a
+dataframe.</p>
+<p>So you can see the process of how Selenium opens the browser and
+clicks the years, we are not adding the “headless” option.</p>
+<div class="codewrapper sourceCode" id="cb9">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># Function to search year hyperlink and click it</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="kw">def</span> findyear_click_gethtml(year):</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>    button <span class="op">=</span> driver.find_element(by<span class="op">=</span>By.ID, value<span class="op">=</span>year)</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>    button.click()</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>    sleep(<span class="dv">3</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>    html <span class="op">=</span> driver.page_source</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>    <span class="cf">return</span> html</span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co"># Function to parse html, extract table data, and assign year column</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="kw">def</span> parsehtml_extractdata(html, year):</span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>    soup <span class="op">=</span> BeautifulSoup(html, <span class="st">'html.parser'</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>    titles_lc <span class="op">=</span> [elem.get_text() <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(class_<span class="op">=</span><span class="st">"film-title"</span>)]</span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a>    nominations_lc <span class="op">=</span> [elem.get_text() <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(class_<span class="op">=</span><span class="st">"film-nominations"</span>)]</span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>    awards_lc <span class="op">=</span> [elem.get_text() <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(class_<span class="op">=</span><span class="st">"film-awards"</span>)]</span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a>    best_picture_lc <span class="op">=</span> [<span class="st">"No"</span> <span class="cf">if</span> elem.find(<span class="st">"i"</span>) <span class="op">==</span> <span class="va">None</span> <span class="cf">else</span> <span class="st">"Yes"</span> <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(class_<span class="op">=</span><span class="st">"film-best-picture"</span>)]</span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a>    movies_df <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a>        {<span class="st">'titles'</span>: titles_lc, <span class="st">'nominations'</span>: nominations_lc, <span class="st">'awards'</span>: awards_lc, <span class="st">'best_picture'</span>: best_picture_lc, <span class="st">'year'</span>: year}</span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a>    )</span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a>    <span class="cf">return</span> movies_df</span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a></span>
+<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a><span class="co"># Open Selenium webdriver and go to the page</span></span>
+<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a>driver <span class="op">=</span> webdriver.Chrome()</span>
+<span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a>driver.get(<span class="st">"https://www.scrapethissite.com/pages/ajax-javascript/"</span>)</span>
+<span id="cb9-24"><a href="#cb9-24" tabindex="-1"></a></span>
+<span id="cb9-25"><a href="#cb9-25" tabindex="-1"></a><span class="co"># Create empty dataframe where we will append/concatenate the dataframes we get for each year</span></span>
+<span id="cb9-26"><a href="#cb9-26" tabindex="-1"></a>result_df <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb9-27"><a href="#cb9-27" tabindex="-1"></a></span>
+<span id="cb9-28"><a href="#cb9-28" tabindex="-1"></a><span class="cf">for</span> year <span class="kw">in</span> [<span class="st">"2010"</span>, <span class="st">"2011"</span>, <span class="st">"2012"</span>, <span class="st">"2013"</span>, <span class="st">"2014"</span>, <span class="st">"2015"</span>]:</span>
+<span id="cb9-29"><a href="#cb9-29" tabindex="-1"></a>    html_year <span class="op">=</span> findyear_click_gethtml(year)</span>
+<span id="cb9-30"><a href="#cb9-30" tabindex="-1"></a>    df_year <span class="op">=</span> parsehtml_extractdata(html_year, year)</span>
+<span id="cb9-31"><a href="#cb9-31" tabindex="-1"></a>    result_df <span class="op">=</span> pd.concat([result_df, df_year])</span>
+<span id="cb9-32"><a href="#cb9-32" tabindex="-1"></a></span>
+<span id="cb9-33"><a href="#cb9-33" tabindex="-1"></a><span class="co"># Close the browser that Selenium opened</span></span>
+<span id="cb9-34"><a href="#cb9-34" tabindex="-1"></a>driver.quit()</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="challenge2" class="callout challenge">
+<div class="callout-square">
+<i class="callout-icon" data-feather="zap"></i>
+</div>
+<div class="callout-inner">
+<h3 class="callout-title">Challenge</h3>
+<div class="callout-content">
+<p>If you are tired of scraping table data like we’ve been doing for the
+last two episodes, here is another dynamic website exercise where you
+can practice what you’ve learned. Go to <a href="https://www.scrapingcourse.com/javascript-rendering" class="external-link">this product
+page</a> created by scrapingcourse.com and extract all product names and
+prices, and also the hyperlink that each product card has to a detailed
+view page.</p>
+<p>When you complete that, and if you are up to an additional challenge,
+scrape from the detailed view page of each product its SKU, Category and
+Description.</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
+</button>
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div class="accordion-body">
+<p>To identify what elements containt the data you need, you should use
+the “Inspect” tool in your browser. The following image is a screenshot
+of the website. In there we can see that each product card is a
+<code>&lt;div&gt;</code> element with multiple attributes that we can
+use to narrow down our search to the specific elements we want. For
+example, we would use <code>'data-testid'='product-item'</code>. After
+we find all <em>divs</em> that satisfy that condition, we can extract
+from each the hyperlink, the name, and the price. The hyperlink is the
+‘href’ attribute of the <code>&lt;a&gt;</code> tag. The name and price
+are inside <code>&lt;span&gt;</code> tags, and we could use multiple
+attributes to get each of them. In the following code, we will use
+<code>'class'='product-name'</code> to get the name and
+<code>'data-content'='product-price'</code> to get the price.</p>
+<figure><img src="../fig/product_cards_challenge.PNG" alt="A screenshot of Google Chrome web browser, highlighting the `&lt;div&gt;` element that contains the data we want about the product" class="figure mx-auto d-block"></figure><div class="codewrapper sourceCode" id="cb10">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># Open Selenium webdriver in headless mode and go to the desired page</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>options <span class="op">=</span> webdriver.ChromeOptions()</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>options.add_argument(<span class="st">"--headless=new"</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>driver <span class="op">=</span> webdriver.Chrome(options<span class="op">=</span>options)</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>driver.get(<span class="st">"https://www.scrapingcourse.com/javascript-rendering"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co"># As we don't have to click anything, just wait for the JavaScript to load, we can get the HTML right away</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>sleep(<span class="dv">3</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>html <span class="op">=</span> driver.page_source</span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co"># Parste the HTML</span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(html, <span class="st">'html.parser'</span>)</span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="co"># Find all &lt;div&gt; elements that have a 'data-testid' attribute with the value of 'product-item'</span></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a>divs <span class="op">=</span> soup.find_all(<span class="st">"div"</span>, attrs <span class="op">=</span> {<span class="st">'data-testid'</span>: <span class="st">'product-item'</span>})</span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="co"># Loop through the &lt;div&gt; elements we found, and for each get the href,</span></span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a><span class="co"># the name (inside a &lt;span&gt; element with attribute class="product-name")</span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a><span class="co"># and the price (inside a &lt;span&gt; element with attribute data-content="product-price"</span></span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a>list_of_dicts <span class="op">=</span> []</span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a><span class="cf">for</span> div <span class="kw">in</span> divs:</span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a>    <span class="co"># Create a dictionary to store the data we want for each product</span></span>
+<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a>    item_dict <span class="op">=</span> {</span>
+<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a>        <span class="st">'link'</span>: div.find(<span class="st">'a'</span>)[<span class="st">'href'</span>],</span>
+<span id="cb10-24"><a href="#cb10-24" tabindex="-1"></a>        <span class="st">'name'</span>: div.find(<span class="st">'span'</span>, attrs <span class="op">=</span> {<span class="st">'class'</span>: <span class="st">'product-name'</span>}).get_text(),</span>
+<span id="cb10-25"><a href="#cb10-25" tabindex="-1"></a>        <span class="st">'price'</span>: div.find(<span class="st">'span'</span>, attrs <span class="op">=</span> {<span class="st">'data-content'</span>: <span class="st">'product-price'</span>}).get_text()</span>
+<span id="cb10-26"><a href="#cb10-26" tabindex="-1"></a>    }</span>
+<span id="cb10-27"><a href="#cb10-27" tabindex="-1"></a>    list_of_dicts.append(item_dict)</span>
+<span id="cb10-28"><a href="#cb10-28" tabindex="-1"></a></span>
+<span id="cb10-29"><a href="#cb10-29" tabindex="-1"></a>all_products <span class="op">=</span> pd.DataFrame(list_of_dicts)</span></code></pre>
+</div>
+<p>We could arrive to the same result if we replace the for loop with
+list comprehensions. So here is another possible solution with that
+approach.</p>
+<div class="codewrapper sourceCode" id="cb11">
+<h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>links <span class="op">=</span> [elem[<span class="st">'href'</span>] <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(<span class="st">'a'</span>, attrs <span class="op">=</span> {<span class="st">'class'</span>: <span class="st">'product-link'</span>})]</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>names <span class="op">=</span> [elem.get_text() <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(<span class="st">'span'</span>, attrs <span class="op">=</span> {<span class="st">'class'</span>: <span class="st">'product-name'</span>})]</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>prices <span class="op">=</span> [elem.get_text() <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(<span class="st">'span'</span>, attrs <span class="op">=</span> {<span class="st">'data-content'</span>: <span class="st">'product-price'</span>})]</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>all_products_v2 <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>    {<span class="st">'link'</span>: links, <span class="st">'name'</span>: names, <span class="st">'price'</span>: prices}</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>)</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="the-scraping-pipeline">The scraping pipeline<a class="anchor" aria-label="anchor" href="#the-scraping-pipeline"></a>
+</h2>
+<hr class="half-width">
+<p>By now, you’ve learned about the core tools for web scraping:
+requests, BeautifulSoup, and Selenium. These three tools form a
+versatile pipeline for almost any web scraping task. When starting a new
+scraping project, there are several important steps to follow that will
+help ensure you capture the data you need.</p>
+<p>The first step is <strong>understanding the website
+structure</strong>. Every website is different and structures data in
+its own particular way. Spend some time exploring the site and
+identifying the HTML elements that contain the information you want.
+Next, <strong>determine if the content is static or dynamic</strong>.
+Static content can be directly accessed from the HTML source code using
+requests and BeautifulSoup, while dynamic content often requires
+Selenium to load JavaScript on the page before BeautifulSoup can parse
+it.</p>
+<p>Once you know how the website presents its data, <strong>start
+building your pipeline</strong>. If the content is static, make a
+<code>requests</code> call to get the HTML document, and use
+<code>BeautifulSoup</code> to locate and extract the necessary elements.
+If the content is dynamic, use <code>Selenium</code> to load the page
+fully, perform any interactions (like clicking or scrolling), and then
+pass the rendered HTML to <code>BeautifulSoup</code> for parsing and
+extracing the necessary elements. Finally, <strong>format and store the
+data</strong> in a structured way that’s useful for your specific
+project and that makes it easy to analyse later.</p>
+<p>This scraping pipeline helps break down complex scraping tasks into
+manageable steps and allows you to adapt the tools based on the
+website’s unique features. With practice, you’ll be able to efficiently
+combine these tools to extract valuable data from almost any
+website.</p>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -1580,8 +2083,8 @@ any links that you are not going to use.
   "url": "https://josenino95.github.io/web-scraping-python/instructor/aio.html",
   "identifier": "https://josenino95.github.io/web-scraping-python/instructor/aio.html",
   "dateCreated": "2024-09-23",
-  "dateModified": "2024-10-29",
-  "datePublished": "2024-10-29"
+  "dateModified": "2024-11-01",
+  "datePublished": "2024-11-01"
 }
 
   </script><script>
