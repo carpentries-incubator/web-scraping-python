@@ -15,30 +15,51 @@ exercises: 5
 ::::::::::::::::::::::::::::::::::::: objectives
 
 - Use the `Selenium` package to scrape dynamic websites.
-- Identify the elements of interest using the browser's "Inspect" tool.
 - Understand the usual pipeline of a web scraping project.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-## You see it but the HTML doesn't have it!
+Visit this practice webpage created by Hartley Brody for learning and practicing web scraping:  [https://www.scrapethissite.com/pages/ajax-javascript/](https://www.scrapethissite.com/pages/ajax-javascript/) (but first, read the [terms of use](https://www.scrapethissite.com/faq/)).
+Select “2015” to display that year’s Oscar-winning films.
+Now try viewing the HTML behind the page, either using the View Page Source tool in your browser or by using Python with the requests and BeautifulSoup packages, as we’ve learned.
 
-Visit the following webpage created by Hartley Brody for the purpose of learning and practicing web scraping: [https://www.scrapethissite.com/pages/ajax-javascript/](https://www.scrapethissite.com/pages/ajax-javascript/) (read first the [terms of use](https://www.scrapethissite.com/faq/)). Select "2015" to see that year's Oscar winning films. Now look at the HTML behind it as we've learned, using the "View page source" tool on your browser or in Python using the requests and BeautifulSoup packages. Can you find in any place of the HTML the best picture winner "Spotlight"? Can you find any other of the movies or the data from the table? If you can't, how could you scrape this page?
+Can you find the Best Picture winner Spotlight anywhere in the HTML?
+Can you find any of the other movies or the data from the table?
+If not, how could you scrape this page?
 
-When you explore a page like this, you'll notice that the movie data, including the title "Spotlight," isn’t actually in the initial HTML source. This is because the website uses JavaScript to load the information dynamically. JavaScript is a programming language that runs in your browser, allowing websites to fetch, process, and display content on the fly, often based on user actions like clicking a button. When you select "2015", the browser executes JavaScript (called by one of the `<script>` elements you see in the HTML) to retrieve the relevant movie information from the web server and build a new HTML document with actual information in the table. This makes the page feel more interactive, but it also means the initial HTML you see doesn’t contain the movie data itself.
+When you explore a page like this, you’ll notice that the movie data (including the title Spotlight) isn’t present in the initial HTML source. That’s because the website uses **JavaScript** to load the information dynamically.
+JavaScript is a programming language that runs in your browser and allows websites to fetch, process, and display content on the fly — often in response to user actions, like clicking a button.
 
-Let’s explore a new way to view HTML elements in your browser to better understand the differences in an HTML document before and after JavaScript is executed. On the Oscar winners page you just visited, right-click (or Control key + Click on Mac) and select "Inspect" from the pop-up menu, as shown in the image below. This opens DevTools on the side of your browser, offering a range of features for inspecting, debugging, and analyzing web pages in real-time. For this workshop, however, we’ll focus on just the "Elements" tab. In the "Elements" tab, you’ll see an HTML document that actually includes the table element, unlike what you saw in "View Page Source". This difference is because "View Page Source" displays the original HTML, before any JavaScript is run, while "Inspect" reveals the HTML as it appears after JavaScript has executed.
+When you select "2015", your browser runs JavaScript (triggered by one of the `<script>` elements in the HTML) to retrieve the relevant movie information from the web server and dynamically update the table.
+This makes the page feel more interactive, but it also means that the initial HTML you see doesn’t contain the movie data itself.
 
-![](fig/inspect.png){alt="A screenshot of Google Chrome web browser, showing how to use Inspect from the Chrome DevTools"}
+You can observe this difference when using the "View page source" and "Inspect" tools in your browser:
+"View page source" shows the original HTML sent by the server, before any JavaScript runs.
+"Inspect" shows the rendered HTML, after JavaScript has executed and updated the page content.
 
-As the `requests` package retrieves the source HTML, we need a different approach to scrape these types of websites. For this, we will use the `Selenium` package. But don't forget about the "Inspect" tool we just learned, it will be handy when scraping.
+Because the requests package only retrieves the original source HTML, it won’t work for scraping pages like this.
+To scrape content that is generated dynamically by JavaScript, we’ll use a different tool: the `Selenium` package.
 
 ## Using Selenium to scrape dynamic websites
 
-[Selenium](https://www.selenium.dev/) is an open source project for web browser automation. It will be useful for our scraping tasks as it will act as a real user interacting with a webpage in a browser. This way, Selenium will render pages in a browser environment, allowing JavaScript to load dynamic content, and therefore giving us access to the website HTML after JavaScript has executed. Additionally, this package simulates real user interactions like filling in text boxes, clicking, scrolling, or selecting drop-down menus, which will be useful when we scrape dynamic websites.
+[Selenium](https://www.selenium.dev/) is an open-source project for web browser automation.
+It’s especially useful for scraping tasks because it behaves like a real user interacting with a web page in a browser.
 
-To use it, we'll load "webdriver" and "By" from the `selenium` package. webdriver open or simulate a web browser, interacting with it based on the instructions we give. By will allow us to specify how we will select a given element in the HTML, by tag (using "By.TAG_NAME") or by attributes like class ("By.CLASS_NAME"), id ("By.ID"), or name ("By.NAME"). We will also load the other packages we used in the previous episode.
+With Selenium, the browser actually renders the page, allowing JavaScript to run and load any dynamic content. This means we can access the fully loaded HTML (just like we’d see using the "Inspect" tool) after JavaScript has executed.
+
+In addition, Selenium can simulate real user interactions like filling in text boxes, clicking buttons, scrolling, or selecting items from drop-down menus.
+These features are essential when scraping dynamic websites.
+
+To get started, we’ll load the `webdriver` and `By` components from the selenium package:
+
+- `webdriver` lets us launch or simulate a web browser and interact with it through code.
+
+- `By` helps us specify how we want to locate elements in the HTML, by tag name (`By.TAG_NAME`), class (`By.CLASS_NAME`), ID (`By.ID`), name (`By.NAME`), and more.
+
+We’ll also continue using the other packages introduced in the previous episode.
 
 ```python
+# Loading libraries
 from bs4 import BeautifulSoup
 import pandas as pd
 from time import sleep
@@ -46,47 +67,84 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 ```
 
-Selenium can simulate multiple multiple browsers like Chrome, Firefox, Safari, etc. For now, we'll use Chrome. When you run the following line of code, you'll notice that a Google Chrome window opens up. Don't close it, as this is how Selenium interacts with the browser. Later we'll see how to do *headless* browser interactions, headless meaning that browser interactions will happen in the background, without opening a new browser window or user interface.
+Selenium can simulate different browsers like Chrome, Firefox, Safari, and others.
+For now, we’ll use Chrome.
+When you run the following line of code, a new Google Chrome window will open.
+Don’t close it, this is the browser that Selenium is controlling to interact with the webpage.
+
+Later in the lesson, we’ll learn how to run headless browser sessions.
+Headless means the browser runs in the background without opening a visible window or user interface, which is useful for automation tasks and running scripts on servers.
+To direct the browser to the Oscar winners page, use the `.get()` method on the `driver` object we just created.
 
 ```python
+# Open a Chrome web browser driven by Selenium
 driver = webdriver.Chrome()
-```
 
-Now, to tell the browser to visit our Oscar winners page, use the `.get()` method on the `driver` object we just created.
-
-```python
+# Go to a specific website
 driver.get("https://www.scrapethissite.com/pages/ajax-javascript/")
 ```
 
-How can we direct Selenium to click the text "2015" for the table of that year tho show up? First, we need to find that element, in a similar way to how we find elements with BeautifulSoup. Just like we used `.find()` in BeautifulSoup to find the first element that matched the specified criteria, in Selenium we have `.find_element()`. Likewise, as we used `.find_all()` in BeautifulSoup to return a list of all coincidences for our search criteria, we can use `.find_elements()` in Selenium. But the syntax of how we specify the search paramenters will be a little different.
+How can we direct Selenium to click the "2015" text so the table for that year appears?
+First, we need to locate that element, similar to how we used `.find()` and `.find_all()` with BeautifulSoup.
+In Selenium, we use `.find_element()` to get the first matching element, and `.find_elements()` to get all matches.
+However, the syntax for specifying search parameters is slightly different.
 
-If we wanted to search a table element that has the `<table>` tag, we would run `driver.find_element(by=By.TAG_NAME, value="table")`. If we wanted to search an element with a specific value in the "class" attribute, for example an element like `<tr class="film">` we would run `driver.find_element(by=By.CLASS_NAME, value="film")`. To know what element we need to click to open "2015" table of Oscar winners we can use the "Inspect" tool (remember you can do this in Google Chrome by pointing your mouse over the "2015" value, make a right-click, and select "Inspect" from the pop-up menu). In the DevTools window, you'll see element `<a href="#" class="year-link" id="2015">2015</a>`. As the ID attribute is unique for only one element in the HTML, we can directly select the element by this attribute using the code you'll find after the following image.
+For example:
+
+- To select the first `<table>` element, you’d use:
+`driver.find_element(by=By.TAG_NAME, value="table")`
+
+- To find a row with `<tr class="film">`, you’d use:
+`driver.find_element(by=By.CLASS_NAME, value="film")`
+
+To find the specific element that triggers the display of 2015’s Oscar winners, use the "Inspect" tool in Chrome.
+Right-click on the "2015" text and choose "Inspect."
+In the DevTools panel, you'll see this HTML element:
+
+```HTML
+<a href="#" class="year-link" id="2015">2015</a>
+```
 
 ![](fig/inspect_element.PNG){alt="A screenshot of Google Chrome web browser, showing how to search a specific element by using Inspect from the Chrome DevTools"}
 
+Because the `id` attribute is unique, we can select this element directly using:
 
 ```python
+# Find 2015 element button
 button_2015 = driver.find_element(by=By.ID, value="2015")
 ```
 
-We've located the hyperlink element we want to click to get the table for that year, and on that element we will use the `.click()` method to interact with it. As the table takes a couple of seconds to load, we will also use the `sleep()` function from the "time" module to wait will the JavaScript runs and the table loads. Then, we use `driver.page_source` for Selenium to get the HTML document from the website, and we store it in a variable called `html_2015`. Finally, we close the web browser that Selenium was using with `driver.quit()`.
+We’ve located the hyperlink element we need to click to display the table for that year, and we’ll use the `.click()` method to interact with it.
+Since the table takes a couple of seconds to load, we’ll use the `sleep()` function to pause while the JavaScript runs and the table loads.
+Next, we’ll use driver.page_source to retrieve the updated HTML content from the website and store it in a variable called `html_2015`.
+Finally, we’ll close the browser window Selenium opened using `driver.quit()`.
 
 ```python
+# Click 2015 button
 button_2015.click()
+
+# Wait for table to load
 sleep(3)
+
+# Retrieve page HTML
 html_2015 = driver.page_source
+
+# Close web browser
 driver.quit()
 ```
 
-Importantly, the HTML document we stored in `html_2015` **is the HTML after the dynamic content loaded**, so it will contain the table values for 2015 that weren't there originally and that we wouldn't be able to see if we had used the `requests` package instead.
+Importantly, the HTML document we stored in `html_2015` **is the HTML after the dynamic content loaded**.
+This content wasn’t present in the original HTML and wouldn't be accessible if we had used the requests package alone.
 
-We could continue using Selenium and its `.find_element()` and `.find_elements()` methods to to extract our data of interest. But instead, we will use BeautifulSoup to parse the HTML and find elements, as we already have some practice using it. If we search for the first element with class attribute equal to "film-title" and return the text inside it, we see that this HTML has the "Spotlight" movie.
+While we could continue using Selenium’s `.find_element()` and `.find_elements()` methods to extract the data, we'll switch back to BeautifulSoup to parse the HTML and locate elements, since we already have practice with it.
+For example, if we search for the first element with the class attribute "film" and retrieve its text, we’ll see that the HTML now includes the movie “Spotlight.”
 
 ```python
+# Parse HTML and 
 soup = BeautifulSoup(html_2015, 'html.parser')
 print(soup.find(class_='film').prettify())
 ```
-```python
+```output
 <tr class="film">
  <td class="film-title">
   Spotlight
@@ -104,11 +162,14 @@ print(soup.find(class_='film').prettify())
 </tr>
 ```
 
-The following code repeats the process of clicking and loading the 2015 data, but now using "headless" mode (i.e. without opening a browser window). Then, it extracts data from the table one column at a time, taking advantage that each column has a unique class attribute that identifies it. Instead of using for loops to extract data from each element that `.find_all()` finds, we use list comprehensions. You can learn more about them reading [Python's documentation for list comprehensions](https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions), or with this [Programiz short tutorial](https://www.programiz.com/python-programming/list-comprehension).
+The following code repeats the process of clicking and loading the 2015 data, but now in "headless" mode (meaning the browser runs in the background without opening a visible window).
+After the data loads, the code extracts information from the table one column at a time, using the fact that each column has a unique class attribute.
+Instead of writing traditional for loops to extract the text from each element returned by .find_all(), we use list comprehensions, which provide a more concise way to generate lists.
+You can learn more about them reading [Python's documentation on list comprehensions](https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions) or this [short tutorial by Programiz](https://www.programiz.com/python-programming/list-comprehension).
 
 ```python
 # Create the Selenium webdriver and make it headless
-options = ChromeOptions()
+options = webdriver.ChromeOptions()
 options.add_argument("--headless=new")
 driver = webdriver.Chrome(options=options)
 
@@ -138,13 +199,15 @@ movies_2015 = pd.DataFrame(
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-Based on what we've learned in this episode, write code for getting the data of all the years from 2010 to 2015 of [Hartley Brody's website](https://www.scrapethissite.com/pages/ajax-javascript/) with information of Oscar Winning Films. Hint: You'll use the same code, but add loop through each year.
+Using what we've learned in this episode, write a Python script that collects Oscar-winning film data for all years from 2010 to 2015 from [Hartley Brody's website](https://www.scrapethissite.com/pages/ajax-javascript/).
+Hint: Reuse the code you wrote to scrape the 2015 data, and place it inside a loop that goes through each year.
 
 :::::::::::::::::::::::: solution
 
-Besides adding a loop for each year, the following solution is refactoring the code by creating two functions: one that finds and clicks a year returning the html after the data shows up, and another that gets the html and parses it to extract the data and create a dataframe.
+In addition to looping through each year, the following solution changes the code by defining two functions:
+one that finds and clicks on a year and returns the HTML after the data loads, and another that takes this HTML, parses it, and extracts the data into a DataFrame.
 
-So you can see the process of how Selenium opens the browser and clicks the years, we are not adding the "headless" option.
+To let you observe how Selenium opens the browser and interacts with the page, this version does not use the "headless" option.
 
 ```python
 # Function to search year hyperlink and click it
@@ -190,15 +253,26 @@ driver.quit()
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-If you are tired of scraping table data like we've been doing for the last two episodes, here is another dynamic website exercise where you can practice what you've learned. Go to [this product page](https://www.scrapingcourse.com/javascript-rendering) created by scrapingcourse.com and extract all product names and prices, and also the hyperlink that each product card has to a detailed view page.
+If you're ready for a break from scraping table data like we've done in the last two episodes, try this new exercise to practice working with dynamic websites.
+Visit [this product page](https://www.scrapingcourse.com/javascript-rendering) created by scrapingcourse.com and extract the name and price of each product, along with the hyperlink from each product card to its detailed view page.
 
-When you complete that, and if you are up to an additional challenge, scrape from the detailed view page of each product its SKU, Category and Description.
+Once you've done that, and if you're up for an additional challenge, visit each product’s detail page and scrape its SKU, Category, and Description.
 
 :::::::::::::::::::::::: solution
 
-To identify what elements containt the data you need, you should use the "Inspect" tool in your browser. The following image is a screenshot of the website. In there we can see that each product card is a `<div>` element with multiple attributes that we can use to narrow down our search to the specific elements we want. For example, we would use `'data-testid'='product-item'`. After we find all *divs* that satisfy that condition, we can extract from each the hyperlink, the name, and the price. The hyperlink is the 'href' attribute of the `<a>` tag. The name and price are inside `<span>` tags, and we could use multiple attributes to get each of them. In the following code, we will use `'class'='product-name'` to get the name and `'data-content'='product-price'` to get the price.
+To identify the elements that contain the data you need, start by using the "Inspect" tool in your browser.
+The screenshot below shows an example from the website, where each product card is a `<div>` element with several attributes that help narrow down your search.
 
 ![](fig/product_cards_challenge.PNG){alt="A screenshot of Google Chrome web browser, highlighting the `<div>` element that contains the data we want about the product"}
+
+For instance, you can target these product cards by selecting `<div>` elements with the attribute `'data-testid'='product-item'`.
+Once you've found all the relevant `<div>` elements, you can extract the necessary information from each:
+
+- Hyperlink: This is the `href` attribute of the `<a>` tag within each product card.
+
+- Product name: This is inside a `<span>` tag with the class attribute `'product-name'`.
+
+- Price: This is also inside a `<span>` tag, and we can identify it using the attribute `'data-content'='product-price'`.
 
 ```python
 # Open Selenium webdriver in headless mode and go to the desired page
@@ -249,28 +323,39 @@ all_products_v2 = pd.DataFrame(
 
 ## The scraping pipeline
 
-By now, you've learned about the core tools for web scraping: requests, BeautifulSoup, and Selenium. These three tools form a versatile pipeline for almost any web scraping task. When starting a new scraping project, there are several important steps to follow that will help ensure you capture the data you need.
+By now, you've learned the core tools for web scraping: requests, BeautifulSoup, and Selenium.
+Together, these tools form a powerful and flexible pipeline that can handle most scraping tasks.
+When starting a new scraping project, following a few key steps will help ensure you capture the data you need efficiently and responsibly.
 
-The first step is **understanding the website structure**. Every website is different and structures data in its own particular way. Spend some time exploring the site and identifying the HTML elements that contain the information you want. Next, **determine if the content is static or dynamic**. Static content can be directly accessed from the HTML source code using requests and BeautifulSoup, while dynamic content often requires Selenium to load JavaScript on the page before BeautifulSoup can parse it.
+The first step is to **understand the structure of the website**.
+Every site organizes its content differently, so take time to explore the page, inspect elements, and identify the HTML tags and attributes that hold the information you're after.
 
-Once you know how the website presents its data, **start building your pipeline**. If the content is static, make a `requests` call to get the HTML document, and use `BeautifulSoup` to locate and extract the necessary elements. If the content is dynamic, use `Selenium` to load the page fully, perform any interactions (like clicking or scrolling), and then pass the rendered HTML to `BeautifulSoup` for parsing and extracing the necessary elements. Finally, **format and store the data** in a structured way that's useful for your specific project and that makes it easy to analyse later.
+Next, **determine whether the content is static or dynamic**.
+Static content is part of the initial HTML and can be accessed directly using requests and parsed with BeautifulSoup.
+Dynamic content, on the other hand, is loaded or updated by JavaScript after the initial page load, and typically requires Selenium to render the page fully before parsing.
 
-This scraping pipeline helps break down complex scraping tasks into manageable steps and allows you to adapt the tools based on the website’s unique features. With practice, you’ll be able to efficiently combine these tools to extract valuable data from almost any website.
+Once you've identified how the content is delivered, **build your scraping pipeline**.
+For static content, make a request using `requests.get()` and pass the HTML to BeautifulSoup to locate and extract the relevant elements.
+  For dynamic pages, use Selenium to open the page in a browser, interact with the page as needed (e.g., clicking buttons, selecting dropdowns), and retrieve the updated HTML with `driver.page_source`. Then use BeautifulSoup to parse and extract the data.
 
+Finally, **clean, format, and store the data** in a structured format, such as a list of dictionaries or a Pandas DataFrame, so it’s ready for analysis or export.
+
+Following this pipeline helps you break down complex tasks into clear, manageable steps and choose the right tools for the job
+With practice, you’ll be able to adapt this process to scrape and organize data from a wide range of websites.
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- Dynamic websites load content using JavaScript, which isn't present in the initial or source HTML. It's important to distinguish between static and dynamic content when planning your scraping approach.
-- The `Selenium` package and its `webdriver` module simulate a real user interacting with a browser, allowing it to execute JavaScript and clicking, scrolling or filling in text boxes.
-- Here are the commandand we learned when we use `Selenium`:
-  - `webdriver.Chrome()` # Start the Google Chrome browser simulator
-  - `.get("website_url")` # Go to a given website
-  - `.find_element(by, value)` and `.find_elements(by, value)` # Get a given element
-  - `.click()` # Click the element selected
-  - `.page_source` # Get the HTML after JavaScript has executed, which can later be parsed with BeautifulSoup
-  - `.quit()` # Close the browser simulator
-- The browser's "Inspect" tool allows users to view the HTML document after dynamic content has loaded, revealing elements added by JavaScript. This tool helps identify the specific elements you are interested in scraping.
-- A typical scraping pipeline involves understanding the website's structure, determining content type (static or dynamic), using the appropriate tools (requests and BeautifulSoup for static, Selenium and BeautifulSoup for dynamic), and structuring the scraped data for analysis.
+- Dynamic websites load content using JavaScript, so the data may not be present in the initial HTML.
+  It's important to distinguish between static and dynamic content when planning your scraping approach.
+- The `Selenium` package and its `webdriver` module simulates a real browser, allowing you to execute JavaScript and interact with the page as a user would —clicking, scrolling, or filling out forms
+- Key Selenium commands:
+  - `webdriver.Chrome()`: Launch the Chrome browser simulator
+  - `.get("website_url")`: Visit a given website
+  - `.find_element(by, value)` and `.find_elements(by, value)`: Locate one or multiple elements
+  - `.click()`: Click a selected element
+  - `.page_source`: Retrieve the full HTML after JavaScript execution
+  - `.quit()`: Close the browser
+- The browser's "Inspect" tool allows users to view the HTML document after dynamic content has loaded.
+  This is useful for identifying which elements contain the data you want to scrape.
+- A typical web scraping pipeline includes: 1) Understanding the website structure; 2) Determining whether content is static or dynamic; 3) Choosing the right tools (requests + BeautifulSoup or Selenium); 4) Extracting and cleaning the data; 5) Storing the data in a structured format.
 ::::::::::::::::::::::::::::::::::::::::::::::::
-
-[r-markdown]: https://rmarkdown.rstudio.com/

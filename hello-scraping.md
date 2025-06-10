@@ -6,28 +6,35 @@ exercises: 10
 
 :::::::::::::::::::::::::::::::::::::: questions 
 
-- What is behind a website and how can I extract its information?
-- What is there to consider before I do web scraping?
+- What’s behind a website, and how can I extract information from it?
+- What ethical and legal considerations should I keep in mind before scraping a website?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Identify the structure and basic components of an HTML document.
-- Use BeautifulSoup to locate elements, tags, attributes and text in an HTML document.
-- Understand the situations in which web scraping is not suitable for obtaining the desired data.
+- Identify the structure and key components of an HTML document.
+- Use BeautifulSoup to locate elements, tags, attributes, and text within an HTML page.
+- Recognize situations where web scraping is inappropriate or not permitted for accessing data.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Introduction
 
-This is part two of an Introduction to Web Scraping workshop we offered on February 2024. You can refer to those [workshop materials](https://ucsbcarpentry.github.io/2024-02-27-ucsb-webscraping/) to have a more gentle introduction to scraping using XPath and the `Scraper` Chrome extension.
+This workshop is a continuation of our Introduction to Web Scraping workshop.
+If you're looking for a gentler introduction that uses XPath and the Scraper Chrome extension, take a look at the [workshop materials for that workshop](https://carpentries-incubator.github.io/lc-webscraping/).
 
-We'll refresh some of the concepts covered there to have a practical understanding of how content/data is structured in a website. For that purpose, we'll see what Hypertext Markup Language (HTML) is and how it structures and formats the content using `tags`. From there, we'll use the BeautifulSoup library to parse the HTML content so we can easily search and access elements of the website we are interested in. Starting from basic examples, we'll move to scrape more complex, real-life websites.
+Here, we’ll revisit some of those core ideas to build a more hands-on understanding of how content and data are structured on the web. 
+We’ll start by exploring what HTML (Hypertext Markup Language) is and how it uses tags to organize and format content.
+Then, we’ll introduce the BeautifulSoup library to parse HTML and make it easier to search for and extract specific elements from a webpage.
+
+We'll begin with simple examples and gradually move on to scraping more complex, real-world websites.
 
 ## HTML quick overview
 
-All websites have a Hypertext Markup Language (HTML) document behind them. The following text is HTML for a very simple website, with only three sentences. If you look at it, can you imagine how that website looks?
+All websites have a Hypertext Markup Language (HTML) document behind them.
+Below is an example of HTML for a very simple webpage that contains just three sentences.
+As you look through it, try to imagine how the website would appear in a browser.
 
 ```html
 <!DOCTYPE html>
@@ -45,58 +52,69 @@ All websites have a Hypertext Markup Language (HTML) document behind them. The f
 This other paragraph has two hyperlinks,
 one to <a href="https://carpentries.org/">The Carpentries homepage</a>,
 and another to the
-<a href="https://carpentries.org/past_workshops/">past workshops</a> page.
+<a href="https://carpentries.org/workshops/past-workshops/">past workshops</a> page.
 </p>
 </body>
 </html>
 ```
 
-Well, if you put that text in a file with a .html extension, the job of your web browser when opening the file will be to interpret that (markup) language and display a nicely formatted website.
+If you save that text in a file with a .html extension —using a simple text editor like Notepad on Windows or TextEdit on macOS— and open it in your web browser, the browser will interpret the markup language and display a nicely formatted web page.
 
 ![](fig/simple_website.PNG){alt="Screenshot of a simple website with the previews HTML"}
 
-An HTML document is composed of **elements**, which can be identified by **tags** written inside angle brackets (`<` and `>`). For example, the HTML root element, which delimits the beginning and end of an HTML document, is identified by the `<html>` tag.
+When you open an HTML file in your browser, what it's really doing is reading a structured document made up of **elements**, each marked by **tags** inside angle brackets (< and >).
+For instance, the HTML root element, which delimits the beginning and end of an HTML document, is identified by the `<html>` tag.
 
-Most elements have both a opening and a closing tag, determining the span of the element. In the previous simple website, we see a head element that goes from the opening tag `<head>` up to the closing tag `</head>`. Given than an element can be inside another element, an HTML document has a tree structure, where every element is a node that can contain child nodes, like the following image shows.
+Most elements have both an opening tag and a closing tag, which define the start and end of that element.
+For example, in the simple website we looked at earlier, the head element begins with `<head>` and ends with `</head>`.
+
+Because elements can be nested inside one another, an HTML document forms a tree structure, where each element is a node that can contain child nodes, as illustrated in the image below.
 
 ![The Document Object Model (DOM) that represents an HTML document with a tree structure. Source: Wikipedia. Author: Birger Eriksson](https://upload.wikimedia.org/wikipedia/commons/5/5a/DOM-model.svg){alt="Screenshot of a simple website with the previews HTML"}
 
-Finally, we can define or modify the behavior, appeareance, or functionality of an element by using **attributes**. Attributes are inside the opening tag, and consist of a name and a value, formatted as `name="value"`. For example, in the previous simple website, we added a hyperlink with the `<a>...</a>` tags, but to set the destination URL we used the `href` attribute by writing in the opening tag `a href="https://carpentries.org/past_workshops/"`.
+Finally, we can define or modify the behavior, appearance, or functionality of an element using **attributes**.
+Attributes appear inside the opening tag and consist of a name and a value, formatted like `name="value"`.
 
-Here is a non-exhaustive list of elements you'll find in HTML and their purpose:
+For example, in the simple website, we added a hyperlink using the `<a>...</a>` tags.
+To specify the destination URL, we used the `href` attribute inside the opening `<a>` tag like this: `<a href="https://carpentries.org/workshops/past-workshops/">past workshops</a>`.
 
-- `<hmtl>...</html>` The root element, which contains the entirety of the document.
-- `<head>...</head>` Contains metadata, for example, the title that the web browser displays.
-- `<body>...</body>` The content that is going to be displayed.
-- `<h1>...</h1>, <h2>...</h2>, <h3>...</h3>` Defines headers of level 1, 2, 3, etc.
-- `<p>...</p>` A paragraph.
-- `<a href="">...</a>` Creates a hyperlink, and we provide the destination URL with the `href` attribute.
-- `<img src="" alt="">` Embedds an image, giving a source to the image with the `src` attribute and specifying alternate text with `alt`.
-- `<table>...</table>, <th>...</th>, <tr>...</tr>, <td>...</td>` Defines a table, that as children will have a header (defined inside `th`), rows (defined inside `tr`), and a cell inside a row (as `td`).
-- `<div>...</div>` Is used to group sections of HTML content.
-- `<script>...</script>` Embeds or references JavaScript code.
+Here is a non-exhaustive list of common HTML elements and their purposes:
 
-In the previous list we've described some attributes specific for the hyperlink elements (`<a>`) and the image elements (`<img>`), but there are a few other global attributes that most HTML elements can have and are useful to identify specific elements when doing web scraping:
+- `<hmtl>...</html>`: The root element that contains the entire document.
+- `<head>...</head>`: Contains metadata such as the page title that the browser displays.
+- `<body>...</body>`: Contains the content that will be shown on the webpage.
+- `<h1>...</h1>, <h2>...</h2>, <h3>...</h3>`: Define headers of levels 1, 2, 3, and so on.
+- `<p>...</p>`: Represents a paragraph.
+- `<a href="">...</a>`: Creates a hyperlink; the destination URL is set with the href attribute.
+- `<img src="" alt="">`: Embeds an image, with the image source specified by `src` and alternative text provided by `alt`. It doesn't have an opening tag.
+- `<table>...</table>, <th>...</th>, <tr>...</tr>, <td>...</td>`: Define a table structure, with headers (`<th>`), rows (`<tr>`), and cells (`<td>`).
+- `<div>...</div>`: Groups sections of HTML content together.
+- `<script>...</script>`: Embeds or links to JavaScript code.
 
-- `id=""` Assigns a unique identifier to an element, which cannot be repeated in the entire HTML document
-- `title=""` Provides extra information, displayed as a tooltip when the user hovers over the element.
-- `class=""` Is used to apply a similar styling to multiple elements at once.
+In the list above, we mentioned some attributes specific to hyperlink (`<a>`) and image (`<img>`) elements, but there are also several global attributes that most HTML elements can have.
+These are especially useful for identifying elements when web scraping:
 
-To summarize, an **element**  is identified by **tags**, and we can assign properties to an element by using **attributes**. Knowing this about HTML will make our lifes easier when trying to get some specific data from a website.
+- `id=""`: Assigns a unique identifier to an element; this ID must be unique within the entire HTML document. 
+- `title=""`: Provides extra information about the element, shown as a tooltip when the user hovers over it.
+- `class=""`: Applies a common styling or grouping to multiple elements at once.
 
+To summarize: **elements** are identified by **tags**, and **attributes** let us assign properties or identifiers to those elements.
+Understanding this structure will make it much easier to extract specific data from a website.
 
 ## Parsing HTML with BeautifulSoup
 
-Now that we know how a website is structured, we can start extracting information from it. The BeautifulSoup package is our main tool for that task, as it will parse the HTML so we can search and access the elements of interest in a programmatic way. 
+Now that we understand how a website is structured, we can begin extracting information from it.
+The `BeautifulSoup` package is our main tool for this task —it parses the HTML so we can programmatically search for and access the elements we need.
 
-To see how this package works, we'll use the simple website example we showed before. As our first step, we will load the BeautifulSoup package, along with Pandas.
+To see how BeautifulSoup works, we’ll use the simple website example from earlier.
+As a first step, we’ll load the `BeautifulSoup` package along with Pandas.
 
 ```python
 from bs4 import BeautifulSoup
 import pandas as pd
 ```
 
-Let's get the HTML content inside a string variable called `example_html`
+Let’s store the HTML content in a string variable named `example_html`.
 
 ```python
 example_html = """
@@ -115,14 +133,16 @@ example_html = """
 This other paragraph has two hyperlinks,
 one to <a href="https://carpentries.org/">The Carpentries homepage</a>,
 and another to the
-<a href="https://carpentries.org/past_workshops/">past workshops</a> page.
+<a href="https://carpentries.org/workshops/past-workshops/">past workshops</a> page.
 </p>
 </body>
 </html>
 """
 ```
 
-We parse this HTML using the `BeautifulSoup()` function we imported, specifying that we want to use the `html.parser`. This object will represent the document as a nested data structure, similar to a tree as we mentioned before. If we use the `.prettify()` method on this object, we can see the nested structure, as inner elements will be indented to the right. 
+We parse the HTML by passing it to the `BeautifulSoup()` function, specifying `html.parser` as the parser.
+This creates an object that represents the document as a nested data structure —similar to the tree structure we discussed earlier.
+Using the `.prettify()` method on this object displays the HTML with indentation that reflects its nested structure, making it easier to read.
 
 ```python
 soup = BeautifulSoup(example_html, 'html.parser')
@@ -162,7 +182,7 @@ print(soup.prettify())
     The Carpentries homepage
    </a>
    , and another to the
-   <a href="https://carpentries.org/past_workshops/">
+   <a href="https://carpentries.org/workshops/past-workshops/">
     past workshops
    </a>
    .
@@ -171,7 +191,18 @@ print(soup.prettify())
 </html>
 ```
 
-Now that our `soup` variable holds the parsed document, we can use the `.find()` and `.find_all()` methods. `.find()` will search the tag that we specify, and return the entire element, including the starting and closing tags. If there are multiple elements with the same tag, `.find()` will only return the first one. If you want to return all the elements that match your search, you'd want to use `.find_all()` instead, which will return them in a list. Additionally, to return the text contained in a given element and all its children, you'd use `.get_text()`. Below you can see how all these commands play out in our simple website example.
+Now that our `soup` variable holds the parsed document, we can use the `.find()` and `.find_all()` methods to search for elements.
+
+- `.find()` looks for the first occurrence of a specified tag and returns the entire element, including its opening and closing tags.
+
+- If multiple elements share the same tag, `.find()` returns only the first one.
+
+- To get all matching elements, use `.find_all()`, which returns a list of all elements with the specified tag.
+
+- To extract just the text inside an element and all its children, use the `.get_text()` method.
+`.find()` will search the tag that we specify, and return the entire element, including the starting and closing tags.
+
+Below, you’ll see examples of how these commands work with our simple website.
 
 ```python
 print("1.", soup.find('title'))
@@ -187,10 +218,8 @@ print("6.", soup.get_text())
 2. Sample web page
 3. h1 Header #1
 4. [<h1>h1 Header #1</h1>, <h1>h1 Header #2</h1>]
-5. [<a href="https://carpentries.org/">The Carpentries homepage</a>, <a href="https://carpentries.org/past_workshops/">past workshops</a>]
+5. [<a href="https://carpentries.org/">The Carpentries homepage</a>, <a href="https://carpentries.org/workshops/past-workshops/">past workshops</a>]
 6. 
-
-
 
 Sample web page
 
@@ -200,14 +229,15 @@ This is a paragraph tag
 h2 Sub-header
 A new paragraph, now in the sub-header
 h1 Header #2
-This other paragraph has two  hyperlinks, one to The Carpentries homepage, and another to the past workshops.
 
-
-
-
+This other paragraph has two hyperlinks,
+one to The Carpentries homepage,
+and another to the
+past workshops page.
 ```
 
-How would you extract all hyperlinks identified with `<a>` tags? In our example, we see that there are only two hyperlinks, and we could extract them in a list using the `.find_all('a')` method.
+How would you extract all hyperlinks identified with `<a>` tags?
+In our example, we see that there are only two hyperlinks, and we could extract them in a list using the `.find_all('a')` method.
 
 ```python
 links = soup.find_all('a')
@@ -216,18 +246,19 @@ print(links)
 ```
 ```output
 Number of hyperlinks found:  2
-[<a href="https://carpentries.org/">The Carpentries homepage</a>, <a href="https://carpentries.org/past_workshops/">past workshops</a>]
+[<a href="https://carpentries.org/">The Carpentries homepage</a>, <a href="https://carpentries.org/workshops/past-workshops/">past workshops</a>]
 ```
 
-To access the value of a given attribute in an element, for example the value of the `href` attribute in `<a href="">`, we would use square brackets and the name of the attribute (`['href']`), just like how in a Python dictionary we would access the value using the respective key. Let's make a loop that prints only the URL for each hyperlink we have in our example.
+To access the value of a given attribute in an element, for example the value of the `href` attribute in `<a href="">`, we would use the `.get()` method with the name of the attribute (i.e. `.get('href')`).
+Let's make a loop that prints only the URL for each hyperlink we have in our example.
 
 ```python
 for item in links:
-    print(item['href'])
+    print(item.get('href'))
 ```
 ```output
 https://carpentries.org/
-https://carpentries.org/past_workshops/
+https://carpentries.org/workshops/past-workshops/
 ```
 
 ::::::::::::::::::::::::::::::::::::: challenge
@@ -249,24 +280,32 @@ One way of completing the exercise is as follows.
 ```python
 first_link = {
    'element': str(soup.find('a')),
-   'url': soup.find('a')['href'],
+   'url': soup.find('a').get('href'),
    'text': soup.find('a').get_text()
 }
 ```
-An alternate but similar way is to store the tag found for not calling multiple times `soup.find('a')`, and also creating first an empty dictionary and append to it the keys and values we want, as this will be useful when we do this multiple times in a for loop.
+
+An alternative and often more efficient approach is to first store the result of `soup.find('a')` in a variable, rather than calling it multiple times.
+This makes your code cleaner and avoids redundant searches.
+
+You can also start by creating an empty dictionary and then add key-value pairs to it. This is especially useful when you're extracting multiple pieces of information in a loop, as you'll likely want to build up a dictionary of results step by step.
 
 ```python
 find_a = soup.find('a')
 first_link = {}
 first_link['element'] = str(find_a)
-first_link['url'] = find_a['href']
+first_link['url'] = find_a.get('href')
 first_link['text'] = find_a.get_text()
 ```
 :::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-To finish this introduction on HTML and BeautifulSoup, let's create code for extracting in a structured way all the hyperlink elements, their destination URL and the text displayed for link. For that, let's use the `links` variable that we created before as `links = soup.find_all('a')`. We'll loop over each hyperlink element found, storing for each the three pieces of information we want in a dictionary, and finally appending that dictionary to a list called `list_of_dicts`. At the end we will have a list with two elements, that we can transform to a Pandas dataframe.
+To wrap up this introduction to HTML and BeautifulSoup, let’s write code that extracts all hyperlink elements in a structured way —capturing each link's tag, destination URL, and display text.
+
+We’ll start with the links variable we created earlier: `links = soup.find_all('a')`.
+Then, we’ll loop through each hyperlink element, store the three pieces of information in a dictionary, and append each dictionary to a list called `list_of_dicts`.
+At the end, we’ll have a list containing two dictionaries —one for each link— which we can easily convert into a Pandas DataFrame.
 
 ```python
 links = soup.find_all('a')
@@ -274,7 +313,7 @@ list_of_dicts = []
 for item in links:
     dict_a = {}
     dict_a['element'] = str(item)
-    dict_a['url'] = item['href']
+    dict_a['url'] = item.get('href')
     dict_a['text'] = item.get_text()
     list_of_dicts.append(dict_a)
 
@@ -283,52 +322,83 @@ print(links_df)
 ```
 
 ```output
-                                             element  \
-0  <a href="https://carpentries.org/">The Carpent...   
-1  <a href="https://carpentries.org/past_workshop...   
-
-                                       url                      text  
-0                 https://carpentries.org/  The Carpentries homepage  
-1  https://carpentries.org/past_workshops/            past workshops  
+                                             element                                                url                      text
+0  <a href="https://carpentries.org/">The Carpent...                           https://carpentries.org/  The Carpentries homepage
+1  <a href="https://carpentries.org/workshops/pas...  https://carpentries.org/workshops/past-workshops/            past workshops
 ```
 
-You'll find more useful information about the BeautifulSoup package and how to use all its methods in the [Beautiful Soup Documentation website](https://beautiful-soup-4.readthedocs.io/en/latest/).
+You can find more detailed information about the BeautifulSoup package and its full range of methods in the [BeautifulSoup Documentation](https://beautiful-soup-4.readthedocs.io/en/latest/).
 
 ## The rights, wrongs, and legal barriers to scraping 
 
-The internet is no longer what it used to be. Once an open and boundless source of information, the web has become an invaluable pool of data, widely used by companies to train machine learning and generative AI models. Now, social media platforms and other website owners have either recognized the potential for profit and licensed their data or have become overwhelmed by bots crawling their sites and straining their server resources.
+The internet isn’t as open as it once was.
+What used to be a vast, freely accessible source of information has become a valuable reservoir of data —especially for training machine learning and generative AI models.
+In response, many social media platforms and website owners have either started monetizing access to their data or taken steps to protect their resources from being overwhelmed by automated bots.
 
-For this reason, it’s now more common to see that a website's Terms of Service (TOS) explicitly prohibits web scraping. If we want to avoid getting into trouble, we need to carefully check the TOS of your website of interest as well as its 'robots.txt' file. You should be able to find both using your preferred search engine, but you may directly go to the latter by appending '/robots.txt' at the root URL of the website (e.g. for Facebook you'll find it in 'https://facebook.com/robots.txt', not in any other URL like 'https://facebook.com/user/robots.txt').
+As a result, it’s increasingly common for websites to include explicit prohibitions against web scraping in their Terms of Service (TOS).
+To avoid legal or ethical issues, it’s essential to check both the TOS and the site's `robots.txt` file before scraping.
+
+You can usually find a site's `robots.txt` file by appending `/robots.txt` to the root of the domain—for example: `https://facebook.com/robots.txt` (not `https://facebook.com/user/robots.txt`).
+Both the TOS and `robots.txt` will help you understand what is allowed and what isn’t, so it’s important to review them carefully before proceeding.
 
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-Visit [Facebook's Terms of Service](https://www.facebook.com/terms.php) and its [robots.txt file](https://facebook.com/robots.txt). What do they say about web scraping or collecting data using automated means? Compare it to [Reddit's TOS](https://redditinc.com/policies/user-agreement-september-25-2023) and [Reddit's robots.txt](https://www.reddit.com/robots.txt).
+Visit [Facebook's Terms of Service](https://www.facebook.com/terms.php) and its [robots.txt file](https://facebook.com/robots.txt). What do they say about web scraping or collecting data using automated means? Compare it to [Reddit's TOS](https://redditinc.com/policies/user-agreement) and [Reddit's robots.txt](https://www.reddit.com/robots.txt).
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-Besides checking the website's policies, you should also be aware of the legislation applicable to your location regarding copyright and data privacy laws. If you plan to start harvesting a large amount of data for research or commercial purposes, you should probably seek legal advice first. If you work in a university, chances are it has a copyright office that will help you sort out the legal aspects of your project. The university library is often the best place to start looking for help on copyright.
+In addition to reviewing a website’s policies, you should also be aware of the laws that apply in your region —especially those related to copyright and data privacy.
+If you’re planning to collect a large amount of data for research or commercial purposes, it’s a good idea to seek legal advice before proceeding.
+If you’re affiliated with a university, there’s a good chance it has a copyright office or legal team that can help you navigate the legal aspects of your project.
+The university library is often a great starting point for finding support and guidance on copyright and data use.
 
-To conclude, here is a brief code of conduct you should consider when doing web scraping:
+To conclude, here is a brief code of conduct you should keep in mind when doing web scraping:
 
 
-1. **Ask nicely if you can access the data in another way**. If your project requires data from a particular organisation, you can try asking them directly if they could provide you what you are looking for, or check if they have an API to access the data. With some luck, they will have the primary data that they used on their website in a structured format, saving you the trouble.
-1. **Don’t download copies of documents that are clearly not public**. For example, academic journal publishers often have very strict rules about what you can and what you cannot do with their databases. Mass downloading article PDFs is probably prohibited and can put you (or at the very least your friendly university librarian) in trouble. If your project requires local copies of documents (e.g. for text mining projects), special agreements can be reached with the publisher. The library is a good place to start investigating something like that.
-1. **Check your local legislation**. For example, certain countries have laws protecting personal information such as email addresses and phone numbers. Scraping such information, even from publicly avaialable web sites, can be illegal (e.g. in Australia).
-1. **Don’t share downloaded content illegally**. Scraping for personal purposes is usually OK, even if it is copyrighted information, as it could fall under the fair use provision of the intellectual property legislation. However, sharing data for which you don’t hold the right to share is illegal.
-1. **Share what you can**. If the data you scraped is in the public domain or you got permission to share it, then put it out there for other people to reuse it (e.g. on datahub.io). If you wrote a web scraper to access it, share its code (e.g. on GitHub) so that others can benefit from it.
-1. **Publish your own data in a reusable way**. Don’t force others to write their own scrapers to get at your data. Use open and software-agnostic formats (e.g. JSON, XML), provide metadata (data about your data: where it came from, what it represents, how to use it, etc.) and make sure it can be indexed by search engines so that people can find it.
-1. **Don’t break the Internet**. Not all web sites are designed to withstand thousands of requests per second. If you are writing a recursive scraper (i.e. that follows hyperlinks), test it on a smaller dataset first to make sure it does what it is supposed to do. Adjust the settings of your scraper to allow for a delay between requests. More on this topic in the next episode.
+1. **Ask nicely whether you can access the data in another way**.
+If your project relies on data from a particular organization, consider reaching out to them directly or checking whether they provide an API.
+With a bit of luck, they might offer the data you need in a structured format —saving you time and effort.
+
+1.  **Don’t download content that’s clearly not public**.
+For example, academic journal publishers often impose strict usage restrictions on their databases. 
+Mass-downloading PDFs can violate these rules and may get you —or your university librarian— into trouble.
+
+    If you need local copies for a legitimate reason (e.g., text mining), special agreements may be possible.
+Your university library is a good place to start exploring those options.
+
+1. **Check your local legislation**.
+Many countries have laws protecting personal information, such as email addresses or phone numbers.
+Even if this data is visible on a website, scraping it could be illegal depending on your jurisdiction (e.g., in Australia).
+
+1. **Don’t share scraped content illegally**.
+Scraping for personal use is often considered fair use, even when it involves copyrighted material. But sharing that data —especially if you don’t have the rights to distribute it— can be illegal.
+
+1. **Share what you can**.
+If the scraped data is public domain or you’ve been granted permission to share it, consider publishing it for others to reuse (e.g., on datahub.io).
+Also, if you wrote a scraper to access it, sharing your code (e.g., on GitHub) can help others learn from and build on your work.
+
+1. **Publish your own data in a reusable way**.
+Make it easier for others by offering your data in open, software-agnostic formats like CSV, JSON, or XML. 
+Include metadata that describes the content, origin, and intended use of the data.
+Ensure it’s accessible and searchable by search engines.
+
+1.  **Don’t break the Internet**.
+Some websites can’t handle high volumes of requests.
+If your scraper is recursive (i.e., it follows links), test it first on a small subset.
+
+    Be respectful by setting delays between requests and limiting the rate of access.
+You’ll learn more about how to do this in the next episode.
+
+Following these guidelines helps ensure that your scraping is ethical, legal, and considerate of the broader web ecosystem.
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- Every website has an HTML document behind it that gives a structure to its content.
-- An HTML is composed of elements, which usually have a opening `<tag>` and a closing `</tag>`.
-- Elements can have different properties, assigned by attributes in the form of `<tag attribute_name="value">`.
-- We can parse any HTML document with `BeautifulSoup()` and find elements using the `.find()` and `.find_all()` methods.
-- We can access the text of an element using the `.get_text()` method and the attribute values as we do with Python dictionaries (`element["attribute_name"]`).
-- We must be careful to not tresspass the Terms of Service (TOS) of the website we are scraping.
+- Every website is built on an HTML document that structures its content.
+- An HTML document is composed of elements, usually defined by an opening `<tag>` and a closing `</tag>`.
+- Elements can have attributes that define their properties, written as `<tag attribute_name="value">`.
+- We can parse an HTML document using `BeautifulSoup()` and search for elements with the `.find()` and `.find_all()` methods.
+    - We can extract the text inside an element with `.get_text()` and access attribute values using `.get("attribute_name")`.
+- Always review and respect a website’s Terms of Service (TOS) before scraping its content.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
-
-[r-markdown]: https://rmarkdown.rstudio.com/
