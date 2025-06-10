@@ -25,7 +25,7 @@ We'll focus on retrieving data about upcoming and past workshops taught by The C
 To give you a sense of how web scraping can be useful here, we might use this data to analyze which countries have hosted the most workshops, build a live dashboard showing recent trends in instruction, or even create an app that notifies us when a new workshop is scheduled in our region.
 
 With the basic tools shown here, you can build similar apps and analyses using the website(s) you're interested in.
-But always keep in mind the code of conduct from the previous episode —especially the first point: there might be an easier and more appropriate way to access the data you need.
+But always keep in mind the code of conduct from the previous episode, especially the first point: there might be an easier and more appropriate way to access the data you need.
 
 In fact, for the example we’re about to explore, The Carpentries provides a [list of data feeds](https://feeds.carpentries.org/full_list.html) that you can use to access information about upcoming and past workshops directly.
 
@@ -77,7 +77,7 @@ If you don’t see that option, try clicking elsewhere on the page. A new tab wi
 ![](fig/view_page_source.png){alt="A screenshot of The Carpentries upcoming workshops website in the Google Chrome web browser, showing how to View page source"}
 
 In the HTML page source in your browser, you can scroll down to find the first-level header (`<h1>`) with the text “Upcoming workshops.”
-An easier way is to use the Find bar — press Ctrl + F on Windows or Command + F on Mac — and search for “Upcoming workshops.”
+An easier way is to use the Find bar (press Ctrl + F on Windows or Command + F on Mac) and search for “Upcoming workshops.”
 
 From that point, you can read the surrounding HTML and compare it to how the content appears on the rendered website.
 You’ll see how formatting is handled through tags like unordered lists (`<ul>`), list items (`<li>`), paragraphs (`<p>`), and content divisions (`<div>`).
@@ -100,7 +100,7 @@ For this workshop, we’ll focus on just one: the "Elements" tab.
 
 If you selected the organization name to inspect (as shown in the screenshot), you'll see an anchor (`<a>`) element highlighted in the Elements tab.
 Around it, as its parent, you’ll find a third-level header marked by `<h3>` tags.
-This provides a visual example of the tree-like structure we discussed earlier —elements nested inside other elements.
+This provides a visual example of the tree-like structure we discussed earlier, elements nested inside other elements.
 
 Back in our code, we left off after retrieving the HTML behind the website using the requests package and storing it in a variable named `req`.
 
@@ -140,7 +140,7 @@ But exactly which `<div>` among all those in the HTML?
 You’ll notice that this parent `div` stands out because it has a `class` attribute attribute with the value "p-8 mb-5 border".
 
 The animation below illustrates that all the information for each workshop is grouped within a `<div>` element marked by that same class attribute.
-It also shows how the "Inspect" tool highlights the relevant portion of the webpage when you hover over an HTML element —making it easier to understand the structure and pinpoint the content you want to extract.
+It also shows how the "Inspect" tool highlights the relevant portion of the webpage when you hover over an HTML element, making it easier to understand the structure and pinpoint the content you want to extract.
 
 ![](fig/inspect_div_class.gif){alt="All workshop cards share a 'p-8 mb-5 border' class attribute."}
 
