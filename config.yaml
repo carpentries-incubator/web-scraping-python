@@ -34,7 +34,7 @@ life_cycle: 'pre-alpha' # FIXME
 license: 'CC-BY 4.0'
 
 # Link to the source repository for this lesson
-source: 'https://github.com/josenino95/web-scraping-python' # FIXME
+source: 'https://carpentries-incubator.github.io/web-scraping-python' # FIXME
 
 # Default branch of your lesson
 branch: 'main'
