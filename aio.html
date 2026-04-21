@@ -6,21 +6,27 @@
 <title>Web Scraping with Python: All in One View</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <script src="assets/themetoggle.js"></script><link rel="stylesheet" type="text/css" href="assets/styles.css">
-<script src="assets/scripts.js" type="text/javascript"></script><!-- mathjax --><script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      config: ["MMLorHTML.js"],
-      jax: ["input/TeX","input/MathML","output/HTML-CSS","output/NativeMML", "output/PreviewHTML"],
-      extensions: ["tex2jax.js","mml2jax.js","MathMenu.js","MathZoom.js", "fast-preview.js", "AssistiveMML.js", "a11y/accessibility-menu.js"],
-      TeX: {
-        extensions: ["AMSmath.js","AMSsymbols.js","noErrors.js","noUndefined.js"]
-      },
-      tex2jax: {
-        inlineMath: [['\\(', '\\)']],
-        displayMath: [ ['$$','$$'], ['\\[', '\\]'] ],
-        processEscapes: true
-      }
-    });
-    </script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><!-- Responsive Favicon for The Carpentries --><link rel="apple-touch-icon" sizes="180x180" href="favicons/incubator/apple-touch-icon.png">
+<script src="assets/scripts.js" type="text/javascript"></script><!-- mathjax --><!-- NOTE: https://docs.mathjax.org/en/latest/output/mathml.html#mathml-support --><!-- Changes from V2 to V4: https://mathjax.github.io/MathJax-demos-web/convert-configuration/convert-configuration.html
+        Jax output/NativeMML is not yet implemented
+        Jax output/PreviewHTML is not yet implemented
+        Extension fast-preview is not yet implemented (but may be in a future release)
+    --><script>
+    window.MathJax = {
+        tex: {
+            inlineMath: [['\\(', '\\)']],
+            displayMath: [ ['$$','$$'], ['\\[', '\\]'] ],
+            processEscapes: true,
+            packages: ['base', 'ams', 'noerrors', 'noundefined']
+        },
+        options: {
+            ignoreHtmlClass: 'tex2jax_ignore',
+            processHtmlClass: 'tex2jax_process'
+        },
+        loader: {
+            load: ['a11y/assistive-mml', '[tex]/noerrors']
+        }
+    };
+    </script><script defer src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script><!-- Responsive Favicon for The Carpentries --><link rel="apple-touch-icon" sizes="180x180" href="favicons/incubator/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicons/incubator/favicon-32x32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicons/incubator/favicon-16x16.png">
 <link rel="manifest" href="favicons/incubator/site.webmanifest">
@@ -47,8 +53,8 @@
       </div>
     </div>
     <div class="selector-container">
-      <div id="theme-selector">
-        <li class="nav-item dropdown" id="theme-button-list">
+      <menu class="theme-selector" id="theme-selector-menu">
+<li class="nav-item dropdown theme-button-list" id="theme-button-list-menu">
           <button class="btn btn-link nav-link px-0 px-lg-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme (auto)">
             <svg class="bi my-1 theme-icon-active"><use href="#circle-half"></use></svg><i data-feather="chevron-down"></i>
           </button>
@@ -73,10 +79,8 @@
             </li>
           </ul>
 </li>
-      </div>
-
-
-      <div class="dropdown" id="instructor-dropdown">
+    </menu>
+<div class="dropdown" id="instructor-dropdown">
         <button class="btn btn-secondary dropdown-toggle bordered-button" type="button" id="dropdownMenu1" data-bs-toggle="dropdown" aria-expanded="false">
           <i aria-hidden="true" class="icon" data-feather="eye"></i> Learner View <i data-feather="chevron-down"></i>
         </button>
@@ -141,29 +145,18 @@
     <a id="search-button" class="btn btn-primary" href="aio.html" role="button" aria-label="Search the All In One page">Search the All In One page</a>
   </div>
 <!--/div.container-fluid -->
-</nav><div class="col-md-12 mobile-title">
-  Web Scraping with Python
-</div>
-
-<aside class="col-md-12 lesson-progress"><div style="width: %" class="percentage">
-    %
-  </div>
-  <div class="progress incubator">
-    <div class="progress-bar incubator" role="progressbar" style="width: %" aria-valuenow="" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100">
-    </div>
-  </div>
-</aside><div class="container">
+</nav><div class="container">
       <div class="row">
         <!-- START: inst/pkgdown/templates/navbar.html -->
 <div id="sidebar-col" class="col-lg-4">
   <div id="sidebar" class="sidebar">
-      <nav aria-labelledby="flush-headingEleven"><button role="button" aria-label="close menu" alt="close menu" aria-expanded="true" aria-controls="sidebar" class="collapse-toggle" data-collapse="Collapse " data-episodes="Episodes ">
+      <nav aria-labelledby="flush-collapse-chapters-toggle"><button role="button" aria-label="Collapse" alt="Collapse" aria-expanded="true" aria-controls="sidebar" class="collapse-toggle" data-collapse="Collapse " data-episodes="Episodes ">
           <i class="search-icon" data-feather="x" role="img"></i>
         </button>
         <div class="sidebar-inner">
           <div class="row mobile-row" id="theme-row-mobile">
-            <div class="col" id="theme-selector">
-              <li class="nav-item dropdown" id="theme-button-list">
+            <menu class="col theme-selector" id="theme-selector-sidebar">
+<li class="nav-item dropdown theme-button-list" id="theme-button-list-sidebar">
                 <button class="btn btn-link nav-link px-0 px-lg-2 dropdown-toggle d-flex align-items-center" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown" data-bs-display="static" aria-label="Toggle theme (auto)">
                   <svg class="bi my-1 theme-icon-active"><use href="#circle-half"></use></svg><span class="d-lg-none ms-1" id="bd-theme-text">Toggle Theme</span>
                 </button>
@@ -188,19 +181,19 @@
                   </li>
                 </ul>
 </li>
-            </div>
-          </div>
+            </menu>
+</div>
           <div class="row mobile-row">
             <div class="col">
               <div class="sidenav-view-selector">
-                <div class="accordion accordion-flush" id="accordionFlush9">
+                <div class="accordion accordion-flush" id="accordion-instructor-toggle">
                   <div class="accordion-item">
-                    <h2 class="accordion-header" id="flush-headingNine">
-                      <button class="accordion-button collapsed" id="instructor" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseNine" aria-expanded="false" aria-controls="flush-collapseNine">
+                    <h2 class="accordion-header" id="flush-heading-instructor-toggle">
+                      <button class="accordion-button collapsed" id="instructor" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-instructor-toggle" aria-expanded="false" aria-controls="flush-collapse-instructor-toggle">
                         <i id="eye" aria-hidden="true" class="icon" data-feather="eye"></i> Learner View
                       </button>
                     </h2>
-                    <div id="flush-collapseNine" class="accordion-collapse collapse" aria-labelledby="flush-headingNine" data-bs-parent="#accordionFlush2">
+                    <div id="flush-collapse-instructor-toggle" class="accordion-collapse collapse" data-bs-parent="#accordion-instructor-toggle">
                       <div class="accordion-body">
                         <a href="instructor/aio.html">Instructor View</a>
                       </div>
@@ -218,15 +211,15 @@
 </div>
 <!--/div.mobile-row -->
 
-          <div class="accordion accordion-flush" id="accordionFlush11">
+          <div class="accordion accordion-flush" id="accordion-chapters-toggle">
             <div class="accordion-item">
 
-              <button id="chapters" class="accordion-button show" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseEleven" aria-expanded="false" aria-controls="flush-collapseEleven">
-                <h2 class="accordion-header chapters" id="flush-headingEleven">
+              <button id="chapters" class="accordion-button show" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-chapters-toggle" aria-expanded="false" aria-controls="flush-collapse-chapters-toggle">
+                <h2 class="accordion-header chapters" id="flush-heading-chapters-toggle">
                   EPISODES
                 </h2>
               </button>
-              <div id="flush-collapseEleven" class="accordion-collapse show collapse" aria-labelledby="flush-headingEleven" data-bs-parent="#accordionFlush11">
+              <div id="flush-collapse-chapters-toggle" class="accordion-collapse show collapse" data-bs-parent="#accordion-chapters-toggle">
 
                 <div class="accordion-body">
                   <div class="accordion accordion-flush" id="accordionFlush1">
@@ -282,14 +275,14 @@
             </div>
 
             <hr class="half-width">
-<div class="accordion accordion-flush lesson-resources" id="accordionFlush12">
+<div class="accordion accordion-flush lesson-resources" id="accordion-resources-toggle">
               <div class="accordion-item">
-                <h2 class="accordion-header" id="flush-headingTwelve">
-                  <button class="accordion-button collapsed" id="lesson-resources" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwelve" aria-expanded="false" aria-controls="flush-collapseTwelve">
+                <h2 class="accordion-header" id="flush-heading-resources-toggle">
+                  <button class="accordion-button collapsed" id="lesson-resources" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapse-resources-toggle" aria-expanded="false" aria-controls="flush-collapse-resources-toggle">
                     RESOURCES
                   </button>
                 </h2>
-                <div id="flush-collapseTwelve" class="accordion-collapse collapse" aria-labelledby="flush-headingTwelve" data-bs-parent="#accordionFlush12">
+                <div id="flush-collapse-resources-toggle" class="accordion-collapse collapse" data-bs-parent="#accordion-resources-toggle">
                   <div class="accordion-body">
                     <ul>
 <li>
@@ -329,7 +322,7 @@
         <!-- START: inst/pkgdown/templates/content-extra.html -->
   <div class="col-xl-8 col-lg-12 primary-content">
     <main id="main-content" class="main-content"><div class="container lesson-content">
-        
+        <h1>All in One View</h1>
         
 <section id="aio-hello-scraping"><p>Content from <a href="hello-scraping.html">Hello-Scraping</a></p>
 <hr>
@@ -396,25 +389,25 @@ how the website would appear in a browser.</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">HTML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode html" tabindex="0"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="dt">&gt;</span></span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>Sample web page<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>h1 Header #1<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>This is a paragraph tag<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>h2 Sub-header<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>A new paragraph, now in the <span class="dt">&lt;</span><span class="kw">b</span><span class="dt">&gt;</span>sub-header<span class="dt">&lt;/</span><span class="kw">b</span><span class="dt">&gt;&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>h1 Header #2<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
-<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span></span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a>This other paragraph has two hyperlinks,</span>
-<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>one to <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">"https://carpentries.org/"</span><span class="dt">&gt;</span>The Carpentries homepage<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span>,</span>
-<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a>and another to the</span>
-<span id="cb1-16"><a href="#cb1-16" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">"https://carpentries.org/workshops/past-workshops/"</span><span class="dt">&gt;</span>past workshops<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span> page.</span>
-<span id="cb1-17"><a href="#cb1-17" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
-<span id="cb1-18"><a href="#cb1-18" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
-<span id="cb1-19"><a href="#cb1-19" tabindex="-1"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre>
+<pre class="sourceCode html" tabindex="0"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="dt">&lt;!DOCTYPE</span> html<span class="dt">&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="dt">&lt;</span><span class="kw">html</span><span class="dt">&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a><span class="dt">&lt;</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1" aria-label="code-block-1-4"></a><span class="dt">&lt;</span><span class="kw">title</span><span class="dt">&gt;</span>Sample web page<span class="dt">&lt;/</span><span class="kw">title</span><span class="dt">&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1" aria-label="code-block-1-5"></a><span class="dt">&lt;/</span><span class="kw">head</span><span class="dt">&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1" aria-label="code-block-1-6"></a><span class="dt">&lt;</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1" aria-label="code-block-1-7"></a><span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>h1 Header #1<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1" aria-label="code-block-1-8"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>This is a paragraph tag<span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1" aria-label="code-block-1-9"></a><span class="dt">&lt;</span><span class="kw">h2</span><span class="dt">&gt;</span>h2 Sub-header<span class="dt">&lt;/</span><span class="kw">h2</span><span class="dt">&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1" aria-label="code-block-1-10"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span>A new paragraph, now in the <span class="dt">&lt;</span><span class="kw">b</span><span class="dt">&gt;</span>sub-header<span class="dt">&lt;/</span><span class="kw">b</span><span class="dt">&gt;&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1" aria-label="code-block-1-11"></a><span class="dt">&lt;</span><span class="kw">h1</span><span class="dt">&gt;</span>h1 Header #2<span class="dt">&lt;/</span><span class="kw">h1</span><span class="dt">&gt;</span></span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1" aria-label="code-block-1-12"></a><span class="dt">&lt;</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1" aria-label="code-block-1-13"></a>This other paragraph has two hyperlinks,</span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1" aria-label="code-block-1-14"></a>one to <span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">"https://carpentries.org/"</span><span class="dt">&gt;</span>The Carpentries homepage<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1" aria-label="code-block-1-15"></a>and another to the</span>
+<span id="cb1-16"><a href="#cb1-16" tabindex="-1" aria-label="code-block-1-16"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">"https://carpentries.org/workshops/past-workshops/"</span><span class="dt">&gt;</span>past workshops<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span> page.</span>
+<span id="cb1-17"><a href="#cb1-17" tabindex="-1" aria-label="code-block-1-17"></a><span class="dt">&lt;/</span><span class="kw">p</span><span class="dt">&gt;</span></span>
+<span id="cb1-18"><a href="#cb1-18" tabindex="-1" aria-label="code-block-1-18"></a><span class="dt">&lt;/</span><span class="kw">body</span><span class="dt">&gt;</span></span>
+<span id="cb1-19"><a href="#cb1-19" tabindex="-1" aria-label="code-block-1-19"></a><span class="dt">&lt;/</span><span class="kw">html</span><span class="dt">&gt;</span></span></code></pre>
 </div>
 <p>If you save that text in a file with a .html extension —using a
 simple text editor like Notepad on Windows or TextEdit on macOS— and
@@ -514,35 +507,35 @@ package along with Pandas.</p>
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1" aria-label="code-block-2-2"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span></code></pre>
 </div>
 <p>Let’s store the HTML content in a string variable named
 <code>example_html</code>.</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a>example_html <span class="op">=</span> <span class="st">"""</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="st">&lt;!DOCTYPE html&gt;</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="st">&lt;html&gt;</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="st">&lt;head&gt;</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="st">&lt;title&gt;Sample web page&lt;/title&gt;</span></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="st">&lt;/head&gt;</span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="st">&lt;body&gt;</span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="st">&lt;h1&gt;h1 Header #1&lt;/h1&gt;</span></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="st">&lt;p&gt;This is a paragraph tag&lt;/p&gt;</span></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="st">&lt;h2&gt;h2 Sub-header&lt;/h2&gt;</span></span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="st">&lt;p&gt;A new paragraph, now in the &lt;b&gt;sub-header&lt;/b&gt;&lt;/p&gt;</span></span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="st">&lt;h1&gt;h1 Header #2&lt;/h1&gt;</span></span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="st">&lt;p&gt;</span></span>
-<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="st">This other paragraph has two hyperlinks,</span></span>
-<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="st">one to &lt;a href="https://carpentries.org/"&gt;The Carpentries homepage&lt;/a&gt;,</span></span>
-<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="st">and another to the</span></span>
-<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="st">&lt;a href="https://carpentries.org/workshops/past-workshops/"&gt;past workshops&lt;/a&gt; page.</span></span>
-<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="st">&lt;/p&gt;</span></span>
-<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="st">&lt;/body&gt;</span></span>
-<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="st">&lt;/html&gt;</span></span>
-<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="st">"""</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a>example_html <span class="op">=</span> <span class="st">"""</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a><span class="st">&lt;!DOCTYPE html&gt;</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1" aria-label="code-block-3-3"></a><span class="st">&lt;html&gt;</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1" aria-label="code-block-3-4"></a><span class="st">&lt;head&gt;</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1" aria-label="code-block-3-5"></a><span class="st">&lt;title&gt;Sample web page&lt;/title&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1" aria-label="code-block-3-6"></a><span class="st">&lt;/head&gt;</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1" aria-label="code-block-3-7"></a><span class="st">&lt;body&gt;</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1" aria-label="code-block-3-8"></a><span class="st">&lt;h1&gt;h1 Header #1&lt;/h1&gt;</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1" aria-label="code-block-3-9"></a><span class="st">&lt;p&gt;This is a paragraph tag&lt;/p&gt;</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1" aria-label="code-block-3-10"></a><span class="st">&lt;h2&gt;h2 Sub-header&lt;/h2&gt;</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1" aria-label="code-block-3-11"></a><span class="st">&lt;p&gt;A new paragraph, now in the &lt;b&gt;sub-header&lt;/b&gt;&lt;/p&gt;</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1" aria-label="code-block-3-12"></a><span class="st">&lt;h1&gt;h1 Header #2&lt;/h1&gt;</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1" aria-label="code-block-3-13"></a><span class="st">&lt;p&gt;</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1" aria-label="code-block-3-14"></a><span class="st">This other paragraph has two hyperlinks,</span></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1" aria-label="code-block-3-15"></a><span class="st">one to &lt;a href="https://carpentries.org/"&gt;The Carpentries homepage&lt;/a&gt;,</span></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1" aria-label="code-block-3-16"></a><span class="st">and another to the</span></span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1" aria-label="code-block-3-17"></a><span class="st">&lt;a href="https://carpentries.org/workshops/past-workshops/"&gt;past workshops&lt;/a&gt; page.</span></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1" aria-label="code-block-3-18"></a><span class="st">&lt;/p&gt;</span></span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1" aria-label="code-block-3-19"></a><span class="st">&lt;/body&gt;</span></span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1" aria-label="code-block-3-20"></a><span class="st">&lt;/html&gt;</span></span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1" aria-label="code-block-3-21"></a><span class="st">"""</span></span></code></pre>
 </div>
 <p>We parse the HTML by passing it to the <code>BeautifulSoup()</code>
 function, specifying <code>html.parser</code> as the parser. This
@@ -554,8 +547,8 @@ read.</p>
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(example_html, <span class="st">'html.parser'</span>)</span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a><span class="bu">print</span>(soup.prettify())</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a>soup <span class="op">=</span> BeautifulSoup(example_html, <span class="st">'html.parser'</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a><span class="bu">print</span>(soup.prettify())</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -621,12 +614,12 @@ website.</p>
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"1."</span>, soup.find(<span class="st">'title'</span>))</span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"2."</span>, soup.find(<span class="st">'title'</span>).get_text())</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"3."</span>, soup.find(<span class="st">'h1'</span>).get_text())</span>
-<span id="cb6-4"><a href="#cb6-4" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"4."</span>, soup.find_all(<span class="st">'h1'</span>))</span>
-<span id="cb6-5"><a href="#cb6-5" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"5."</span>, soup.find_all(<span class="st">'a'</span>))</span>
-<span id="cb6-6"><a href="#cb6-6" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"6."</span>, soup.get_text())</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="bu">print</span>(<span class="st">"1."</span>, soup.find(<span class="st">'title'</span>))</span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a><span class="bu">print</span>(<span class="st">"2."</span>, soup.find(<span class="st">'title'</span>).get_text())</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1" aria-label="code-block-6-3"></a><span class="bu">print</span>(<span class="st">"3."</span>, soup.find(<span class="st">'h1'</span>).get_text())</span>
+<span id="cb6-4"><a href="#cb6-4" tabindex="-1" aria-label="code-block-6-4"></a><span class="bu">print</span>(<span class="st">"4."</span>, soup.find_all(<span class="st">'h1'</span>))</span>
+<span id="cb6-5"><a href="#cb6-5" tabindex="-1" aria-label="code-block-6-5"></a><span class="bu">print</span>(<span class="st">"5."</span>, soup.find_all(<span class="st">'a'</span>))</span>
+<span id="cb6-6"><a href="#cb6-6" tabindex="-1" aria-label="code-block-6-6"></a><span class="bu">print</span>(<span class="st">"6."</span>, soup.get_text())</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -659,9 +652,9 @@ two hyperlinks, and we could extract them in a list using the
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a>links <span class="op">=</span> soup.find_all(<span class="st">'a'</span>)</span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Number of hyperlinks found: "</span>, <span class="bu">len</span>(links))</span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a><span class="bu">print</span>(links)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a>links <span class="op">=</span> soup.find_all(<span class="st">'a'</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a><span class="bu">print</span>(<span class="st">"Number of hyperlinks found: "</span>, <span class="bu">len</span>(links))</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1" aria-label="code-block-8-3"></a><span class="bu">print</span>(links)</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -678,8 +671,8 @@ our example.</p>
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> links:</span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>    <span class="bu">print</span>(item.get(<span class="st">'href'</span>))</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="cf">for</span> item <span class="kw">in</span> links:</span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1" aria-label="code-block-10-2"></a>    <span class="bu">print</span>(item.get(<span class="st">'href'</span>))</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -701,11 +694,11 @@ HTML of our example.</p>
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a>first_link <span class="op">=</span> {</span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a>   <span class="st">'element'</span>: the complete hyperlink element,</span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>   <span class="st">'url'</span>: the destination url of the hyperlink,</span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a>   <span class="st">'text'</span>: the text that the website displays <span class="im">as</span> the hyperlink</span>
-<span id="cb12-5"><a href="#cb12-5" tabindex="-1"></a>}</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a>first_link <span class="op">=</span> {</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1" aria-label="code-block-12-2"></a>   <span class="st">'element'</span>: the complete hyperlink element,</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1" aria-label="code-block-12-3"></a>   <span class="st">'url'</span>: the destination url of the hyperlink,</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1" aria-label="code-block-12-4"></a>   <span class="st">'text'</span>: the text that the website displays <span class="im">as</span> the hyperlink</span>
+<span id="cb12-5"><a href="#cb12-5" tabindex="-1" aria-label="code-block-12-5"></a>}</span></code></pre>
 </div>
 </div>
 </div>
@@ -715,17 +708,17 @@ HTML of our example.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>One way of completing the exercise is as follows.</p>
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a>first_link <span class="op">=</span> {</span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>   <span class="st">'element'</span>: <span class="bu">str</span>(soup.find(<span class="st">'a'</span>)),</span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a>   <span class="st">'url'</span>: soup.find(<span class="st">'a'</span>).get(<span class="st">'href'</span>),</span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a>   <span class="st">'text'</span>: soup.find(<span class="st">'a'</span>).get_text()</span>
-<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a>}</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1" aria-label="code-block-13-1"></a>first_link <span class="op">=</span> {</span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1" aria-label="code-block-13-2"></a>   <span class="st">'element'</span>: <span class="bu">str</span>(soup.find(<span class="st">'a'</span>)),</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1" aria-label="code-block-13-3"></a>   <span class="st">'url'</span>: soup.find(<span class="st">'a'</span>).get(<span class="st">'href'</span>),</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1" aria-label="code-block-13-4"></a>   <span class="st">'text'</span>: soup.find(<span class="st">'a'</span>).get_text()</span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1" aria-label="code-block-13-5"></a>}</span></code></pre>
 </div>
 <p>An alternative and often more efficient approach is to first store
 the result of <code>soup.find('a')</code> in a variable, rather than
@@ -738,11 +731,11 @@ up a dictionary of results step by step.</p>
 <div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a>find_a <span class="op">=</span> soup.find(<span class="st">'a'</span>)</span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>first_link <span class="op">=</span> {}</span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a>first_link[<span class="st">'element'</span>] <span class="op">=</span> <span class="bu">str</span>(find_a)</span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a>first_link[<span class="st">'url'</span>] <span class="op">=</span> find_a.get(<span class="st">'href'</span>)</span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>first_link[<span class="st">'text'</span>] <span class="op">=</span> find_a.get_text()</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1" aria-label="code-block-14-1"></a>find_a <span class="op">=</span> soup.find(<span class="st">'a'</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1" aria-label="code-block-14-2"></a>first_link <span class="op">=</span> {}</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1" aria-label="code-block-14-3"></a>first_link[<span class="st">'element'</span>] <span class="op">=</span> <span class="bu">str</span>(find_a)</span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1" aria-label="code-block-14-4"></a>first_link[<span class="st">'url'</span>] <span class="op">=</span> find_a.get(<span class="st">'href'</span>)</span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1" aria-label="code-block-14-5"></a>first_link[<span class="st">'text'</span>] <span class="op">=</span> find_a.get_text()</span></code></pre>
 </div>
 </div>
 </div>
@@ -761,17 +754,17 @@ Pandas DataFrame.</p>
 <div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>links <span class="op">=</span> soup.find_all(<span class="st">'a'</span>)</span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>list_of_dicts <span class="op">=</span> []</span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> links:</span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a>    dict_a <span class="op">=</span> {}</span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>    dict_a[<span class="st">'element'</span>] <span class="op">=</span> <span class="bu">str</span>(item)</span>
-<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a>    dict_a[<span class="st">'url'</span>] <span class="op">=</span> item.get(<span class="st">'href'</span>)</span>
-<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>    dict_a[<span class="st">'text'</span>] <span class="op">=</span> item.get_text()</span>
-<span id="cb15-8"><a href="#cb15-8" tabindex="-1"></a>    list_of_dicts.append(dict_a)</span>
-<span id="cb15-9"><a href="#cb15-9" tabindex="-1"></a></span>
-<span id="cb15-10"><a href="#cb15-10" tabindex="-1"></a>links_df <span class="op">=</span> pd.DataFrame(list_of_dicts)</span>
-<span id="cb15-11"><a href="#cb15-11" tabindex="-1"></a><span class="bu">print</span>(links_df)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" tabindex="-1" aria-label="code-block-15-1"></a>links <span class="op">=</span> soup.find_all(<span class="st">'a'</span>)</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1" aria-label="code-block-15-2"></a>list_of_dicts <span class="op">=</span> []</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1" aria-label="code-block-15-3"></a><span class="cf">for</span> item <span class="kw">in</span> links:</span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1" aria-label="code-block-15-4"></a>    dict_a <span class="op">=</span> {}</span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1" aria-label="code-block-15-5"></a>    dict_a[<span class="st">'element'</span>] <span class="op">=</span> <span class="bu">str</span>(item)</span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1" aria-label="code-block-15-6"></a>    dict_a[<span class="st">'url'</span>] <span class="op">=</span> item.get(<span class="st">'href'</span>)</span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1" aria-label="code-block-15-7"></a>    dict_a[<span class="st">'text'</span>] <span class="op">=</span> item.get_text()</span>
+<span id="cb15-8"><a href="#cb15-8" tabindex="-1" aria-label="code-block-15-8"></a>    list_of_dicts.append(dict_a)</span>
+<span id="cb15-9"><a href="#cb15-9" tabindex="-1" aria-label="code-block-15-9"></a></span>
+<span id="cb15-10"><a href="#cb15-10" tabindex="-1" aria-label="code-block-15-10"></a>links_df <span class="op">=</span> pd.DataFrame(list_of_dicts)</span>
+<span id="cb15-11"><a href="#cb15-11" tabindex="-1" aria-label="code-block-15-11"></a><span class="bu">print</span>(links_df)</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -994,21 +987,21 @@ Carpentry Introduction to Regular Expressions</a>.</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># Loading libraries</span></span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="im">import</span> requests</span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="im">import</span> re</span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="im">from</span> time <span class="im">import</span> sleep</span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-7"><a href="#cb1-7" tabindex="-1"></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
-<span id="cb1-8"><a href="#cb1-8" tabindex="-1"></a></span>
-<span id="cb1-9"><a href="#cb1-9" tabindex="-1"></a><span class="co"># Getting the HTML from our desired URL as a text string</span></span>
-<span id="cb1-10"><a href="#cb1-10" tabindex="-1"></a>url <span class="op">=</span> <span class="st">'https://carpentries.org/workshops/upcoming-workshops/'</span></span>
-<span id="cb1-11"><a href="#cb1-11" tabindex="-1"></a>req <span class="op">=</span> requests.get(url).text</span>
-<span id="cb1-12"><a href="#cb1-12" tabindex="-1"></a></span>
-<span id="cb1-13"><a href="#cb1-13" tabindex="-1"></a><span class="co"># Cleaning and printing the string</span></span>
-<span id="cb1-14"><a href="#cb1-14" tabindex="-1"></a>cleaned_req <span class="op">=</span> re.sub(<span class="vs">r'\s*\n\s*'</span>, <span class="st">''</span>, req).strip()</span>
-<span id="cb1-15"><a href="#cb1-15" tabindex="-1"></a><span class="bu">print</span>(cleaned_req[<span class="dv">0</span>:<span class="dv">1000</span>])</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="co"># Loading libraries</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="im">import</span> requests</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a><span class="im">import</span> re</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1" aria-label="code-block-1-4"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1" aria-label="code-block-1-5"></a><span class="im">from</span> time <span class="im">import</span> sleep</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1" aria-label="code-block-1-6"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-7"><a href="#cb1-7" tabindex="-1" aria-label="code-block-1-7"></a><span class="im">from</span> tqdm <span class="im">import</span> tqdm</span>
+<span id="cb1-8"><a href="#cb1-8" tabindex="-1" aria-label="code-block-1-8"></a></span>
+<span id="cb1-9"><a href="#cb1-9" tabindex="-1" aria-label="code-block-1-9"></a><span class="co"># Getting the HTML from our desired URL as a text string</span></span>
+<span id="cb1-10"><a href="#cb1-10" tabindex="-1" aria-label="code-block-1-10"></a>url <span class="op">=</span> <span class="st">'https://carpentries.org/workshops/upcoming-workshops/'</span></span>
+<span id="cb1-11"><a href="#cb1-11" tabindex="-1" aria-label="code-block-1-11"></a>req <span class="op">=</span> requests.get(url).text</span>
+<span id="cb1-12"><a href="#cb1-12" tabindex="-1" aria-label="code-block-1-12"></a></span>
+<span id="cb1-13"><a href="#cb1-13" tabindex="-1" aria-label="code-block-1-13"></a><span class="co"># Cleaning and printing the string</span></span>
+<span id="cb1-14"><a href="#cb1-14" tabindex="-1" aria-label="code-block-1-14"></a>cleaned_req <span class="op">=</span> re.sub(<span class="vs">r'\s*\n\s*'</span>, <span class="st">''</span>, req).strip()</span>
+<span id="cb1-15"><a href="#cb1-15" tabindex="-1" aria-label="code-block-1-15"></a><span class="bu">print</span>(cleaned_req[<span class="dv">0</span>:<span class="dv">1000</span>])</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1071,14 +1064,14 @@ third-level headers (<code>&lt;h3&gt;</code>) in the page.</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="co"># Parsing the HTML with BeautifulSoup</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(cleaned_req, <span class="st">'html.parser'</span>)</span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co"># Finding all third-level headers and doing a formatted print</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a>h3_by_tag <span class="op">=</span> soup.find_all(<span class="st">'h3'</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Number of h3 elements found: "</span>, <span class="bu">len</span>(h3_by_tag))</span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="cf">for</span> n, h3 <span class="kw">in</span> <span class="bu">enumerate</span>(h3_by_tag):</span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Workshop #</span><span class="sc">{</span>n<span class="sc">}</span><span class="ss"> - </span><span class="sc">{</span>h3<span class="sc">.</span>get_text()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="co"># Parsing the HTML with BeautifulSoup</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1" aria-label="code-block-3-2"></a>soup <span class="op">=</span> BeautifulSoup(cleaned_req, <span class="st">'html.parser'</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1" aria-label="code-block-3-3"></a></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1" aria-label="code-block-3-4"></a><span class="co"># Finding all third-level headers and doing a formatted print</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1" aria-label="code-block-3-5"></a>h3_by_tag <span class="op">=</span> soup.find_all(<span class="st">'h3'</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1" aria-label="code-block-3-6"></a><span class="bu">print</span>(<span class="st">"Number of h3 elements found: "</span>, <span class="bu">len</span>(h3_by_tag))</span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1" aria-label="code-block-3-7"></a><span class="cf">for</span> n, h3 <span class="kw">in</span> <span class="bu">enumerate</span>(h3_by_tag):</span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1" aria-label="code-block-3-8"></a>    <span class="bu">print</span>(<span class="ss">f"Workshop #</span><span class="sc">{</span>n<span class="sc">}</span><span class="ss"> - </span><span class="sc">{</span>h3<span class="sc">.</span>get_text()<span class="sc">}</span><span class="ss">"</span>)</span></code></pre>
 </div>
 <p>Besides searching elements by tag, it’s often useful to search using
 attributes like id or class. In our case, we can see the <code>h3</code>
@@ -1092,8 +1085,8 @@ can search for elements with this specific class using the
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># An alternative using the "class" attribute, instead of the h3 tag</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>h3_by_class <span class="op">=</span> soup.find_all(class_<span class="op">=</span><span class="st">"title text-base md:text-[1.75rem] leading-[2.125rem] font-semibold"</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="co"># An alternative using the "class" attribute, instead of the h3 tag</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a>h3_by_class <span class="op">=</span> soup.find_all(class_<span class="op">=</span><span class="st">"title text-base md:text-[1.75rem] leading-[2.125rem] font-semibold"</span>)</span></code></pre>
 </div>
 <p>This will give us the same elements as before, but demonstrates how
 to refine your search by class —an especially useful technique when
@@ -1125,16 +1118,16 @@ border”.</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># Get the parent of the first h3 element and prettify it</span></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>div_firsth3 <span class="op">=</span> h3_by_class[<span class="dv">0</span>].parent</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="bu">print</span>(div_firsth3.prettify())</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="co"># Get the parent of the first h3 element and prettify it</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a>div_firsth3 <span class="op">=</span> h3_by_class[<span class="dv">0</span>].parent</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a><span class="bu">print</span>(div_firsth3.prettify())</span></code></pre>
 </div>
 <div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler1" aria-expanded="false" aria-controls="collapseSpoiler1">
   <h3 class="accordion-header" id="headingSpoiler1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Python output </h3>
 </button>
-<div id="collapseSpoiler1" class="accordion-collapse collapse" aria-labelledby="headingSpoiler1" data-bs-parent="#accordionSpoiler1">
+<div id="collapseSpoiler1" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler1" aria-labelledby="headingSpoiler1">
 <div class="accordion-body">
 <p>Remember, the output shown here is probably different than yours, as
 the website is continuously updated.</p>
@@ -1211,14 +1204,14 @@ DataFrame for easier analysis.</p>
 <div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1"></a><span class="co"># Create an empty dictionary and fill it with the info we are interested in</span></span>
-<span id="cb7-2"><a href="#cb7-2" tabindex="-1"></a>dict_workshop <span class="op">=</span> {}</span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1"></a>dict_workshop[<span class="st">'host'</span>] <span class="op">=</span> div_firsth3.find(<span class="st">'h3'</span>).get_text()</span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1"></a>dict_workshop[<span class="st">'link'</span>] <span class="op">=</span> div_firsth3.find(<span class="st">'h3'</span>).find(<span class="st">'a'</span>).get(<span class="st">'href'</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1"></a>dict_workshop[<span class="st">'curriculum'</span>] <span class="op">=</span> div_firsth3.get(<span class="st">'data-curriculum'</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1"></a>dict_workshop[<span class="st">'country'</span>] <span class="op">=</span> div_firsth3.get(<span class="st">'data-country'</span>)</span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1"></a>dict_workshop[<span class="st">'format'</span>] <span class="op">=</span> div_firsth3.get(<span class="st">'data-meeting'</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1"></a>dict_workshop[<span class="st">'program'</span>] <span class="op">=</span> div_firsth3.get(<span class="st">'data-program'</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="co"># Create an empty dictionary and fill it with the info we are interested in</span></span>
+<span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a>dict_workshop <span class="op">=</span> {}</span>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a>dict_workshop[<span class="st">'host'</span>] <span class="op">=</span> div_firsth3.find(<span class="st">'h3'</span>).get_text()</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1" aria-label="code-block-7-4"></a>dict_workshop[<span class="st">'link'</span>] <span class="op">=</span> div_firsth3.find(<span class="st">'h3'</span>).find(<span class="st">'a'</span>).get(<span class="st">'href'</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1" aria-label="code-block-7-5"></a>dict_workshop[<span class="st">'curriculum'</span>] <span class="op">=</span> div_firsth3.get(<span class="st">'data-curriculum'</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1" aria-label="code-block-7-6"></a>dict_workshop[<span class="st">'country'</span>] <span class="op">=</span> div_firsth3.get(<span class="st">'data-country'</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1" aria-label="code-block-7-7"></a>dict_workshop[<span class="st">'format'</span>] <span class="op">=</span> div_firsth3.get(<span class="st">'data-meeting'</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1" aria-label="code-block-7-8"></a>dict_workshop[<span class="st">'program'</span>] <span class="op">=</span> div_firsth3.get(<span class="st">'data-program'</span>)</span></code></pre>
 </div>
 <p>Ok, that’s the code for extracting information about the first
 workshop listed, but what about all other workshops? Loop time!</p>
@@ -1228,23 +1221,23 @@ the containers for each workshop.</p>
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># Find all divs that match a class attribute</span></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>divs <span class="op">=</span> soup.find_all(<span class="st">'div'</span>, class_<span class="op">=</span><span class="st">"p-8 mb-5 border"</span>)</span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a><span class="co"># Create an empty list, and fill it with info on each of the workshops found</span></span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a>workshop_list <span class="op">=</span> []</span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> divs: </span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>    dict_workshop <span class="op">=</span> {}</span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>    dict_workshop[<span class="st">'host'</span>] <span class="op">=</span> item.find(<span class="st">'h3'</span>).get_text()</span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>    dict_workshop[<span class="st">'link'</span>] <span class="op">=</span> div_firsth3.find(<span class="st">'h3'</span>).find(<span class="st">'a'</span>).get(<span class="st">'href'</span>)</span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>    dict_workshop[<span class="st">'curriculum'</span>] <span class="op">=</span> div_firsth3.get(<span class="st">'data-curriculum'</span>)</span>
-<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>    dict_workshop[<span class="st">'country'</span>] <span class="op">=</span> div_firsth3.get(<span class="st">'data-country'</span>)</span>
-<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>    dict_workshop[<span class="st">'format'</span>] <span class="op">=</span> div_firsth3.get(<span class="st">'data-meeting'</span>)</span>
-<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a>    dict_workshop[<span class="st">'program'</span>] <span class="op">=</span> div_firsth3.get(<span class="st">'data-program'</span>)</span>
-<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a>    workshop_list.append(dict_workshop)</span>
-<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a></span>
-<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a><span class="co"># Transform list into a DataFrame</span></span>
-<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a>upcomingworkshops_df <span class="op">=</span> pd.DataFrame(workshop_list)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="co"># Find all divs that match a class attribute</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a>divs <span class="op">=</span> soup.find_all(<span class="st">'div'</span>, class_<span class="op">=</span><span class="st">"p-8 mb-5 border"</span>)</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1" aria-label="code-block-8-3"></a></span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1" aria-label="code-block-8-4"></a><span class="co"># Create an empty list, and fill it with info on each of the workshops found</span></span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1" aria-label="code-block-8-5"></a>workshop_list <span class="op">=</span> []</span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1" aria-label="code-block-8-6"></a><span class="cf">for</span> item <span class="kw">in</span> divs: </span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1" aria-label="code-block-8-7"></a>    dict_workshop <span class="op">=</span> {}</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1" aria-label="code-block-8-8"></a>    dict_workshop[<span class="st">'host'</span>] <span class="op">=</span> item.find(<span class="st">'h3'</span>).get_text()</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1" aria-label="code-block-8-9"></a>    dict_workshop[<span class="st">'link'</span>] <span class="op">=</span> div_firsth3.find(<span class="st">'h3'</span>).find(<span class="st">'a'</span>).get(<span class="st">'href'</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1" aria-label="code-block-8-10"></a>    dict_workshop[<span class="st">'curriculum'</span>] <span class="op">=</span> div_firsth3.get(<span class="st">'data-curriculum'</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1" aria-label="code-block-8-11"></a>    dict_workshop[<span class="st">'country'</span>] <span class="op">=</span> div_firsth3.get(<span class="st">'data-country'</span>)</span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1" aria-label="code-block-8-12"></a>    dict_workshop[<span class="st">'format'</span>] <span class="op">=</span> div_firsth3.get(<span class="st">'data-meeting'</span>)</span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1" aria-label="code-block-8-13"></a>    dict_workshop[<span class="st">'program'</span>] <span class="op">=</span> div_firsth3.get(<span class="st">'data-program'</span>)</span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1" aria-label="code-block-8-14"></a>    workshop_list.append(dict_workshop)</span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1" aria-label="code-block-8-15"></a></span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1" aria-label="code-block-8-16"></a><span class="co"># Transform list into a DataFrame</span></span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1" aria-label="code-block-8-17"></a>upcomingworkshops_df <span class="op">=</span> pd.DataFrame(workshop_list)</span></code></pre>
 </div>
 <p>Great! We’ve finished our first scraping task on a real website. Be
 aware that there are multiple ways of achieving the same result. For
@@ -1259,35 +1252,35 @@ same.</p>
 <button class="accordion-button spoiler-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSpoiler2" aria-expanded="false" aria-controls="collapseSpoiler2">
   <h3 class="accordion-header" id="headingSpoiler2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="eye"></i></div> Alternative code </h3>
 </button>
-<div id="collapseSpoiler2" class="accordion-collapse collapse" aria-labelledby="headingSpoiler2" data-bs-parent="#accordionSpoiler2">
+<div id="collapseSpoiler2" class="accordion-collapse collapse" data-bs-parent="#accordionSpoiler2" aria-labelledby="headingSpoiler2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># Find the container of all the workshops</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>container <span class="op">=</span> soup.find(<span class="st">'div'</span>, class_<span class="op">=</span><span class="st">"filtered"</span>)</span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a><span class="co"># Use the .contents property to get all the children, and accessing the first element</span></span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>child_div <span class="op">=</span> container.contents[<span class="dv">0</span>]</span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>workshop_list <span class="op">=</span> []</span>
-<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a></span>
-<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a><span class="co"># Create an empty list, and fill it with info on each of the workshops found</span></span>
-<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="cf">while</span> child_div <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a>    dict_workshop <span class="op">=</span> {}</span>
-<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>    dict_workshop[<span class="st">'host'</span>] <span class="op">=</span> child_div.find(<span class="st">'h3'</span>).get_text()</span>
-<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>    dict_workshop[<span class="st">'link'</span>] <span class="op">=</span> child_div.find(<span class="st">'h3'</span>).find(<span class="st">'a'</span>).get(<span class="st">'href'</span>)</span>
-<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a>    dict_workshop[<span class="st">'curriculum'</span>] <span class="op">=</span> child_div.get(<span class="st">'data-curriculum'</span>)</span>
-<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>    dict_workshop[<span class="st">'country'</span>] <span class="op">=</span> child_div.get(<span class="st">'data-country'</span>)</span>
-<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a>    dict_workshop[<span class="st">'format'</span>] <span class="op">=</span> child_div.get(<span class="st">'data-meeting'</span>)</span>
-<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a>    dict_workshop[<span class="st">'program'</span>] <span class="op">=</span> child_div.get(<span class="st">'data-program'</span>)</span>
-<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a>    workshop_list.append(dict_workshop)</span>
-<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a></span>
-<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a>    <span class="co"># Next iteration of the loop will be with the next sibling</span></span>
-<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a>    child_div <span class="op">=</span> child_div.next_sibling</span>
-<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a></span>
-<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a><span class="co"># Transform list into a DataFrame</span></span>
-<span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a>upcomingworkshops_df <span class="op">=</span> pd.DataFrame(workshop_list)</span>
-<span id="cb9-24"><a href="#cb9-24" tabindex="-1"></a>upcomingworkshops_df</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="co"># Find the container of all the workshops</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1" aria-label="code-block-9-2"></a>container <span class="op">=</span> soup.find(<span class="st">'div'</span>, class_<span class="op">=</span><span class="st">"filtered"</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1" aria-label="code-block-9-3"></a></span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1" aria-label="code-block-9-4"></a><span class="co"># Use the .contents property to get all the children, and accessing the first element</span></span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1" aria-label="code-block-9-5"></a>child_div <span class="op">=</span> container.contents[<span class="dv">0</span>]</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1" aria-label="code-block-9-6"></a>workshop_list <span class="op">=</span> []</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1" aria-label="code-block-9-7"></a></span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1" aria-label="code-block-9-8"></a><span class="co"># Create an empty list, and fill it with info on each of the workshops found</span></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1" aria-label="code-block-9-9"></a><span class="cf">while</span> child_div <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1" aria-label="code-block-9-10"></a>    dict_workshop <span class="op">=</span> {}</span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1" aria-label="code-block-9-11"></a>    dict_workshop[<span class="st">'host'</span>] <span class="op">=</span> child_div.find(<span class="st">'h3'</span>).get_text()</span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1" aria-label="code-block-9-12"></a>    dict_workshop[<span class="st">'link'</span>] <span class="op">=</span> child_div.find(<span class="st">'h3'</span>).find(<span class="st">'a'</span>).get(<span class="st">'href'</span>)</span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1" aria-label="code-block-9-13"></a>    dict_workshop[<span class="st">'curriculum'</span>] <span class="op">=</span> child_div.get(<span class="st">'data-curriculum'</span>)</span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1" aria-label="code-block-9-14"></a>    dict_workshop[<span class="st">'country'</span>] <span class="op">=</span> child_div.get(<span class="st">'data-country'</span>)</span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1" aria-label="code-block-9-15"></a>    dict_workshop[<span class="st">'format'</span>] <span class="op">=</span> child_div.get(<span class="st">'data-meeting'</span>)</span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1" aria-label="code-block-9-16"></a>    dict_workshop[<span class="st">'program'</span>] <span class="op">=</span> child_div.get(<span class="st">'data-program'</span>)</span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1" aria-label="code-block-9-17"></a>    workshop_list.append(dict_workshop)</span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1" aria-label="code-block-9-18"></a></span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1" aria-label="code-block-9-19"></a>    <span class="co"># Next iteration of the loop will be with the next sibling</span></span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1" aria-label="code-block-9-20"></a>    child_div <span class="op">=</span> child_div.next_sibling</span>
+<span id="cb9-21"><a href="#cb9-21" tabindex="-1" aria-label="code-block-9-21"></a></span>
+<span id="cb9-22"><a href="#cb9-22" tabindex="-1" aria-label="code-block-9-22"></a><span class="co"># Transform list into a DataFrame</span></span>
+<span id="cb9-23"><a href="#cb9-23" tabindex="-1" aria-label="code-block-9-23"></a>upcomingworkshops_df <span class="op">=</span> pd.DataFrame(workshop_list)</span>
+<span id="cb9-24"><a href="#cb9-24" tabindex="-1" aria-label="code-block-9-24"></a>upcomingworkshops_df</span></code></pre>
 </div>
 </div>
 </div>
@@ -1317,41 +1310,41 @@ held?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>We can reuse directly the code we wrote before, changing only the URL
 we got the HTML from.</p>
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># Get HTML and parse it with BeautifulSoup</span></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>url_past <span class="op">=</span> <span class="st">'https://carpentries.org/workshops/past-workshops/'</span></span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>req_past <span class="op">=</span> requests.get(url_past).text</span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a></span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>soup_past <span class="op">=</span> BeautifulSoup(req_past, <span class="st">'html.parser'</span>)</span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co"># Find all divs that match a class attribute</span></span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>divs_past <span class="op">=</span> soup_past.find_all(<span class="st">'div'</span>, class_<span class="op">=</span><span class="st">"p-8 mb-5 border"</span>)</span>
-<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a></span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a><span class="co"># Create an empty list, and fill it with info on each of the workshops found</span></span>
-<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a>workshop_list <span class="op">=</span> []</span>
-<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> divs_past:</span>
-<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a>    dict_workshop <span class="op">=</span> {}</span>
-<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a>    dict_workshop[<span class="st">'host'</span>] <span class="op">=</span> item.find(<span class="st">'h3'</span>).get_text()</span>
-<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a>    dict_workshop[<span class="st">'link'</span>] <span class="op">=</span> item.find(<span class="st">'h3'</span>).find(<span class="st">'a'</span>).get(<span class="st">'href'</span>)</span>
-<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a>    dict_workshop[<span class="st">'curriculum'</span>] <span class="op">=</span> item.get(<span class="st">'data-curriculum'</span>)</span>
-<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a>    dict_workshop[<span class="st">'country'</span>] <span class="op">=</span> item.get(<span class="st">'data-country'</span>)</span>
-<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a>    dict_workshop[<span class="st">'format'</span>] <span class="op">=</span> item.get(<span class="st">'data-meeting'</span>)</span>
-<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a>    dict_workshop[<span class="st">'program'</span>] <span class="op">=</span> item.get(<span class="st">'data-program'</span>)</span>
-<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a>    workshop_list.append(dict_workshop)</span>
-<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a></span>
-<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a><span class="co"># Transform list into a DataFrame</span></span>
-<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a>pastworkshops_df  <span class="op">=</span> pd.DataFrame(workshop_list)</span>
-<span id="cb10-24"><a href="#cb10-24" tabindex="-1"></a></span>
-<span id="cb10-25"><a href="#cb10-25" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Total number of workshops in the table: '</span>, <span class="bu">len</span>(pastworkshops_df))</span>
-<span id="cb10-26"><a href="#cb10-26" tabindex="-1"></a></span>
-<span id="cb10-27"><a href="#cb10-27" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Top 5 of countries by number of workshops held: </span><span class="ch">\n</span><span class="st">'</span>,</span>
-<span id="cb10-28"><a href="#cb10-28" tabindex="-1"></a>      pastworkshops_df[<span class="st">'country'</span>].value_counts().head())</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="co"># Get HTML and parse it with BeautifulSoup</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1" aria-label="code-block-10-2"></a>url_past <span class="op">=</span> <span class="st">'https://carpentries.org/workshops/past-workshops/'</span></span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1" aria-label="code-block-10-3"></a>req_past <span class="op">=</span> requests.get(url_past).text</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1" aria-label="code-block-10-4"></a></span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1" aria-label="code-block-10-5"></a>soup_past <span class="op">=</span> BeautifulSoup(req_past, <span class="st">'html.parser'</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1" aria-label="code-block-10-6"></a></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1" aria-label="code-block-10-7"></a><span class="co"># Find all divs that match a class attribute</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1" aria-label="code-block-10-8"></a>divs_past <span class="op">=</span> soup_past.find_all(<span class="st">'div'</span>, class_<span class="op">=</span><span class="st">"p-8 mb-5 border"</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1" aria-label="code-block-10-9"></a></span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1" aria-label="code-block-10-10"></a><span class="co"># Create an empty list, and fill it with info on each of the workshops found</span></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1" aria-label="code-block-10-11"></a>workshop_list <span class="op">=</span> []</span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1" aria-label="code-block-10-12"></a><span class="cf">for</span> item <span class="kw">in</span> divs_past:</span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1" aria-label="code-block-10-13"></a>    dict_workshop <span class="op">=</span> {}</span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1" aria-label="code-block-10-14"></a>    dict_workshop[<span class="st">'host'</span>] <span class="op">=</span> item.find(<span class="st">'h3'</span>).get_text()</span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1" aria-label="code-block-10-15"></a>    dict_workshop[<span class="st">'link'</span>] <span class="op">=</span> item.find(<span class="st">'h3'</span>).find(<span class="st">'a'</span>).get(<span class="st">'href'</span>)</span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1" aria-label="code-block-10-16"></a>    dict_workshop[<span class="st">'curriculum'</span>] <span class="op">=</span> item.get(<span class="st">'data-curriculum'</span>)</span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1" aria-label="code-block-10-17"></a>    dict_workshop[<span class="st">'country'</span>] <span class="op">=</span> item.get(<span class="st">'data-country'</span>)</span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1" aria-label="code-block-10-18"></a>    dict_workshop[<span class="st">'format'</span>] <span class="op">=</span> item.get(<span class="st">'data-meeting'</span>)</span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1" aria-label="code-block-10-19"></a>    dict_workshop[<span class="st">'program'</span>] <span class="op">=</span> item.get(<span class="st">'data-program'</span>)</span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1" aria-label="code-block-10-20"></a>    workshop_list.append(dict_workshop)</span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1" aria-label="code-block-10-21"></a></span>
+<span id="cb10-22"><a href="#cb10-22" tabindex="-1" aria-label="code-block-10-22"></a><span class="co"># Transform list into a DataFrame</span></span>
+<span id="cb10-23"><a href="#cb10-23" tabindex="-1" aria-label="code-block-10-23"></a>pastworkshops_df  <span class="op">=</span> pd.DataFrame(workshop_list)</span>
+<span id="cb10-24"><a href="#cb10-24" tabindex="-1" aria-label="code-block-10-24"></a></span>
+<span id="cb10-25"><a href="#cb10-25" tabindex="-1" aria-label="code-block-10-25"></a><span class="bu">print</span>(<span class="st">'Total number of workshops in the table: '</span>, <span class="bu">len</span>(pastworkshops_df))</span>
+<span id="cb10-26"><a href="#cb10-26" tabindex="-1" aria-label="code-block-10-26"></a></span>
+<span id="cb10-27"><a href="#cb10-27" tabindex="-1" aria-label="code-block-10-27"></a><span class="bu">print</span>(<span class="st">'Top 5 of countries by number of workshops held: </span><span class="ch">\n</span><span class="st">'</span>,</span>
+<span id="cb10-28"><a href="#cb10-28" tabindex="-1" aria-label="code-block-10-28"></a>      pastworkshops_df[<span class="st">'country'</span>].value_counts().head())</span></code></pre>
 </div>
 </div>
 </div>
@@ -1376,7 +1369,7 @@ workshops.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>Instructors appear to be inside a <code>span</code> element
 identified with the “instructors” class attribute. Similarly for
@@ -1387,18 +1380,18 @@ like.</p>
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> divs: </span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>    dict_workshop <span class="op">=</span> {}</span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>    dict_workshop[<span class="st">'host'</span>] <span class="op">=</span> item.find(<span class="st">'h3'</span>).get_text()</span>
-<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>    dict_workshop[<span class="st">'link'</span>] <span class="op">=</span> item.find(<span class="st">'h3'</span>).find(<span class="st">'a'</span>)[<span class="st">'href'</span>]</span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>    dict_workshop[<span class="st">'curriculum'</span>] <span class="op">=</span> item.get(<span class="st">'data-curriculum'</span>)</span>
-<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>    dict_workshop[<span class="st">'country'</span>] <span class="op">=</span> item.get(<span class="st">'data-country'</span>)</span>
-<span id="cb11-7"><a href="#cb11-7" tabindex="-1"></a>    dict_workshop[<span class="st">'format'</span>] <span class="op">=</span> item.get(<span class="st">'data-meeting'</span>)</span>
-<span id="cb11-8"><a href="#cb11-8" tabindex="-1"></a>    dict_workshop[<span class="st">'program'</span>] <span class="op">=</span> item.get(<span class="st">'data-program'</span>)</span>
-<span id="cb11-9"><a href="#cb11-9" tabindex="-1"></a>    dict_workshop[<span class="st">'instructor'</span>] <span class="op">=</span> item.find(<span class="st">'span'</span>, class_ <span class="op">=</span> <span class="st">"instructors"</span>).get_text() <span class="cf">if</span> item.find(<span class="st">'span'</span>, class_ <span class="op">=</span> <span class="st">"instructors"</span>) <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span> <span class="cf">else</span> <span class="st">''</span></span>
-<span id="cb11-10"><a href="#cb11-10" tabindex="-1"></a>    dict_workshop[<span class="st">'helper'</span>] <span class="op">=</span> item.find(<span class="st">'span'</span>, class_ <span class="op">=</span> <span class="st">"helpers"</span>).get_text() <span class="cf">if</span> item.find(<span class="st">'span'</span>, class_ <span class="op">=</span> <span class="st">"helpers"</span>) <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span> <span class="cf">else</span> <span class="st">''</span></span>
-<span id="cb11-11"><a href="#cb11-11" tabindex="-1"></a>    dict_workshop[<span class="st">'date'</span>] <span class="op">=</span> item.find(<span class="st">'div'</span>, class_ <span class="op">=</span> <span class="st">"text-sm font-semibold text-gray-mid"</span>).get_text()</span>
-<span id="cb11-12"><a href="#cb11-12" tabindex="-1"></a>    workshop_list.append(dict_workshop)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a><span class="cf">for</span> item <span class="kw">in</span> divs: </span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1" aria-label="code-block-11-2"></a>    dict_workshop <span class="op">=</span> {}</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1" aria-label="code-block-11-3"></a>    dict_workshop[<span class="st">'host'</span>] <span class="op">=</span> item.find(<span class="st">'h3'</span>).get_text()</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1" aria-label="code-block-11-4"></a>    dict_workshop[<span class="st">'link'</span>] <span class="op">=</span> item.find(<span class="st">'h3'</span>).find(<span class="st">'a'</span>)[<span class="st">'href'</span>]</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1" aria-label="code-block-11-5"></a>    dict_workshop[<span class="st">'curriculum'</span>] <span class="op">=</span> item.get(<span class="st">'data-curriculum'</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1" aria-label="code-block-11-6"></a>    dict_workshop[<span class="st">'country'</span>] <span class="op">=</span> item.get(<span class="st">'data-country'</span>)</span>
+<span id="cb11-7"><a href="#cb11-7" tabindex="-1" aria-label="code-block-11-7"></a>    dict_workshop[<span class="st">'format'</span>] <span class="op">=</span> item.get(<span class="st">'data-meeting'</span>)</span>
+<span id="cb11-8"><a href="#cb11-8" tabindex="-1" aria-label="code-block-11-8"></a>    dict_workshop[<span class="st">'program'</span>] <span class="op">=</span> item.get(<span class="st">'data-program'</span>)</span>
+<span id="cb11-9"><a href="#cb11-9" tabindex="-1" aria-label="code-block-11-9"></a>    dict_workshop[<span class="st">'instructor'</span>] <span class="op">=</span> item.find(<span class="st">'span'</span>, class_ <span class="op">=</span> <span class="st">"instructors"</span>).get_text() <span class="cf">if</span> item.find(<span class="st">'span'</span>, class_ <span class="op">=</span> <span class="st">"instructors"</span>) <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span> <span class="cf">else</span> <span class="st">''</span></span>
+<span id="cb11-10"><a href="#cb11-10" tabindex="-1" aria-label="code-block-11-10"></a>    dict_workshop[<span class="st">'helper'</span>] <span class="op">=</span> item.find(<span class="st">'span'</span>, class_ <span class="op">=</span> <span class="st">"helpers"</span>).get_text() <span class="cf">if</span> item.find(<span class="st">'span'</span>, class_ <span class="op">=</span> <span class="st">"helpers"</span>) <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span> <span class="cf">else</span> <span class="st">''</span></span>
+<span id="cb11-11"><a href="#cb11-11" tabindex="-1" aria-label="code-block-11-11"></a>    dict_workshop[<span class="st">'date'</span>] <span class="op">=</span> item.find(<span class="st">'div'</span>, class_ <span class="op">=</span> <span class="st">"text-sm font-semibold text-gray-mid"</span>).get_text()</span>
+<span id="cb11-12"><a href="#cb11-12" tabindex="-1" aria-label="code-block-11-12"></a>    workshop_list.append(dict_workshop)</span></code></pre>
 </div>
 <p>You’ll notice the extra <code>if ... else</code> statements in the
 instructor and helper extraction. This avoids the code to show an error
@@ -1433,10 +1426,10 @@ statement.</p>
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1"></a><span class="im">from</span> time <span class="im">import</span> sleep</span>
-<span id="cb12-2"><a href="#cb12-2" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'First'</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1"></a>sleep(<span class="dv">10</span>)</span>
-<span id="cb12-4"><a href="#cb12-4" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Second'</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a><span class="im">from</span> time <span class="im">import</span> sleep</span>
+<span id="cb12-2"><a href="#cb12-2" tabindex="-1" aria-label="code-block-12-2"></a><span class="bu">print</span>(<span class="st">'First'</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1" aria-label="code-block-12-3"></a>sleep(<span class="dv">10</span>)</span>
+<span id="cb12-4"><a href="#cb12-4" tabindex="-1" aria-label="code-block-12-4"></a><span class="bu">print</span>(<span class="st">'Second'</span>)</span></code></pre>
 </div>
 <p>Let’s incorporate this important principle as we extract additional
 information from each workshop’s individual website. We already have our
@@ -1447,16 +1440,16 @@ workshop in the DataFrame and take a look.</p>
 <div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1"></a><span class="co"># Get the first link from the upcominworkshops dataframe</span></span>
-<span id="cb13-2"><a href="#cb13-2" tabindex="-1"></a>first_url <span class="op">=</span> upcomingworkshops_df.loc[<span class="dv">0</span>, <span class="st">'link'</span>]</span>
-<span id="cb13-3"><a href="#cb13-3" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"URL we are visiting: "</span>, first_url)</span>
-<span id="cb13-4"><a href="#cb13-4" tabindex="-1"></a></span>
-<span id="cb13-5"><a href="#cb13-5" tabindex="-1"></a><span class="co"># Retrieve the HTML</span></span>
-<span id="cb13-6"><a href="#cb13-6" tabindex="-1"></a>req <span class="op">=</span> requests.get(first_url).text</span>
-<span id="cb13-7"><a href="#cb13-7" tabindex="-1"></a>cleaned_req <span class="op">=</span> re.sub(<span class="vs">r'\s*\n\s*'</span>, <span class="st">''</span>, req).strip()</span>
-<span id="cb13-8"><a href="#cb13-8" tabindex="-1"></a></span>
-<span id="cb13-9"><a href="#cb13-9" tabindex="-1"></a><span class="co"># Parse the HTML</span></span>
-<span id="cb13-10"><a href="#cb13-10" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(cleaned_req, <span class="st">'html.parser'</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" tabindex="-1" aria-label="code-block-13-1"></a><span class="co"># Get the first link from the upcominworkshops dataframe</span></span>
+<span id="cb13-2"><a href="#cb13-2" tabindex="-1" aria-label="code-block-13-2"></a>first_url <span class="op">=</span> upcomingworkshops_df.loc[<span class="dv">0</span>, <span class="st">'link'</span>]</span>
+<span id="cb13-3"><a href="#cb13-3" tabindex="-1" aria-label="code-block-13-3"></a><span class="bu">print</span>(<span class="st">"URL we are visiting: "</span>, first_url)</span>
+<span id="cb13-4"><a href="#cb13-4" tabindex="-1" aria-label="code-block-13-4"></a></span>
+<span id="cb13-5"><a href="#cb13-5" tabindex="-1" aria-label="code-block-13-5"></a><span class="co"># Retrieve the HTML</span></span>
+<span id="cb13-6"><a href="#cb13-6" tabindex="-1" aria-label="code-block-13-6"></a>req <span class="op">=</span> requests.get(first_url).text</span>
+<span id="cb13-7"><a href="#cb13-7" tabindex="-1" aria-label="code-block-13-7"></a>cleaned_req <span class="op">=</span> re.sub(<span class="vs">r'\s*\n\s*'</span>, <span class="st">''</span>, req).strip()</span>
+<span id="cb13-8"><a href="#cb13-8" tabindex="-1" aria-label="code-block-13-8"></a></span>
+<span id="cb13-9"><a href="#cb13-9" tabindex="-1" aria-label="code-block-13-9"></a><span class="co"># Parse the HTML</span></span>
+<span id="cb13-10"><a href="#cb13-10" tabindex="-1" aria-label="code-block-13-10"></a>soup <span class="op">=</span> BeautifulSoup(cleaned_req, <span class="st">'html.parser'</span>)</span></code></pre>
 </div>
 <p>If we explore the HTML using the ‘View page source’ or ‘Inspect’
 tools in the browser, we notice something interesting inside the
@@ -1480,41 +1473,41 @@ though we could extend this to all workshops if needed.</p>
 <div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1"></a><span class="co"># List of URLs in our dataframe</span></span>
-<span id="cb14-2"><a href="#cb14-2" tabindex="-1"></a>urls <span class="op">=</span> <span class="bu">list</span>(upcomingworkshops_df.loc[:<span class="dv">5</span>, <span class="st">'link'</span>])</span>
-<span id="cb14-3"><a href="#cb14-3" tabindex="-1"></a></span>
-<span id="cb14-4"><a href="#cb14-4" tabindex="-1"></a><span class="co"># Start an empty list to store the different dictionaries with our data</span></span>
-<span id="cb14-5"><a href="#cb14-5" tabindex="-1"></a>list_of_workshops <span class="op">=</span> []</span>
-<span id="cb14-6"><a href="#cb14-6" tabindex="-1"></a></span>
-<span id="cb14-7"><a href="#cb14-7" tabindex="-1"></a><span class="co"># Start a loop over each URL</span></span>
-<span id="cb14-8"><a href="#cb14-8" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> tqdm(urls):</span>
-<span id="cb14-9"><a href="#cb14-9" tabindex="-1"></a>    <span class="co"># Get the HTML and parse it</span></span>
-<span id="cb14-10"><a href="#cb14-10" tabindex="-1"></a>    req <span class="op">=</span> requests.get(item).text</span>
-<span id="cb14-11"><a href="#cb14-11" tabindex="-1"></a>    cleaned_req <span class="op">=</span> re.sub(<span class="vs">r'\s*\n\s*'</span>, <span class="st">''</span>, req).strip()</span>
-<span id="cb14-12"><a href="#cb14-12" tabindex="-1"></a>    soup <span class="op">=</span> BeautifulSoup(cleaned_req, <span class="st">'html.parser'</span>)</span>
-<span id="cb14-13"><a href="#cb14-13" tabindex="-1"></a></span>
-<span id="cb14-14"><a href="#cb14-14" tabindex="-1"></a>    <span class="co"># Start an empty dictionary and fill it with the URL, which</span></span>
-<span id="cb14-15"><a href="#cb14-15" tabindex="-1"></a>    <span class="co"># is our identifier with our other dataframe</span></span>
-<span id="cb14-16"><a href="#cb14-16" tabindex="-1"></a>    dict_w <span class="op">=</span> {}</span>
-<span id="cb14-17"><a href="#cb14-17" tabindex="-1"></a>    dict_w[<span class="st">'link'</span>] <span class="op">=</span> item</span>
-<span id="cb14-18"><a href="#cb14-18" tabindex="-1"></a></span>
-<span id="cb14-19"><a href="#cb14-19" tabindex="-1"></a>    <span class="co"># Use the find function to search for the &lt;meta&gt; tag that </span></span>
-<span id="cb14-20"><a href="#cb14-20" tabindex="-1"></a>    <span class="co"># has each specific 'name' attribute and get the value in the</span></span>
-<span id="cb14-21"><a href="#cb14-21" tabindex="-1"></a>    <span class="co"># 'content' attribute</span></span>
-<span id="cb14-22"><a href="#cb14-22" tabindex="-1"></a>    dict_w[<span class="st">'startdate'</span>] <span class="op">=</span> soup.find(<span class="st">'meta'</span>, attrs <span class="op">=</span> {<span class="st">'name'</span>: <span class="st">'startdate'</span>}).get(<span class="st">'content'</span>)</span>
-<span id="cb14-23"><a href="#cb14-23" tabindex="-1"></a>    dict_w[<span class="st">'enddate'</span>] <span class="op">=</span> soup.find(<span class="st">'meta'</span>, attrs <span class="op">=</span> {<span class="st">'name'</span>: <span class="st">'enddate'</span>}).get(<span class="st">'content'</span>)</span>
-<span id="cb14-24"><a href="#cb14-24" tabindex="-1"></a>    dict_w[<span class="st">'language'</span>] <span class="op">=</span> soup.find(<span class="st">'meta'</span>, attrs <span class="op">=</span> {<span class="st">'name'</span>: <span class="st">'language'</span>}).get(<span class="st">'content'</span>)</span>
-<span id="cb14-25"><a href="#cb14-25" tabindex="-1"></a>    dict_w[<span class="st">'latlng'</span>] <span class="op">=</span> soup.find(<span class="st">'meta'</span>, attrs <span class="op">=</span> {<span class="st">'name'</span>: <span class="st">'latlng'</span>}).get(<span class="st">'content'</span>)</span>
-<span id="cb14-26"><a href="#cb14-26" tabindex="-1"></a>    dict_w[<span class="st">'instructor'</span>] <span class="op">=</span> soup.find(<span class="st">'meta'</span>, attrs <span class="op">=</span> {<span class="st">'name'</span>: <span class="st">'instructor'</span>}).get(<span class="st">'content'</span>)</span>
-<span id="cb14-27"><a href="#cb14-27" tabindex="-1"></a>    dict_w[<span class="st">'helper'</span>] <span class="op">=</span> soup.find(<span class="st">'meta'</span>, attrs <span class="op">=</span> {<span class="st">'name'</span>: <span class="st">'helper'</span>}).get(<span class="st">'content'</span>)</span>
-<span id="cb14-28"><a href="#cb14-28" tabindex="-1"></a></span>
-<span id="cb14-29"><a href="#cb14-29" tabindex="-1"></a>    <span class="co"># Append to our list</span></span>
-<span id="cb14-30"><a href="#cb14-30" tabindex="-1"></a>    list_of_workshops.append(dict_w)</span>
-<span id="cb14-31"><a href="#cb14-31" tabindex="-1"></a></span>
-<span id="cb14-32"><a href="#cb14-32" tabindex="-1"></a>    <span class="co"># Be respectful, wait at least 3 seconds before a new request</span></span>
-<span id="cb14-33"><a href="#cb14-33" tabindex="-1"></a>    sleep(<span class="dv">3</span>)</span>
-<span id="cb14-34"><a href="#cb14-34" tabindex="-1"></a></span>
-<span id="cb14-35"><a href="#cb14-35" tabindex="-1"></a>extradata_upcoming_df <span class="op">=</span> pd.DataFrame(list_of_workshops)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" tabindex="-1" aria-label="code-block-14-1"></a><span class="co"># List of URLs in our dataframe</span></span>
+<span id="cb14-2"><a href="#cb14-2" tabindex="-1" aria-label="code-block-14-2"></a>urls <span class="op">=</span> <span class="bu">list</span>(upcomingworkshops_df.loc[:<span class="dv">5</span>, <span class="st">'link'</span>])</span>
+<span id="cb14-3"><a href="#cb14-3" tabindex="-1" aria-label="code-block-14-3"></a></span>
+<span id="cb14-4"><a href="#cb14-4" tabindex="-1" aria-label="code-block-14-4"></a><span class="co"># Start an empty list to store the different dictionaries with our data</span></span>
+<span id="cb14-5"><a href="#cb14-5" tabindex="-1" aria-label="code-block-14-5"></a>list_of_workshops <span class="op">=</span> []</span>
+<span id="cb14-6"><a href="#cb14-6" tabindex="-1" aria-label="code-block-14-6"></a></span>
+<span id="cb14-7"><a href="#cb14-7" tabindex="-1" aria-label="code-block-14-7"></a><span class="co"># Start a loop over each URL</span></span>
+<span id="cb14-8"><a href="#cb14-8" tabindex="-1" aria-label="code-block-14-8"></a><span class="cf">for</span> item <span class="kw">in</span> tqdm(urls):</span>
+<span id="cb14-9"><a href="#cb14-9" tabindex="-1" aria-label="code-block-14-9"></a>    <span class="co"># Get the HTML and parse it</span></span>
+<span id="cb14-10"><a href="#cb14-10" tabindex="-1" aria-label="code-block-14-10"></a>    req <span class="op">=</span> requests.get(item).text</span>
+<span id="cb14-11"><a href="#cb14-11" tabindex="-1" aria-label="code-block-14-11"></a>    cleaned_req <span class="op">=</span> re.sub(<span class="vs">r'\s*\n\s*'</span>, <span class="st">''</span>, req).strip()</span>
+<span id="cb14-12"><a href="#cb14-12" tabindex="-1" aria-label="code-block-14-12"></a>    soup <span class="op">=</span> BeautifulSoup(cleaned_req, <span class="st">'html.parser'</span>)</span>
+<span id="cb14-13"><a href="#cb14-13" tabindex="-1" aria-label="code-block-14-13"></a></span>
+<span id="cb14-14"><a href="#cb14-14" tabindex="-1" aria-label="code-block-14-14"></a>    <span class="co"># Start an empty dictionary and fill it with the URL, which</span></span>
+<span id="cb14-15"><a href="#cb14-15" tabindex="-1" aria-label="code-block-14-15"></a>    <span class="co"># is our identifier with our other dataframe</span></span>
+<span id="cb14-16"><a href="#cb14-16" tabindex="-1" aria-label="code-block-14-16"></a>    dict_w <span class="op">=</span> {}</span>
+<span id="cb14-17"><a href="#cb14-17" tabindex="-1" aria-label="code-block-14-17"></a>    dict_w[<span class="st">'link'</span>] <span class="op">=</span> item</span>
+<span id="cb14-18"><a href="#cb14-18" tabindex="-1" aria-label="code-block-14-18"></a></span>
+<span id="cb14-19"><a href="#cb14-19" tabindex="-1" aria-label="code-block-14-19"></a>    <span class="co"># Use the find function to search for the &lt;meta&gt; tag that </span></span>
+<span id="cb14-20"><a href="#cb14-20" tabindex="-1" aria-label="code-block-14-20"></a>    <span class="co"># has each specific 'name' attribute and get the value in the</span></span>
+<span id="cb14-21"><a href="#cb14-21" tabindex="-1" aria-label="code-block-14-21"></a>    <span class="co"># 'content' attribute</span></span>
+<span id="cb14-22"><a href="#cb14-22" tabindex="-1" aria-label="code-block-14-22"></a>    dict_w[<span class="st">'startdate'</span>] <span class="op">=</span> soup.find(<span class="st">'meta'</span>, attrs <span class="op">=</span> {<span class="st">'name'</span>: <span class="st">'startdate'</span>}).get(<span class="st">'content'</span>)</span>
+<span id="cb14-23"><a href="#cb14-23" tabindex="-1" aria-label="code-block-14-23"></a>    dict_w[<span class="st">'enddate'</span>] <span class="op">=</span> soup.find(<span class="st">'meta'</span>, attrs <span class="op">=</span> {<span class="st">'name'</span>: <span class="st">'enddate'</span>}).get(<span class="st">'content'</span>)</span>
+<span id="cb14-24"><a href="#cb14-24" tabindex="-1" aria-label="code-block-14-24"></a>    dict_w[<span class="st">'language'</span>] <span class="op">=</span> soup.find(<span class="st">'meta'</span>, attrs <span class="op">=</span> {<span class="st">'name'</span>: <span class="st">'language'</span>}).get(<span class="st">'content'</span>)</span>
+<span id="cb14-25"><a href="#cb14-25" tabindex="-1" aria-label="code-block-14-25"></a>    dict_w[<span class="st">'latlng'</span>] <span class="op">=</span> soup.find(<span class="st">'meta'</span>, attrs <span class="op">=</span> {<span class="st">'name'</span>: <span class="st">'latlng'</span>}).get(<span class="st">'content'</span>)</span>
+<span id="cb14-26"><a href="#cb14-26" tabindex="-1" aria-label="code-block-14-26"></a>    dict_w[<span class="st">'instructor'</span>] <span class="op">=</span> soup.find(<span class="st">'meta'</span>, attrs <span class="op">=</span> {<span class="st">'name'</span>: <span class="st">'instructor'</span>}).get(<span class="st">'content'</span>)</span>
+<span id="cb14-27"><a href="#cb14-27" tabindex="-1" aria-label="code-block-14-27"></a>    dict_w[<span class="st">'helper'</span>] <span class="op">=</span> soup.find(<span class="st">'meta'</span>, attrs <span class="op">=</span> {<span class="st">'name'</span>: <span class="st">'helper'</span>}).get(<span class="st">'content'</span>)</span>
+<span id="cb14-28"><a href="#cb14-28" tabindex="-1" aria-label="code-block-14-28"></a></span>
+<span id="cb14-29"><a href="#cb14-29" tabindex="-1" aria-label="code-block-14-29"></a>    <span class="co"># Append to our list</span></span>
+<span id="cb14-30"><a href="#cb14-30" tabindex="-1" aria-label="code-block-14-30"></a>    list_of_workshops.append(dict_w)</span>
+<span id="cb14-31"><a href="#cb14-31" tabindex="-1" aria-label="code-block-14-31"></a></span>
+<span id="cb14-32"><a href="#cb14-32" tabindex="-1" aria-label="code-block-14-32"></a>    <span class="co"># Be respectful, wait at least 3 seconds before a new request</span></span>
+<span id="cb14-33"><a href="#cb14-33" tabindex="-1" aria-label="code-block-14-33"></a>    sleep(<span class="dv">3</span>)</span>
+<span id="cb14-34"><a href="#cb14-34" tabindex="-1" aria-label="code-block-14-34"></a></span>
+<span id="cb14-35"><a href="#cb14-35" tabindex="-1" aria-label="code-block-14-35"></a>extradata_upcoming_df <span class="op">=</span> pd.DataFrame(list_of_workshops)</span></code></pre>
 </div>
 <div id="challenge3" class="callout challenge">
 <div class="callout-square">
@@ -1538,7 +1531,7 @@ scraping process more robust?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution3" aria-expanded="false" aria-controls="collapseSolution3">
   <h4 class="accordion-header" id="headingSolution3"> Show me the solution </h4>
 </button>
-<div id="collapseSolution3" class="accordion-collapse collapse" aria-labelledby="headingSolution3" data-bs-parent="#accordionSolution3">
+<div id="collapseSolution3" class="accordion-collapse collapse" data-bs-parent="#accordionSolution3" aria-labelledby="headingSolution3">
 <div class="accordion-body">
 <p>A straightforward Pythonic way to handle errors when accessing URLs
 is to use a <a href="https://docs.python.org/3/tutorial/errors.html" class="external-link">try-except
@@ -1553,13 +1546,13 @@ for review.</p>
 <div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" tabindex="-1"></a>req <span class="op">=</span> requests.get(url)</span>
-<span id="cb15-2"><a href="#cb15-2" tabindex="-1"></a>status_code <span class="op">=</span> response.status_code</span>
-<span id="cb15-3"><a href="#cb15-3" tabindex="-1"></a></span>
-<span id="cb15-4"><a href="#cb15-4" tabindex="-1"></a><span class="cf">if</span> status_code <span class="op">==</span> <span class="dv">200</span>:</span>
-<span id="cb15-5"><a href="#cb15-5" tabindex="-1"></a>    <span class="co"># proceed with scraping</span></span>
-<span id="cb15-6"><a href="#cb15-6" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb15-7"><a href="#cb15-7" tabindex="-1"></a>    <span class="co"># handle or skip this URL</span></span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" tabindex="-1" aria-label="code-block-15-1"></a>req <span class="op">=</span> requests.get(url)</span>
+<span id="cb15-2"><a href="#cb15-2" tabindex="-1" aria-label="code-block-15-2"></a>status_code <span class="op">=</span> response.status_code</span>
+<span id="cb15-3"><a href="#cb15-3" tabindex="-1" aria-label="code-block-15-3"></a></span>
+<span id="cb15-4"><a href="#cb15-4" tabindex="-1" aria-label="code-block-15-4"></a><span class="cf">if</span> status_code <span class="op">==</span> <span class="dv">200</span>:</span>
+<span id="cb15-5"><a href="#cb15-5" tabindex="-1" aria-label="code-block-15-5"></a>    <span class="co"># proceed with scraping</span></span>
+<span id="cb15-6"><a href="#cb15-6" tabindex="-1" aria-label="code-block-15-6"></a><span class="cf">else</span>:</span>
+<span id="cb15-7"><a href="#cb15-7" tabindex="-1" aria-label="code-block-15-7"></a>    <span class="co"># handle or skip this URL</span></span></code></pre>
 </div>
 </div>
 </div>
@@ -1694,12 +1687,12 @@ previous episode.</p>
 <div class="codewrapper sourceCode" id="cb1">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="co"># Loading libraries</span></span>
-<span id="cb1-2"><a href="#cb1-2" tabindex="-1"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
-<span id="cb1-3"><a href="#cb1-3" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-4"><a href="#cb1-4" tabindex="-1"></a><span class="im">from</span> time <span class="im">import</span> sleep</span>
-<span id="cb1-5"><a href="#cb1-5" tabindex="-1"></a><span class="im">from</span> selenium <span class="im">import</span> webdriver</span>
-<span id="cb1-6"><a href="#cb1-6" tabindex="-1"></a><span class="im">from</span> selenium.webdriver.common.by <span class="im">import</span> By</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" tabindex="-1" aria-label="code-block-1-1"></a><span class="co"># Loading libraries</span></span>
+<span id="cb1-2"><a href="#cb1-2" tabindex="-1" aria-label="code-block-1-2"></a><span class="im">from</span> bs4 <span class="im">import</span> BeautifulSoup</span>
+<span id="cb1-3"><a href="#cb1-3" tabindex="-1" aria-label="code-block-1-3"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-4"><a href="#cb1-4" tabindex="-1" aria-label="code-block-1-4"></a><span class="im">from</span> time <span class="im">import</span> sleep</span>
+<span id="cb1-5"><a href="#cb1-5" tabindex="-1" aria-label="code-block-1-5"></a><span class="im">from</span> selenium <span class="im">import</span> webdriver</span>
+<span id="cb1-6"><a href="#cb1-6" tabindex="-1" aria-label="code-block-1-6"></a><span class="im">from</span> selenium.webdriver.common.by <span class="im">import</span> By</span></code></pre>
 </div>
 <p>Selenium can simulate different browsers like Chrome, Firefox,
 Safari, and others. For now, we’ll use Chrome. When you run the
@@ -1715,11 +1708,11 @@ to the Oscar winners page, use the <code>.get()</code> method on the
 <div class="codewrapper sourceCode" id="cb2">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="co"># Open a Chrome web browser driven by Selenium</span></span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a>driver <span class="op">=</span> webdriver.Chrome()</span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co"># Go to a specific website</span></span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a>driver.get(<span class="st">"https://www.scrapethissite.com/pages/ajax-javascript/"</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" tabindex="-1" aria-label="code-block-2-1"></a><span class="co"># Open a Chrome web browser driven by Selenium</span></span>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1" aria-label="code-block-2-2"></a>driver <span class="op">=</span> webdriver.Chrome()</span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1" aria-label="code-block-2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1" aria-label="code-block-2-4"></a><span class="co"># Go to a specific website</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1" aria-label="code-block-2-5"></a>driver.get(<span class="st">"https://www.scrapethissite.com/pages/ajax-javascript/"</span>)</span></code></pre>
 </div>
 <p>How can we direct Selenium to click the “2015” text so the table for
 that year appears? First, we need to locate that element, similar to how
@@ -1744,15 +1737,15 @@ HTML element:</p>
 <div class="codewrapper sourceCode" id="cb3">
 <h3 class="code-label">HTML<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode html" tabindex="0"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">"#"</span><span class="ot"> class</span><span class="op">=</span><span class="st">"year-link"</span><span class="ot"> id</span><span class="op">=</span><span class="st">"2015"</span><span class="dt">&gt;</span>2015<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span></code></pre>
+<pre class="sourceCode html" tabindex="0"><code class="sourceCode html"><span id="cb3-1"><a href="#cb3-1" tabindex="-1" aria-label="code-block-3-1"></a><span class="dt">&lt;</span><span class="kw">a</span><span class="ot"> href</span><span class="op">=</span><span class="st">"#"</span><span class="ot"> class</span><span class="op">=</span><span class="st">"year-link"</span><span class="ot"> id</span><span class="op">=</span><span class="st">"2015"</span><span class="dt">&gt;</span>2015<span class="dt">&lt;/</span><span class="kw">a</span><span class="dt">&gt;</span></span></code></pre>
 </div>
 <figure><img src="fig/inspect_element.PNG" alt="A screenshot of Google Chrome web browser, showing how to search a specific element by using Inspect from the Chrome DevTools" class="figure mx-auto d-block"></figure><p>Because the <code>id</code> attribute is unique, we can select this
 element directly using:</p>
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="co"># Find 2015 element button</span></span>
-<span id="cb4-2"><a href="#cb4-2" tabindex="-1"></a>button_2015 <span class="op">=</span> driver.find_element(by<span class="op">=</span>By.ID, value<span class="op">=</span><span class="st">"2015"</span>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" tabindex="-1" aria-label="code-block-4-1"></a><span class="co"># Find 2015 element button</span></span>
+<span id="cb4-2"><a href="#cb4-2" tabindex="-1" aria-label="code-block-4-2"></a>button_2015 <span class="op">=</span> driver.find_element(by<span class="op">=</span>By.ID, value<span class="op">=</span><span class="st">"2015"</span>)</span></code></pre>
 </div>
 <p>We’ve located the hyperlink element we need to click to display the
 table for that year, and we’ll use the <code>.click()</code> method to
@@ -1765,17 +1758,17 @@ window Selenium opened using <code>driver.quit()</code>.</p>
 <div class="codewrapper sourceCode" id="cb5">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1"></a><span class="co"># Click 2015 button</span></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a>button_2015.click()</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a></span>
-<span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co"># Wait for table to load</span></span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a>sleep(<span class="dv">3</span>)</span>
-<span id="cb5-6"><a href="#cb5-6" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" tabindex="-1"></a><span class="co"># Retrieve page HTML</span></span>
-<span id="cb5-8"><a href="#cb5-8" tabindex="-1"></a>html_2015 <span class="op">=</span> driver.page_source</span>
-<span id="cb5-9"><a href="#cb5-9" tabindex="-1"></a></span>
-<span id="cb5-10"><a href="#cb5-10" tabindex="-1"></a><span class="co"># Close web browser</span></span>
-<span id="cb5-11"><a href="#cb5-11" tabindex="-1"></a>driver.quit()</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="co"># Click 2015 button</span></span>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a>button_2015.click()</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a></span>
+<span id="cb5-4"><a href="#cb5-4" tabindex="-1" aria-label="code-block-5-4"></a><span class="co"># Wait for table to load</span></span>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1" aria-label="code-block-5-5"></a>sleep(<span class="dv">3</span>)</span>
+<span id="cb5-6"><a href="#cb5-6" tabindex="-1" aria-label="code-block-5-6"></a></span>
+<span id="cb5-7"><a href="#cb5-7" tabindex="-1" aria-label="code-block-5-7"></a><span class="co"># Retrieve page HTML</span></span>
+<span id="cb5-8"><a href="#cb5-8" tabindex="-1" aria-label="code-block-5-8"></a>html_2015 <span class="op">=</span> driver.page_source</span>
+<span id="cb5-9"><a href="#cb5-9" tabindex="-1" aria-label="code-block-5-9"></a></span>
+<span id="cb5-10"><a href="#cb5-10" tabindex="-1" aria-label="code-block-5-10"></a><span class="co"># Close web browser</span></span>
+<span id="cb5-11"><a href="#cb5-11" tabindex="-1" aria-label="code-block-5-11"></a>driver.quit()</span></code></pre>
 </div>
 <p>Importantly, the HTML document we stored in <code>html_2015</code>
 <strong>is the HTML after the dynamic content loaded</strong>. This
@@ -1790,9 +1783,9 @@ we’ll see that the HTML now includes the movie “Spotlight.”</p>
 <div class="codewrapper sourceCode" id="cb6">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="co"># Parse HTML and </span></span>
-<span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(html_2015, <span class="st">'html.parser'</span>)</span>
-<span id="cb6-3"><a href="#cb6-3" tabindex="-1"></a><span class="bu">print</span>(soup.find(class_<span class="op">=</span><span class="st">'film'</span>).prettify())</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" tabindex="-1" aria-label="code-block-6-1"></a><span class="co"># Parse HTML and </span></span>
+<span id="cb6-2"><a href="#cb6-2" tabindex="-1" aria-label="code-block-6-2"></a>soup <span class="op">=</span> BeautifulSoup(html_2015, <span class="st">'html.parser'</span>)</span>
+<span id="cb6-3"><a href="#cb6-3" tabindex="-1" aria-label="code-block-6-3"></a><span class="bu">print</span>(soup.find(class_<span class="op">=</span><span class="st">'film'</span>).prettify())</span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1826,33 +1819,33 @@ tutorial by Programiz</a>.</p>
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1"></a><span class="co"># Create the Selenium webdriver and make it headless</span></span>
-<span id="cb8-2"><a href="#cb8-2" tabindex="-1"></a>options <span class="op">=</span> webdriver.ChromeOptions()</span>
-<span id="cb8-3"><a href="#cb8-3" tabindex="-1"></a>options.add_argument(<span class="st">"--headless=new"</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" tabindex="-1"></a>driver <span class="op">=</span> webdriver.Chrome(options<span class="op">=</span>options)</span>
-<span id="cb8-5"><a href="#cb8-5" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" tabindex="-1"></a><span class="co"># Load the website. Find and click 2015. Get post JavaScript execution HTML. Close webdriver</span></span>
-<span id="cb8-7"><a href="#cb8-7" tabindex="-1"></a>driver.get(<span class="st">"https://www.scrapethissite.com/pages/ajax-javascript/"</span>)</span>
-<span id="cb8-8"><a href="#cb8-8" tabindex="-1"></a>button_2015 <span class="op">=</span> driver.find_element(by<span class="op">=</span>By.ID, value<span class="op">=</span><span class="st">"2015"</span>)</span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1"></a>button_2015.click()</span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1"></a>sleep(<span class="dv">3</span>)</span>
-<span id="cb8-11"><a href="#cb8-11" tabindex="-1"></a>html_2015 <span class="op">=</span> driver.page_source</span>
-<span id="cb8-12"><a href="#cb8-12" tabindex="-1"></a>driver.quit()</span>
-<span id="cb8-13"><a href="#cb8-13" tabindex="-1"></a></span>
-<span id="cb8-14"><a href="#cb8-14" tabindex="-1"></a><span class="co"># Parse HTML using BeautifulSoup and extract each column as a list of values ising list comprehensions</span></span>
-<span id="cb8-15"><a href="#cb8-15" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(html_2015, <span class="st">'html.parser'</span>)</span>
-<span id="cb8-16"><a href="#cb8-16" tabindex="-1"></a>titles_lc <span class="op">=</span> [elem.get_text() <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(class_<span class="op">=</span><span class="st">"film-title"</span>)]</span>
-<span id="cb8-17"><a href="#cb8-17" tabindex="-1"></a>nominations_lc <span class="op">=</span> [elem.get_text() <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(class_<span class="op">=</span><span class="st">"film-nominations"</span>)]</span>
-<span id="cb8-18"><a href="#cb8-18" tabindex="-1"></a>awards_lc <span class="op">=</span> [elem.get_text() <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(class_<span class="op">=</span><span class="st">"film-awards"</span>)]</span>
-<span id="cb8-19"><a href="#cb8-19" tabindex="-1"></a></span>
-<span id="cb8-20"><a href="#cb8-20" tabindex="-1"></a><span class="co"># For the best picture column, we can't use .get_text() as there is no text</span></span>
-<span id="cb8-21"><a href="#cb8-21" tabindex="-1"></a><span class="co"># Rather, we want to see if there is an &lt;i&gt; tag</span></span>
-<span id="cb8-22"><a href="#cb8-22" tabindex="-1"></a>best_picture_lc <span class="op">=</span> [<span class="st">"Yes"</span> <span class="cf">if</span> elem.find(<span class="st">"i"</span>) <span class="op">==</span> <span class="va">None</span> <span class="cf">else</span> <span class="st">"No"</span> <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(class_<span class="op">=</span><span class="st">"film-best-picture"</span>)]</span>
-<span id="cb8-23"><a href="#cb8-23" tabindex="-1"></a></span>
-<span id="cb8-24"><a href="#cb8-24" tabindex="-1"></a><span class="co"># Create a dataframe based on the previous lists</span></span>
-<span id="cb8-25"><a href="#cb8-25" tabindex="-1"></a>movies_2015 <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb8-26"><a href="#cb8-26" tabindex="-1"></a>    {<span class="st">'titles'</span>: titles_lc, <span class="st">'nominations'</span>: nominations_lc, <span class="st">'awards'</span>: awards_lc, <span class="st">'best_picture'</span>: best_picture_lc}</span>
-<span id="cb8-27"><a href="#cb8-27" tabindex="-1"></a>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" tabindex="-1" aria-label="code-block-8-1"></a><span class="co"># Create the Selenium webdriver and make it headless</span></span>
+<span id="cb8-2"><a href="#cb8-2" tabindex="-1" aria-label="code-block-8-2"></a>options <span class="op">=</span> webdriver.ChromeOptions()</span>
+<span id="cb8-3"><a href="#cb8-3" tabindex="-1" aria-label="code-block-8-3"></a>options.add_argument(<span class="st">"--headless=new"</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" tabindex="-1" aria-label="code-block-8-4"></a>driver <span class="op">=</span> webdriver.Chrome(options<span class="op">=</span>options)</span>
+<span id="cb8-5"><a href="#cb8-5" tabindex="-1" aria-label="code-block-8-5"></a></span>
+<span id="cb8-6"><a href="#cb8-6" tabindex="-1" aria-label="code-block-8-6"></a><span class="co"># Load the website. Find and click 2015. Get post JavaScript execution HTML. Close webdriver</span></span>
+<span id="cb8-7"><a href="#cb8-7" tabindex="-1" aria-label="code-block-8-7"></a>driver.get(<span class="st">"https://www.scrapethissite.com/pages/ajax-javascript/"</span>)</span>
+<span id="cb8-8"><a href="#cb8-8" tabindex="-1" aria-label="code-block-8-8"></a>button_2015 <span class="op">=</span> driver.find_element(by<span class="op">=</span>By.ID, value<span class="op">=</span><span class="st">"2015"</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1" aria-label="code-block-8-9"></a>button_2015.click()</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1" aria-label="code-block-8-10"></a>sleep(<span class="dv">3</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1" aria-label="code-block-8-11"></a>html_2015 <span class="op">=</span> driver.page_source</span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1" aria-label="code-block-8-12"></a>driver.quit()</span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1" aria-label="code-block-8-13"></a></span>
+<span id="cb8-14"><a href="#cb8-14" tabindex="-1" aria-label="code-block-8-14"></a><span class="co"># Parse HTML using BeautifulSoup and extract each column as a list of values ising list comprehensions</span></span>
+<span id="cb8-15"><a href="#cb8-15" tabindex="-1" aria-label="code-block-8-15"></a>soup <span class="op">=</span> BeautifulSoup(html_2015, <span class="st">'html.parser'</span>)</span>
+<span id="cb8-16"><a href="#cb8-16" tabindex="-1" aria-label="code-block-8-16"></a>titles_lc <span class="op">=</span> [elem.get_text() <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(class_<span class="op">=</span><span class="st">"film-title"</span>)]</span>
+<span id="cb8-17"><a href="#cb8-17" tabindex="-1" aria-label="code-block-8-17"></a>nominations_lc <span class="op">=</span> [elem.get_text() <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(class_<span class="op">=</span><span class="st">"film-nominations"</span>)]</span>
+<span id="cb8-18"><a href="#cb8-18" tabindex="-1" aria-label="code-block-8-18"></a>awards_lc <span class="op">=</span> [elem.get_text() <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(class_<span class="op">=</span><span class="st">"film-awards"</span>)]</span>
+<span id="cb8-19"><a href="#cb8-19" tabindex="-1" aria-label="code-block-8-19"></a></span>
+<span id="cb8-20"><a href="#cb8-20" tabindex="-1" aria-label="code-block-8-20"></a><span class="co"># For the best picture column, we can't use .get_text() as there is no text</span></span>
+<span id="cb8-21"><a href="#cb8-21" tabindex="-1" aria-label="code-block-8-21"></a><span class="co"># Rather, we want to see if there is an &lt;i&gt; tag</span></span>
+<span id="cb8-22"><a href="#cb8-22" tabindex="-1" aria-label="code-block-8-22"></a>best_picture_lc <span class="op">=</span> [<span class="st">"Yes"</span> <span class="cf">if</span> elem.find(<span class="st">"i"</span>) <span class="op">==</span> <span class="va">None</span> <span class="cf">else</span> <span class="st">"No"</span> <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(class_<span class="op">=</span><span class="st">"film-best-picture"</span>)]</span>
+<span id="cb8-23"><a href="#cb8-23" tabindex="-1" aria-label="code-block-8-23"></a></span>
+<span id="cb8-24"><a href="#cb8-24" tabindex="-1" aria-label="code-block-8-24"></a><span class="co"># Create a dataframe based on the previous lists</span></span>
+<span id="cb8-25"><a href="#cb8-25" tabindex="-1" aria-label="code-block-8-25"></a>movies_2015 <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb8-26"><a href="#cb8-26" tabindex="-1" aria-label="code-block-8-26"></a>    {<span class="st">'titles'</span>: titles_lc, <span class="st">'nominations'</span>: nominations_lc, <span class="st">'awards'</span>: awards_lc, <span class="st">'best_picture'</span>: best_picture_lc}</span>
+<span id="cb8-27"><a href="#cb8-27" tabindex="-1" aria-label="code-block-8-27"></a>)</span></code></pre>
 </div>
 <div id="challenge1" class="callout challenge">
 <div class="callout-square">
@@ -1885,40 +1878,40 @@ the page, this version does not use the “headless” option.</p>
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="co"># Function to search year hyperlink and click it</span></span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a><span class="kw">def</span> findyear_click_gethtml(year):</span>
-<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>    button <span class="op">=</span> driver.find_element(by<span class="op">=</span>By.ID, value<span class="op">=</span>year)</span>
-<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>    button.click()</span>
-<span id="cb9-5"><a href="#cb9-5" tabindex="-1"></a>    sleep(<span class="dv">3</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" tabindex="-1"></a>    html <span class="op">=</span> driver.page_source</span>
-<span id="cb9-7"><a href="#cb9-7" tabindex="-1"></a>    <span class="cf">return</span> html</span>
-<span id="cb9-8"><a href="#cb9-8" tabindex="-1"></a></span>
-<span id="cb9-9"><a href="#cb9-9" tabindex="-1"></a><span class="co"># Function to parse html, extract table data, and assign year column</span></span>
-<span id="cb9-10"><a href="#cb9-10" tabindex="-1"></a><span class="kw">def</span> parsehtml_extractdata(html, year):</span>
-<span id="cb9-11"><a href="#cb9-11" tabindex="-1"></a>    soup <span class="op">=</span> BeautifulSoup(html, <span class="st">'html.parser'</span>)</span>
-<span id="cb9-12"><a href="#cb9-12" tabindex="-1"></a>    titles_lc <span class="op">=</span> [elem.get_text() <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(class_<span class="op">=</span><span class="st">"film-title"</span>)]</span>
-<span id="cb9-13"><a href="#cb9-13" tabindex="-1"></a>    nominations_lc <span class="op">=</span> [elem.get_text() <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(class_<span class="op">=</span><span class="st">"film-nominations"</span>)]</span>
-<span id="cb9-14"><a href="#cb9-14" tabindex="-1"></a>    awards_lc <span class="op">=</span> [elem.get_text() <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(class_<span class="op">=</span><span class="st">"film-awards"</span>)]</span>
-<span id="cb9-15"><a href="#cb9-15" tabindex="-1"></a>    best_picture_lc <span class="op">=</span> [<span class="st">"No"</span> <span class="cf">if</span> elem.find(<span class="st">"i"</span>) <span class="op">==</span> <span class="va">None</span> <span class="cf">else</span> <span class="st">"Yes"</span> <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(class_<span class="op">=</span><span class="st">"film-best-picture"</span>)]</span>
-<span id="cb9-16"><a href="#cb9-16" tabindex="-1"></a>    movies_df <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb9-17"><a href="#cb9-17" tabindex="-1"></a>        {<span class="st">'titles'</span>: titles_lc, <span class="st">'nominations'</span>: nominations_lc, <span class="st">'awards'</span>: awards_lc, <span class="st">'best_picture'</span>: best_picture_lc, <span class="st">'year'</span>: year}</span>
-<span id="cb9-18"><a href="#cb9-18" tabindex="-1"></a>    )</span>
-<span id="cb9-19"><a href="#cb9-19" tabindex="-1"></a>    <span class="cf">return</span> movies_df</span>
-<span id="cb9-20"><a href="#cb9-20" tabindex="-1"></a></span>
-<span id="cb9-21"><a href="#cb9-21" tabindex="-1"></a><span class="co"># Open Selenium webdriver and go to the page</span></span>
-<span id="cb9-22"><a href="#cb9-22" tabindex="-1"></a>driver <span class="op">=</span> webdriver.Chrome()</span>
-<span id="cb9-23"><a href="#cb9-23" tabindex="-1"></a>driver.get(<span class="st">"https://www.scrapethissite.com/pages/ajax-javascript/"</span>)</span>
-<span id="cb9-24"><a href="#cb9-24" tabindex="-1"></a></span>
-<span id="cb9-25"><a href="#cb9-25" tabindex="-1"></a><span class="co"># Create empty dataframe where we will append/concatenate the dataframes we get for each year</span></span>
-<span id="cb9-26"><a href="#cb9-26" tabindex="-1"></a>result_df <span class="op">=</span> pd.DataFrame()</span>
-<span id="cb9-27"><a href="#cb9-27" tabindex="-1"></a></span>
-<span id="cb9-28"><a href="#cb9-28" tabindex="-1"></a><span class="cf">for</span> year <span class="kw">in</span> [<span class="st">"2010"</span>, <span class="st">"2011"</span>, <span class="st">"2012"</span>, <span class="st">"2013"</span>, <span class="st">"2014"</span>, <span class="st">"2015"</span>]:</span>
-<span id="cb9-29"><a href="#cb9-29" tabindex="-1"></a>    html_year <span class="op">=</span> findyear_click_gethtml(year)</span>
-<span id="cb9-30"><a href="#cb9-30" tabindex="-1"></a>    df_year <span class="op">=</span> parsehtml_extractdata(html_year, year)</span>
-<span id="cb9-31"><a href="#cb9-31" tabindex="-1"></a>    result_df <span class="op">=</span> pd.concat([result_df, df_year])</span>
-<span id="cb9-32"><a href="#cb9-32" tabindex="-1"></a></span>
-<span id="cb9-33"><a href="#cb9-33" tabindex="-1"></a><span class="co"># Close the browser that Selenium opened</span></span>
-<span id="cb9-34"><a href="#cb9-34" tabindex="-1"></a>driver.quit()</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" tabindex="-1" aria-label="code-block-9-1"></a><span class="co"># Function to search year hyperlink and click it</span></span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1" aria-label="code-block-9-2"></a><span class="kw">def</span> findyear_click_gethtml(year):</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1" aria-label="code-block-9-3"></a>    button <span class="op">=</span> driver.find_element(by<span class="op">=</span>By.ID, value<span class="op">=</span>year)</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1" aria-label="code-block-9-4"></a>    button.click()</span>
+<span id="cb9-5"><a href="#cb9-5" tabindex="-1" aria-label="code-block-9-5"></a>    sleep(<span class="dv">3</span>)</span>
+<span id="cb9-6"><a href="#cb9-6" tabindex="-1" aria-label="code-block-9-6"></a>    html <span class="op">=</span> driver.page_source</span>
+<span id="cb9-7"><a href="#cb9-7" tabindex="-1" aria-label="code-block-9-7"></a>    <span class="cf">return</span> html</span>
+<span id="cb9-8"><a href="#cb9-8" tabindex="-1" aria-label="code-block-9-8"></a></span>
+<span id="cb9-9"><a href="#cb9-9" tabindex="-1" aria-label="code-block-9-9"></a><span class="co"># Function to parse html, extract table data, and assign year column</span></span>
+<span id="cb9-10"><a href="#cb9-10" tabindex="-1" aria-label="code-block-9-10"></a><span class="kw">def</span> parsehtml_extractdata(html, year):</span>
+<span id="cb9-11"><a href="#cb9-11" tabindex="-1" aria-label="code-block-9-11"></a>    soup <span class="op">=</span> BeautifulSoup(html, <span class="st">'html.parser'</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" tabindex="-1" aria-label="code-block-9-12"></a>    titles_lc <span class="op">=</span> [elem.get_text() <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(class_<span class="op">=</span><span class="st">"film-title"</span>)]</span>
+<span id="cb9-13"><a href="#cb9-13" tabindex="-1" aria-label="code-block-9-13"></a>    nominations_lc <span class="op">=</span> [elem.get_text() <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(class_<span class="op">=</span><span class="st">"film-nominations"</span>)]</span>
+<span id="cb9-14"><a href="#cb9-14" tabindex="-1" aria-label="code-block-9-14"></a>    awards_lc <span class="op">=</span> [elem.get_text() <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(class_<span class="op">=</span><span class="st">"film-awards"</span>)]</span>
+<span id="cb9-15"><a href="#cb9-15" tabindex="-1" aria-label="code-block-9-15"></a>    best_picture_lc <span class="op">=</span> [<span class="st">"No"</span> <span class="cf">if</span> elem.find(<span class="st">"i"</span>) <span class="op">==</span> <span class="va">None</span> <span class="cf">else</span> <span class="st">"Yes"</span> <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(class_<span class="op">=</span><span class="st">"film-best-picture"</span>)]</span>
+<span id="cb9-16"><a href="#cb9-16" tabindex="-1" aria-label="code-block-9-16"></a>    movies_df <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb9-17"><a href="#cb9-17" tabindex="-1" aria-label="code-block-9-17"></a>        {<span class="st">'titles'</span>: titles_lc, <span class="st">'nominations'</span>: nominations_lc, <span class="st">'awards'</span>: awards_lc, <span class="st">'best_picture'</span>: best_picture_lc, <span class="st">'year'</span>: year}</span>
+<span id="cb9-18"><a href="#cb9-18" tabindex="-1" aria-label="code-block-9-18"></a>    )</span>
+<span id="cb9-19"><a href="#cb9-19" tabindex="-1" aria-label="code-block-9-19"></a>    <span class="cf">return</span> movies_df</span>
+<span id="cb9-20"><a href="#cb9-20" tabindex="-1" aria-label="code-block-9-20"></a></span>
+<span id="cb9-21"><a href="#cb9-21" tabindex="-1" aria-label="code-block-9-21"></a><span class="co"># Open Selenium webdriver and go to the page</span></span>
+<span id="cb9-22"><a href="#cb9-22" tabindex="-1" aria-label="code-block-9-22"></a>driver <span class="op">=</span> webdriver.Chrome()</span>
+<span id="cb9-23"><a href="#cb9-23" tabindex="-1" aria-label="code-block-9-23"></a>driver.get(<span class="st">"https://www.scrapethissite.com/pages/ajax-javascript/"</span>)</span>
+<span id="cb9-24"><a href="#cb9-24" tabindex="-1" aria-label="code-block-9-24"></a></span>
+<span id="cb9-25"><a href="#cb9-25" tabindex="-1" aria-label="code-block-9-25"></a><span class="co"># Create empty dataframe where we will append/concatenate the dataframes we get for each year</span></span>
+<span id="cb9-26"><a href="#cb9-26" tabindex="-1" aria-label="code-block-9-26"></a>result_df <span class="op">=</span> pd.DataFrame()</span>
+<span id="cb9-27"><a href="#cb9-27" tabindex="-1" aria-label="code-block-9-27"></a></span>
+<span id="cb9-28"><a href="#cb9-28" tabindex="-1" aria-label="code-block-9-28"></a><span class="cf">for</span> year <span class="kw">in</span> [<span class="st">"2010"</span>, <span class="st">"2011"</span>, <span class="st">"2012"</span>, <span class="st">"2013"</span>, <span class="st">"2014"</span>, <span class="st">"2015"</span>]:</span>
+<span id="cb9-29"><a href="#cb9-29" tabindex="-1" aria-label="code-block-9-29"></a>    html_year <span class="op">=</span> findyear_click_gethtml(year)</span>
+<span id="cb9-30"><a href="#cb9-30" tabindex="-1" aria-label="code-block-9-30"></a>    df_year <span class="op">=</span> parsehtml_extractdata(html_year, year)</span>
+<span id="cb9-31"><a href="#cb9-31" tabindex="-1" aria-label="code-block-9-31"></a>    result_df <span class="op">=</span> pd.concat([result_df, df_year])</span>
+<span id="cb9-32"><a href="#cb9-32" tabindex="-1" aria-label="code-block-9-32"></a></span>
+<span id="cb9-33"><a href="#cb9-33" tabindex="-1" aria-label="code-block-9-33"></a><span class="co"># Close the browser that Selenium opened</span></span>
+<span id="cb9-34"><a href="#cb9-34" tabindex="-1" aria-label="code-block-9-34"></a>driver.quit()</span></code></pre>
 </div>
 </div>
 </div>
@@ -1973,35 +1966,35 @@ we can identify it using the attribute
 <div class="codewrapper sourceCode" id="cb10">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a><span class="co"># Open Selenium webdriver in headless mode and go to the desired page</span></span>
-<span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>options <span class="op">=</span> webdriver.ChromeOptions()</span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>options.add_argument(<span class="st">"--headless=new"</span>)</span>
-<span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>driver <span class="op">=</span> webdriver.Chrome(options<span class="op">=</span>options)</span>
-<span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>driver.get(<span class="st">"https://www.scrapingcourse.com/javascript-rendering"</span>)</span>
-<span id="cb10-6"><a href="#cb10-6" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" tabindex="-1"></a><span class="co"># As we don't have to click anything, just wait for the JavaScript to load, we can get the HTML right away</span></span>
-<span id="cb10-8"><a href="#cb10-8" tabindex="-1"></a>sleep(<span class="dv">3</span>)</span>
-<span id="cb10-9"><a href="#cb10-9" tabindex="-1"></a>html <span class="op">=</span> driver.page_source</span>
-<span id="cb10-10"><a href="#cb10-10" tabindex="-1"></a></span>
-<span id="cb10-11"><a href="#cb10-11" tabindex="-1"></a><span class="co"># Parste the HTML</span></span>
-<span id="cb10-12"><a href="#cb10-12" tabindex="-1"></a>soup <span class="op">=</span> BeautifulSoup(html, <span class="st">'html.parser'</span>)</span>
-<span id="cb10-13"><a href="#cb10-13" tabindex="-1"></a><span class="co"># Find all &lt;div&gt; elements that have a 'data-testid' attribute with the value of 'product-item'</span></span>
-<span id="cb10-14"><a href="#cb10-14" tabindex="-1"></a>divs <span class="op">=</span> soup.find_all(<span class="st">"div"</span>, attrs <span class="op">=</span> {<span class="st">'data-testid'</span>: <span class="st">'product-item'</span>})</span>
-<span id="cb10-15"><a href="#cb10-15" tabindex="-1"></a></span>
-<span id="cb10-16"><a href="#cb10-16" tabindex="-1"></a><span class="co"># Loop through the &lt;div&gt; elements we found, and for each get the href,</span></span>
-<span id="cb10-17"><a href="#cb10-17" tabindex="-1"></a><span class="co"># the name (inside a &lt;span&gt; element with attribute class="product-name")</span></span>
-<span id="cb10-18"><a href="#cb10-18" tabindex="-1"></a><span class="co"># and the price (inside a &lt;span&gt; element with attribute data-content="product-price"</span></span>
-<span id="cb10-19"><a href="#cb10-19" tabindex="-1"></a>list_of_dicts <span class="op">=</span> []</span>
-<span id="cb10-20"><a href="#cb10-20" tabindex="-1"></a><span class="cf">for</span> div <span class="kw">in</span> divs:</span>
-<span id="cb10-21"><a href="#cb10-21" tabindex="-1"></a>    <span class="co"># Create a dictionary to store the data we want for each product</span></span>
-<span id="cb10-22"><a href="#cb10-22" tabindex="-1"></a>    item_dict <span class="op">=</span> {</span>
-<span id="cb10-23"><a href="#cb10-23" tabindex="-1"></a>        <span class="st">'link'</span>: div.find(<span class="st">'a'</span>)[<span class="st">'href'</span>],</span>
-<span id="cb10-24"><a href="#cb10-24" tabindex="-1"></a>        <span class="st">'name'</span>: div.find(<span class="st">'span'</span>, attrs <span class="op">=</span> {<span class="st">'class'</span>: <span class="st">'product-name'</span>}).get_text(),</span>
-<span id="cb10-25"><a href="#cb10-25" tabindex="-1"></a>        <span class="st">'price'</span>: div.find(<span class="st">'span'</span>, attrs <span class="op">=</span> {<span class="st">'data-content'</span>: <span class="st">'product-price'</span>}).get_text()</span>
-<span id="cb10-26"><a href="#cb10-26" tabindex="-1"></a>    }</span>
-<span id="cb10-27"><a href="#cb10-27" tabindex="-1"></a>    list_of_dicts.append(item_dict)</span>
-<span id="cb10-28"><a href="#cb10-28" tabindex="-1"></a></span>
-<span id="cb10-29"><a href="#cb10-29" tabindex="-1"></a>all_products <span class="op">=</span> pd.DataFrame(list_of_dicts)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" tabindex="-1" aria-label="code-block-10-1"></a><span class="co"># Open Selenium webdriver in headless mode and go to the desired page</span></span>
+<span id="cb10-2"><a href="#cb10-2" tabindex="-1" aria-label="code-block-10-2"></a>options <span class="op">=</span> webdriver.ChromeOptions()</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1" aria-label="code-block-10-3"></a>options.add_argument(<span class="st">"--headless=new"</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" tabindex="-1" aria-label="code-block-10-4"></a>driver <span class="op">=</span> webdriver.Chrome(options<span class="op">=</span>options)</span>
+<span id="cb10-5"><a href="#cb10-5" tabindex="-1" aria-label="code-block-10-5"></a>driver.get(<span class="st">"https://www.scrapingcourse.com/javascript-rendering"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" tabindex="-1" aria-label="code-block-10-6"></a></span>
+<span id="cb10-7"><a href="#cb10-7" tabindex="-1" aria-label="code-block-10-7"></a><span class="co"># As we don't have to click anything, just wait for the JavaScript to load, we can get the HTML right away</span></span>
+<span id="cb10-8"><a href="#cb10-8" tabindex="-1" aria-label="code-block-10-8"></a>sleep(<span class="dv">3</span>)</span>
+<span id="cb10-9"><a href="#cb10-9" tabindex="-1" aria-label="code-block-10-9"></a>html <span class="op">=</span> driver.page_source</span>
+<span id="cb10-10"><a href="#cb10-10" tabindex="-1" aria-label="code-block-10-10"></a></span>
+<span id="cb10-11"><a href="#cb10-11" tabindex="-1" aria-label="code-block-10-11"></a><span class="co"># Parste the HTML</span></span>
+<span id="cb10-12"><a href="#cb10-12" tabindex="-1" aria-label="code-block-10-12"></a>soup <span class="op">=</span> BeautifulSoup(html, <span class="st">'html.parser'</span>)</span>
+<span id="cb10-13"><a href="#cb10-13" tabindex="-1" aria-label="code-block-10-13"></a><span class="co"># Find all &lt;div&gt; elements that have a 'data-testid' attribute with the value of 'product-item'</span></span>
+<span id="cb10-14"><a href="#cb10-14" tabindex="-1" aria-label="code-block-10-14"></a>divs <span class="op">=</span> soup.find_all(<span class="st">"div"</span>, attrs <span class="op">=</span> {<span class="st">'data-testid'</span>: <span class="st">'product-item'</span>})</span>
+<span id="cb10-15"><a href="#cb10-15" tabindex="-1" aria-label="code-block-10-15"></a></span>
+<span id="cb10-16"><a href="#cb10-16" tabindex="-1" aria-label="code-block-10-16"></a><span class="co"># Loop through the &lt;div&gt; elements we found, and for each get the href,</span></span>
+<span id="cb10-17"><a href="#cb10-17" tabindex="-1" aria-label="code-block-10-17"></a><span class="co"># the name (inside a &lt;span&gt; element with attribute class="product-name")</span></span>
+<span id="cb10-18"><a href="#cb10-18" tabindex="-1" aria-label="code-block-10-18"></a><span class="co"># and the price (inside a &lt;span&gt; element with attribute data-content="product-price"</span></span>
+<span id="cb10-19"><a href="#cb10-19" tabindex="-1" aria-label="code-block-10-19"></a>list_of_dicts <span class="op">=</span> []</span>
+<span id="cb10-20"><a href="#cb10-20" tabindex="-1" aria-label="code-block-10-20"></a><span class="cf">for</span> div <span class="kw">in</span> divs:</span>
+<span id="cb10-21"><a href="#cb10-21" tabindex="-1" aria-label="code-block-10-21"></a>    <span class="co"># Create a dictionary to store the data we want for each product</span></span>
+<span id="cb10-22"><a href="#cb10-22" tabindex="-1" aria-label="code-block-10-22"></a>    item_dict <span class="op">=</span> {</span>
+<span id="cb10-23"><a href="#cb10-23" tabindex="-1" aria-label="code-block-10-23"></a>        <span class="st">'link'</span>: div.find(<span class="st">'a'</span>)[<span class="st">'href'</span>],</span>
+<span id="cb10-24"><a href="#cb10-24" tabindex="-1" aria-label="code-block-10-24"></a>        <span class="st">'name'</span>: div.find(<span class="st">'span'</span>, attrs <span class="op">=</span> {<span class="st">'class'</span>: <span class="st">'product-name'</span>}).get_text(),</span>
+<span id="cb10-25"><a href="#cb10-25" tabindex="-1" aria-label="code-block-10-25"></a>        <span class="st">'price'</span>: div.find(<span class="st">'span'</span>, attrs <span class="op">=</span> {<span class="st">'data-content'</span>: <span class="st">'product-price'</span>}).get_text()</span>
+<span id="cb10-26"><a href="#cb10-26" tabindex="-1" aria-label="code-block-10-26"></a>    }</span>
+<span id="cb10-27"><a href="#cb10-27" tabindex="-1" aria-label="code-block-10-27"></a>    list_of_dicts.append(item_dict)</span>
+<span id="cb10-28"><a href="#cb10-28" tabindex="-1" aria-label="code-block-10-28"></a></span>
+<span id="cb10-29"><a href="#cb10-29" tabindex="-1" aria-label="code-block-10-29"></a>all_products <span class="op">=</span> pd.DataFrame(list_of_dicts)</span></code></pre>
 </div>
 <p>We could arrive to the same result if we replace the for loop with
 list comprehensions. So here is another possible solution with that
@@ -2009,12 +2002,12 @@ approach.</p>
 <div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a>links <span class="op">=</span> [elem[<span class="st">'href'</span>] <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(<span class="st">'a'</span>, attrs <span class="op">=</span> {<span class="st">'class'</span>: <span class="st">'product-link'</span>})]</span>
-<span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a>names <span class="op">=</span> [elem.get_text() <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(<span class="st">'span'</span>, attrs <span class="op">=</span> {<span class="st">'class'</span>: <span class="st">'product-name'</span>})]</span>
-<span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a>prices <span class="op">=</span> [elem.get_text() <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(<span class="st">'span'</span>, attrs <span class="op">=</span> {<span class="st">'data-content'</span>: <span class="st">'product-price'</span>})]</span>
-<span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a>all_products_v2 <span class="op">=</span> pd.DataFrame(</span>
-<span id="cb11-5"><a href="#cb11-5" tabindex="-1"></a>    {<span class="st">'link'</span>: links, <span class="st">'name'</span>: names, <span class="st">'price'</span>: prices}</span>
-<span id="cb11-6"><a href="#cb11-6" tabindex="-1"></a>)</span></code></pre>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" tabindex="-1" aria-label="code-block-11-1"></a>links <span class="op">=</span> [elem[<span class="st">'href'</span>] <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(<span class="st">'a'</span>, attrs <span class="op">=</span> {<span class="st">'class'</span>: <span class="st">'product-link'</span>})]</span>
+<span id="cb11-2"><a href="#cb11-2" tabindex="-1" aria-label="code-block-11-2"></a>names <span class="op">=</span> [elem.get_text() <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(<span class="st">'span'</span>, attrs <span class="op">=</span> {<span class="st">'class'</span>: <span class="st">'product-name'</span>})]</span>
+<span id="cb11-3"><a href="#cb11-3" tabindex="-1" aria-label="code-block-11-3"></a>prices <span class="op">=</span> [elem.get_text() <span class="cf">for</span> elem <span class="kw">in</span> soup.find_all(<span class="st">'span'</span>, attrs <span class="op">=</span> {<span class="st">'data-content'</span>: <span class="st">'product-price'</span>})]</span>
+<span id="cb11-4"><a href="#cb11-4" tabindex="-1" aria-label="code-block-11-4"></a>all_products_v2 <span class="op">=</span> pd.DataFrame(</span>
+<span id="cb11-5"><a href="#cb11-5" tabindex="-1" aria-label="code-block-11-5"></a>    {<span class="st">'link'</span>: links, <span class="st">'name'</span>: names, <span class="st">'price'</span>: prices}</span>
+<span id="cb11-6"><a href="#cb11-6" tabindex="-1" aria-label="code-block-11-6"></a>)</span></code></pre>
 </div>
 </div>
 </div>
@@ -2131,7 +2124,7 @@ any links that you are not going to use.
         <p>Materials licensed under <a href="LICENSE.html">CC-BY 4.0</a> by the authors</p>
 
         <p>Template licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" class="external-link">CC-BY 4.0</a> by <a href="https://carpentries.org/" class="external-link">The Carpentries</a></p>
-        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.20.0" class="external-link">sandpaper (0.20.0)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.0.9" class="external-link">varnish (1.0.9)</a></p>
+        <p>Built with <a href="https://github.com/carpentries/sandpaper/tree/0.20.1" class="external-link">sandpaper (0.20.1)</a>, <a href="https://github.com/carpentries/pegboard/tree/0.7.9" class="external-link">pegboard (0.7.9)</a>, and <a href="https://github.com/carpentries/varnish/tree/1.1.0" class="external-link">varnish (1.1.0)</a></p>
 		</div>
 		</footer>
 </div> <!-- / div.container -->
@@ -2154,8 +2147,8 @@ any links that you are not going to use.
   "url": "https://carpentries-incubator.github.io/web-scraping-python/aio.html",
   "identifier": "https://carpentries-incubator.github.io/web-scraping-python/aio.html",
   "dateCreated": "2024-09-23",
-  "dateModified": "2026-04-14",
-  "datePublished": "2026-04-14"
+  "dateModified": "2026-04-21",
+  "datePublished": "2026-04-21"
 }
 
   </script><script>
