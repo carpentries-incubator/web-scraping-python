@@ -118,7 +118,7 @@
     <a id="search-button" class="btn btn-primary" href="../instructor/aio.html" role="button" aria-label="Search the All In One page">Search the All In One page</a>
   </div><!--/div.container-fluid -->
 </nav><aside class="col-md-12 lesson-progress"><div class="progress incubator">
-    <div class="progress-bar incubator" role="progressbar" style="width: 31%" aria-valuenow="31" aria-valuemin="0" aria-valuemax="100" aria-label="Lesson Progress">31%</div>
+    <div class="progress-bar incubator" role="progressbar" style="width: 33%" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100" aria-label="Lesson Progress">33%</div>
   </div>
 </aside><div class="container">
       <div class="row">
@@ -237,6 +237,15 @@
   </div><!--/div.accordion-item-->
 </div><!--/div.accordion-flush-->
 
+<div class="accordion accordion-flush" id="accordionFlush5">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading5">
+        <a href="Legal-ethics.html">4. Ethics and Legality of Web Scraping</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
                 </div>
               </div>
             </div>
@@ -295,7 +304,7 @@
       </div>
     </nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Scraping a real website</h1>
-        <p>Last updated on 2025-06-10 |
+        <p>Last updated on 2026-08-26 |
 
         <a href="https://github.com/carpentries-incubator/web-scraping-python/edit/main/episodes/a-real-website.md" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -364,10 +373,10 @@ offers much more functionality, which you can explore in the <a href="https://re
 documentation</a>.</p>
 <p>We’ll be scraping The Carpentries website, specifically the pages
 listing <a href="https://carpentries.org/workshops/upcoming-workshops/" class="external-link">upcoming</a>
-and past workshops](<a href="https://carpentries.org/workshops/past-workshops/" class="external-link uri">https://carpentries.org/workshops/past-workshops/</a>). To
-do that, we’ll first load the requests package and then use the
-<code>.get(url)</code> function and the <code>.text</code> property to
-fetch and store the HTML content of the page.</p>
+and <a href="https://carpentries.org/workshops/past-workshops/" class="external-link">past
+workshops</a>. To do that, we’ll first load the requests package and
+then use the <code>.get(url)</code> function and the <code>.text</code>
+property to fetch and store the HTML content of the page.</p>
 <p>Additionally, to simplify our navigation through the HTML document,
 we’ll use the <a href="https://docs.python.org/3/howto/regex.html" class="external-link">Regular
 Expressions</a> module <code>re</code> to remove all newline characters
@@ -506,8 +515,8 @@ border”.</p>
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" tabindex="-1" aria-label="code-block-5-1"></a><span class="co"># Get the parent of the first h3 element and prettify it</span></span>
-<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a>div_firsth3 <span class="op">=</span> h3_by_class[<span class="dv">0</span>].parent</span>
-<span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a><span class="bu">print</span>(div_firsth3.prettify())</span></code></pre>
+<span id="cb5-2"><a href="#cb5-2" tabindex="-1" aria-label="code-block-5-2"></a>firsth3_parent <span class="op">=</span> h3_by_class[<span class="dv">0</span>].parent</span>
+<span id="cb5-3"><a href="#cb5-3" tabindex="-1" aria-label="code-block-5-3"></a><span class="bu">print</span>(firsth3_parent.prettify())</span></code></pre>
 </div>
 <div id="accordionSpoiler1" class="accordion spoiler-accordion accordion-flush">
 <div class="accordion-item">
@@ -593,12 +602,12 @@ DataFrame for easier analysis.</p>
 </h3>
 <pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" tabindex="-1" aria-label="code-block-7-1"></a><span class="co"># Create an empty dictionary and fill it with the info we are interested in</span></span>
 <span id="cb7-2"><a href="#cb7-2" tabindex="-1" aria-label="code-block-7-2"></a>dict_workshop <span class="op">=</span> {}</span>
-<span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a>dict_workshop[<span class="st">'host'</span>] <span class="op">=</span> div_firsth3.find(<span class="st">'h3'</span>).get_text()</span>
-<span id="cb7-4"><a href="#cb7-4" tabindex="-1" aria-label="code-block-7-4"></a>dict_workshop[<span class="st">'link'</span>] <span class="op">=</span> div_firsth3.find(<span class="st">'h3'</span>).find(<span class="st">'a'</span>).get(<span class="st">'href'</span>)</span>
-<span id="cb7-5"><a href="#cb7-5" tabindex="-1" aria-label="code-block-7-5"></a>dict_workshop[<span class="st">'curriculum'</span>] <span class="op">=</span> div_firsth3.get(<span class="st">'data-curriculum'</span>)</span>
-<span id="cb7-6"><a href="#cb7-6" tabindex="-1" aria-label="code-block-7-6"></a>dict_workshop[<span class="st">'country'</span>] <span class="op">=</span> div_firsth3.get(<span class="st">'data-country'</span>)</span>
-<span id="cb7-7"><a href="#cb7-7" tabindex="-1" aria-label="code-block-7-7"></a>dict_workshop[<span class="st">'format'</span>] <span class="op">=</span> div_firsth3.get(<span class="st">'data-meeting'</span>)</span>
-<span id="cb7-8"><a href="#cb7-8" tabindex="-1" aria-label="code-block-7-8"></a>dict_workshop[<span class="st">'program'</span>] <span class="op">=</span> div_firsth3.get(<span class="st">'data-program'</span>)</span></code></pre>
+<span id="cb7-3"><a href="#cb7-3" tabindex="-1" aria-label="code-block-7-3"></a>dict_workshop[<span class="st">'host'</span>] <span class="op">=</span> firsth3_parent.find(<span class="st">'h3'</span>).get_text()</span>
+<span id="cb7-4"><a href="#cb7-4" tabindex="-1" aria-label="code-block-7-4"></a>dict_workshop[<span class="st">'link'</span>] <span class="op">=</span> firsth3_parent.find(<span class="st">'h3'</span>).find(<span class="st">'a'</span>).get(<span class="st">'href'</span>)</span>
+<span id="cb7-5"><a href="#cb7-5" tabindex="-1" aria-label="code-block-7-5"></a>dict_workshop[<span class="st">'curriculum'</span>] <span class="op">=</span> firsth3_parent.get(<span class="st">'data-curriculum'</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" tabindex="-1" aria-label="code-block-7-6"></a>dict_workshop[<span class="st">'country'</span>] <span class="op">=</span> firsth3_parent.get(<span class="st">'data-country'</span>)</span>
+<span id="cb7-7"><a href="#cb7-7" tabindex="-1" aria-label="code-block-7-7"></a>dict_workshop[<span class="st">'format'</span>] <span class="op">=</span> firsth3_parent.get(<span class="st">'data-meeting'</span>)</span>
+<span id="cb7-8"><a href="#cb7-8" tabindex="-1" aria-label="code-block-7-8"></a>dict_workshop[<span class="st">'program'</span>] <span class="op">=</span> firsth3_parent.get(<span class="st">'data-program'</span>)</span></code></pre>
 </div>
 <p>Ok, that’s the code for extracting information about the first
 workshop listed, but what about all other workshops? Loop time!</p>
@@ -616,11 +625,11 @@ the containers for each workshop.</p>
 <span id="cb8-6"><a href="#cb8-6" tabindex="-1" aria-label="code-block-8-6"></a><span class="cf">for</span> item <span class="kw">in</span> divs: </span>
 <span id="cb8-7"><a href="#cb8-7" tabindex="-1" aria-label="code-block-8-7"></a>    dict_workshop <span class="op">=</span> {}</span>
 <span id="cb8-8"><a href="#cb8-8" tabindex="-1" aria-label="code-block-8-8"></a>    dict_workshop[<span class="st">'host'</span>] <span class="op">=</span> item.find(<span class="st">'h3'</span>).get_text()</span>
-<span id="cb8-9"><a href="#cb8-9" tabindex="-1" aria-label="code-block-8-9"></a>    dict_workshop[<span class="st">'link'</span>] <span class="op">=</span> div_firsth3.find(<span class="st">'h3'</span>).find(<span class="st">'a'</span>).get(<span class="st">'href'</span>)</span>
-<span id="cb8-10"><a href="#cb8-10" tabindex="-1" aria-label="code-block-8-10"></a>    dict_workshop[<span class="st">'curriculum'</span>] <span class="op">=</span> div_firsth3.get(<span class="st">'data-curriculum'</span>)</span>
-<span id="cb8-11"><a href="#cb8-11" tabindex="-1" aria-label="code-block-8-11"></a>    dict_workshop[<span class="st">'country'</span>] <span class="op">=</span> div_firsth3.get(<span class="st">'data-country'</span>)</span>
-<span id="cb8-12"><a href="#cb8-12" tabindex="-1" aria-label="code-block-8-12"></a>    dict_workshop[<span class="st">'format'</span>] <span class="op">=</span> div_firsth3.get(<span class="st">'data-meeting'</span>)</span>
-<span id="cb8-13"><a href="#cb8-13" tabindex="-1" aria-label="code-block-8-13"></a>    dict_workshop[<span class="st">'program'</span>] <span class="op">=</span> div_firsth3.get(<span class="st">'data-program'</span>)</span>
+<span id="cb8-9"><a href="#cb8-9" tabindex="-1" aria-label="code-block-8-9"></a>    dict_workshop[<span class="st">'link'</span>] <span class="op">=</span> item.find(<span class="st">'h3'</span>).find(<span class="st">'a'</span>).get(<span class="st">'href'</span>)</span>
+<span id="cb8-10"><a href="#cb8-10" tabindex="-1" aria-label="code-block-8-10"></a>    dict_workshop[<span class="st">'curriculum'</span>] <span class="op">=</span> item.get(<span class="st">'data-curriculum'</span>)</span>
+<span id="cb8-11"><a href="#cb8-11" tabindex="-1" aria-label="code-block-8-11"></a>    dict_workshop[<span class="st">'country'</span>] <span class="op">=</span> item.get(<span class="st">'data-country'</span>)</span>
+<span id="cb8-12"><a href="#cb8-12" tabindex="-1" aria-label="code-block-8-12"></a>    dict_workshop[<span class="st">'format'</span>] <span class="op">=</span> item.get(<span class="st">'data-meeting'</span>)</span>
+<span id="cb8-13"><a href="#cb8-13" tabindex="-1" aria-label="code-block-8-13"></a>    dict_workshop[<span class="st">'program'</span>] <span class="op">=</span> item.get(<span class="st">'data-program'</span>)</span>
 <span id="cb8-14"><a href="#cb8-14" tabindex="-1" aria-label="code-block-8-14"></a>    workshop_list.append(dict_workshop)</span>
 <span id="cb8-15"><a href="#cb8-15" tabindex="-1" aria-label="code-block-8-15"></a></span>
 <span id="cb8-16"><a href="#cb8-16" tabindex="-1" aria-label="code-block-8-16"></a><span class="co"># Transform list into a DataFrame</span></span>
@@ -686,7 +695,7 @@ elements we are interested in.</p>
 <h3 class="callout-title">Challenge</h3>
 <div class="callout-content">
 <p>Extract the same information as in the previous exercise, but this
-time from the Past Workshops Page at <a href="https://carpentries.org/past_workshops/" class="external-link">https://carpentries.org/past_workshops/</a>.
+time from the Past Workshops Page at <a href="https://carpentries.org/workshops/past-workshops/" class="external-link">https://carpentries.org/workshops/past-workshops/</a>.
 Which 5 countries have held the most workshops, and how many has each
 held?</p>
 </div>
@@ -731,7 +740,7 @@ we got the HTML from.</p>
 <span id="cb10-25"><a href="#cb10-25" tabindex="-1" aria-label="code-block-10-25"></a><span class="bu">print</span>(<span class="st">'Total number of workshops in the table: '</span>, <span class="bu">len</span>(pastworkshops_df))</span>
 <span id="cb10-26"><a href="#cb10-26" tabindex="-1" aria-label="code-block-10-26"></a></span>
 <span id="cb10-27"><a href="#cb10-27" tabindex="-1" aria-label="code-block-10-27"></a><span class="bu">print</span>(<span class="st">'Top 5 of countries by number of workshops held: </span><span class="ch">\n</span><span class="st">'</span>,</span>
-<span id="cb10-28"><a href="#cb10-28" tabindex="-1" aria-label="code-block-10-28"></a>      pastworkshops_df[<span class="st">'country'</span>].value_counts().head())</span></code></pre>
+<span id="cb10-28"><a href="#cb10-28" tabindex="-1" aria-label="code-block-10-28"></a>      pastworkshops_df[<span class="st">'country'</span>].value_counts().head()) <span class="co"># head() default = 5</span></span></code></pre>
 </div>
 </div>
 </div>
@@ -806,14 +815,14 @@ or, in extreme cases, take legal action.</p>
 module and its <code>sleep()</code> function to pause between requests.
 The <code>sleep()</code> function makes Python wait for a specified
 number of seconds before moving on to the next line of code. For
-example, the following code pauses for 10 seconds between each print
+example, the following code pauses for 5 seconds between each print
 statement.</p>
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" tabindex="-1" aria-label="code-block-12-1"></a><span class="im">from</span> time <span class="im">import</span> sleep</span>
 <span id="cb12-2"><a href="#cb12-2" tabindex="-1" aria-label="code-block-12-2"></a><span class="bu">print</span>(<span class="st">'First'</span>)</span>
-<span id="cb12-3"><a href="#cb12-3" tabindex="-1" aria-label="code-block-12-3"></a>sleep(<span class="dv">10</span>)</span>
+<span id="cb12-3"><a href="#cb12-3" tabindex="-1" aria-label="code-block-12-3"></a>sleep(<span class="dv">5</span>)</span>
 <span id="cb12-4"><a href="#cb12-4" tabindex="-1" aria-label="code-block-12-4"></a><span class="bu">print</span>(<span class="st">'Second'</span>)</span></code></pre>
 </div>
 <p>Let’s incorporate this important principle as we extract additional
@@ -931,7 +940,7 @@ for review.</p>
 <div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">PYTHON<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" tabindex="-1" aria-label="code-block-15-1"></a>req <span class="op">=</span> requests.get(url)</span>
+<pre class="sourceCode python" tabindex="0"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" tabindex="-1" aria-label="code-block-15-1"></a>response <span class="op">=</span> requests.get(url)</span>
 <span id="cb15-2"><a href="#cb15-2" tabindex="-1" aria-label="code-block-15-2"></a>status_code <span class="op">=</span> response.status_code</span>
 <span id="cb15-3"><a href="#cb15-3" tabindex="-1" aria-label="code-block-15-3"></a></span>
 <span id="cb15-4"><a href="#cb15-4" tabindex="-1" aria-label="code-block-15-4"></a><span class="cf">if</span> status_code <span class="op">==</span> <span class="dv">200</span>:</span>
@@ -1030,8 +1039,8 @@ any links that you are not going to use.
   "url": "https://carpentries-incubator.github.io/web-scraping-python/instructor/a-real-website.html",
   "identifier": "https://carpentries-incubator.github.io/web-scraping-python/instructor/a-real-website.html",
   "dateCreated": "2024-09-23",
-  "dateModified": "2025-06-10",
-  "datePublished": "2026-08-25"
+  "dateModified": "2026-08-26",
+  "datePublished": "2026-08-26"
 }
 
   </script><script>
