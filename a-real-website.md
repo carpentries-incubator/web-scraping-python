@@ -37,12 +37,14 @@ Now that we’re moving into a more realistic and complex scenario, we’ll add 
 For this lesson, we’ll use `requests` solely to retrieve the HTML content of a website.
 Keep in mind that `requests` offers much more functionality, which you can explore in the [Requests package documentation](https://requests.readthedocs.io/en/latest/).
 
-We’ll be scraping The Carpentries website, specifically the pages listing [upcoming](https://carpentries.org/workshops/upcoming-workshops/) and past workshops](https://carpentries.org/workshops/past-workshops/).
+We’ll be scraping The Carpentries website, specifically the pages listing [upcoming](https://carpentries.org/workshops/upcoming-workshops/) and [past workshops](https://carpentries.org/workshops/past-workshops/).
 To do that, we’ll first load the requests package and then use the `.get(url)` function and the `.text` property to fetch and store the HTML content of the page.
   
 Additionally, to simplify our navigation through the HTML document, we’ll use the [Regular Expressions](https://docs.python.org/3/howto/regex.html) module `re` to remove all newline characters (`\n`) and their surrounding whitespace.
 You can think of this as a pre-processing or cleaning step.
 While we won’t go into detail here, you can explore more about the topic in this by [Library Carpentry Introduction to Regular Expressions](https://librarycarpentry.org/lc-data-intro/01-regular-expressions.html).
+
+
 
 
 ```python
@@ -151,8 +153,8 @@ As expected, this will return the `<div>` element with the class attribute "p-8 
 
 ```python
 # Get the parent of the first h3 element and prettify it
-div_firsth3 = h3_by_class[0].parent
-print(div_firsth3.prettify())
+firsth3_parent = h3_by_class[0].parent
+print(firsth3_parent.prettify())
 ```
 :::::::::::::::::::::::::::::::::::::::::: spoiler
 ### Python output
@@ -223,12 +225,12 @@ As shown in the previous episode, we can store all this information in a Python 
 ```python
 # Create an empty dictionary and fill it with the info we are interested in
 dict_workshop = {}
-dict_workshop['host'] = div_firsth3.find('h3').get_text()
-dict_workshop['link'] = div_firsth3.find('h3').find('a').get('href')
-dict_workshop['curriculum'] = div_firsth3.get('data-curriculum')
-dict_workshop['country'] = div_firsth3.get('data-country')
-dict_workshop['format'] = div_firsth3.get('data-meeting')
-dict_workshop['program'] = div_firsth3.get('data-program')
+dict_workshop['host'] = firsth3_parent.find('h3').get_text()
+dict_workshop['link'] = firsth3_parent.find('h3').find('a').get('href')
+dict_workshop['curriculum'] = firsth3_parent.get('data-curriculum')
+dict_workshop['country'] = firsth3_parent.get('data-country')
+dict_workshop['format'] = firsth3_parent.get('data-meeting')
+dict_workshop['program'] = firsth3_parent.get('data-program')
 ```
 
 Ok, that's the code for extracting information about the first workshop listed, but what about all other workshops?
@@ -246,11 +248,11 @@ workshop_list = []
 for item in divs: 
     dict_workshop = {}
     dict_workshop['host'] = item.find('h3').get_text()
-    dict_workshop['link'] = div_firsth3.find('h3').find('a').get('href')
-    dict_workshop['curriculum'] = div_firsth3.get('data-curriculum')
-    dict_workshop['country'] = div_firsth3.get('data-country')
-    dict_workshop['format'] = div_firsth3.get('data-meeting')
-    dict_workshop['program'] = div_firsth3.get('data-program')
+    dict_workshop['link'] = item.find('h3').find('a').get('href')
+    dict_workshop['curriculum'] = item.get('data-curriculum')
+    dict_workshop['country'] = item.get('data-country')
+    dict_workshop['format'] = item.get('data-meeting')
+    dict_workshop['program'] = item.get('data-program')
     workshop_list.append(dict_workshop)
 
 # Transform list into a DataFrame
@@ -297,7 +299,7 @@ A key takeaway from this exercise is that, when we want to scrape data in a stru
 
 ::::::::::::::::::::::::::::::::::::: challenge
 
-Extract the same information as in the previous exercise, but this time from the Past Workshops Page at [https://carpentries.org/past_workshops/](https://carpentries.org/past_workshops/).
+Extract the same information as in the previous exercise, but this time from the Past Workshops Page at [https://carpentries.org/workshops/past-workshops/](https://carpentries.org/workshops/past-workshops/).
 Which 5 countries have held the most workshops, and how many has each held?
 
 :::::::::::::::::::::::: solution
@@ -332,7 +334,7 @@ pastworkshops_df  = pd.DataFrame(workshop_list)
 print('Total number of workshops in the table: ', len(pastworkshops_df))
 
 print('Top 5 of countries by number of workshops held: \n',
-      pastworkshops_df['country'].value_counts().head())
+      pastworkshops_df['country'].value_counts().head()) # head() default = 5
 ```
 
 :::::::::::::::::::::::::::::::::
@@ -385,15 +387,14 @@ Sending too many requests in a short period can disrupt access for other users o
 
 To prevent this, you can use Python’s built-in `time` module and its `sleep()` function to pause between requests.
 The `sleep()` function makes Python wait for a specified number of seconds before moving on to the next line of code.
-For example, the following code pauses for 10 seconds between each print statement.
+For example, the following code pauses for 5 seconds between each print statement.
 
 ```python
 from time import sleep
 print('First')
-sleep(10)
+sleep(5)
 print('Second')
 ```
-
 Let’s incorporate this important principle as we extract additional information from each workshop’s individual website.
 We already have our `upcomingworkshops_df` DataFrame, which includes a `link` column containing the URL for each workshop’s webpage.
 For example, let’s make a request to retrieve the HTML of the first workshop in the DataFrame and take a look.
@@ -474,7 +475,7 @@ This allows you to catch any exceptions that occur when trying to access a URL, 
 A cleaner approach is to check the actual HTTP response code returned by the `requests` call. A status code of 200 means the request was successful and the page exists. For any other response code, you can choose to skip scraping that page and optionally log the code for review.
 
 ```python
-req = requests.get(url)
+response = requests.get(url)
 status_code = response.status_code
 
 if status_code == 200:
