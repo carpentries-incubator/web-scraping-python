@@ -32,7 +32,17 @@ Current maintainer of this lesson: - [Jose Niño Muriel](https://github.com/jose
 
 ## Acknowledgements
 
-Thanks to Noah Spahn, Ronald Lencevičius, and Seth Erickson for their feedback the first time this workshop was taught at UCSB.
+This workshop has been taught three times. We gratefully acknowledge the instructors, helpers, and contributors who have supported each offering:
+
+- **1st time (November 5 & 7, 2024)** – [UC Santa Barbara Library](https://carpentry.library.ucsb.edu/workshop/2024/11/05/ucsb-webscraping/)
+  - **Instructor:** Jose Niño Muriel
+  - **Helpers:** Noah Spahn, Ronald Lencevičius, Seth Erickson
+- **2nd time (January 27 & 29, 2026)** – [UC Santa Barbara Library](https://carpentry.library.ucsb.edu/workshop/2026/01/27/ucsb-webscraping/)
+  - **Instructors:** Jose Nino Muriel, Jairo Melo-Flórez, Julien Brun
+  - **Helper:** Jean Allen
+- **3rd time (March 18, 2026)** – [University of Birmingham (BEAR Training)](https://www.birmingham.ac.uk/research/arc/bear/training/python-for-web-scraping)
+  - **Instructor / Contributor:** Dr Louise Brown (Advanced Research Computing)
+  - **Contributor:** Lisa Bird (legal and ethics content)
 
 ## Citation
 
