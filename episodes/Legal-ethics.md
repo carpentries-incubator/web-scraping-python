@@ -71,9 +71,9 @@ The [UK Government website](https://www.gov.uk/government/publications/copyright
 
 - For works created on or after January 1, 1978, copyright lasts for the life of the author plus 70 years.
 - For works made for hire, anonymous works, or pseudonymous works, copyright lasts 95 years from first publication or 120 years from creation, whichever is shorter.
-- Works published before 1928 are in the public domain.
+- The cutoff date for works entering the public domain advances each year. For example, in the year 2026 the 70 year rule established that works published before 1931 are in the public domain (specifically, works published in the United States before January 1, 1931 have entered the public domain because their copyright terms have expired).
 
-The [US Copyright Office](https://www.copyright.gov/help/faq/faq-duration.html) provides detailed information about the duration of copyright.
+The [US Copyright Office](https://www.copyright.gov/what-is-copyright/) provides detailed information about copyright basics and the duration of copyright.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -104,7 +104,7 @@ In the United States, the primary copyright exception is the doctrine of **Fair 
 3. The amount and substantiality of the portion used in relation to the whole
 4. The effect of the use upon the potential market for or value of the copyrighted work
 
-Courts have found web scraping to be fair use in some cases (e.g. *HiQ Labs v. LinkedIn*, *Authors Guild v. Google*), particularly when the use is transformative. However, fair use is fact-specific and there is no guarantee that any particular scraping activity will qualify.
+Courts have found copying and indexing of web content to be fair use in some cases (e.g. *Authors Guild v. Google*), particularly when the use is transformative. Commercial use can make relying on fair use more challenging, but does not automatically preclude it, as all four factors are weighed together. However, fair use is fact-specific and there is no guarantee that any particular scraping activity will qualify.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -134,12 +134,11 @@ If you want to transfer the copy of the work to anyone else or use it for anothe
 
 ### US: Fair Use and Text/Data Mining
 
-In the US, text and data mining for research purposes may qualify as fair use, particularly if the use is transformative (i.e. you are extracting facts or generating new insights rather than republishing the original expression). Several court cases have supported this interpretation:
+In the US, text and data mining for research purposes may qualify as fair use, particularly if the use is transformative (i.e. you are extracting facts or generating new insights rather than republishing the original expression). Court decisions have supported this interpretation:
 
-- *Authors Guild v. Google* (2015): Google's digitisation of books for a searchable index was held to be fair use.
-- *HiQ Labs v. LinkedIn* (2022): Scraping publicly available data was found not to violate the Computer Fraud and Abuse Act, though copyright issues remain separate.
+- *Authors Guild v. Google* (2015): Google's digitisation of books to create a searchable index and display snippets was held to be fair use because it was highly transformative and did not substitute for the original works.
 
-However, there is no statutory text and data mining exception in US law. Each case depends on its specific facts, and commercial uses face greater scrutiny.
+However, there is no specific statutory text and data mining exception in US copyright law. Each case depends on its specific facts, and commercial uses face greater scrutiny.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -172,7 +171,14 @@ The Computer Misuse Act 1990 makes it a criminal offence to access data or a com
 
 ### US: Computer Fraud and Abuse Act (CFAA)
 
-The Computer Fraud and Abuse Act (18 USC 1030) makes it illegal to access a computer "without authorization" or in a way that "exceeds authorized access." Courts have debated whether violating a website's Terms of Service constitutes unauthorized access. The Supreme Court's ruling in *Van Buren v. United States* (2021) narrowed the interpretation of "exceeds authorized access," but scraping behind login walls or past technical barriers can still raise CFAA issues.
+The Computer Fraud and Abuse Act (18 USC 1030) makes it illegal to access a computer "without authorization" or in a way that "exceeds authorized access." 
+
+Two key court decisions have shaped how the CFAA applies to web scraping:
+
+- *Van Buren v. United States* (2021): The Supreme Court narrowed the interpretation of "exceeds authorized access," holding that it applies to accessing files or databases that an individual is not entitled to access, rather than using authorized access for an improper purpose or in violation of terms of service.
+- *HiQ Labs v. LinkedIn* (2022): On remand following *Van Buren*, the Ninth Circuit reaffirmed that scraping publicly available data on the open web—where no password or authentication gate exists—generally does not constitute access "without authorization" under the CFAA. 
+
+However, *HiQ* did not make all web scraping legal: scraping behind login barriers, bypassing CAPTCHAs or technical access controls, or ignoring formal cease-and-desist revocations can still trigger liability under the CFAA or state breach-of-contract and common-law doctrines.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -216,11 +222,11 @@ In the UK, the fact that someone's personal data may be publicly available does 
 
 The United States does not have a single comprehensive federal data protection law equivalent to the UK GDPR. Instead, data privacy is governed by a patchwork of federal and state laws:
 
-- **State laws**: California's CCPA/CPRA, Virginia's VCDPA, Colorado's CPA, and others provide varying levels of consumer data protection.
+- **State laws**: California's CCPA/CPRA, Virginia's VCDPA, Colorado's CPA, and others provide varying levels of consumer data protection. Importantly, unlike the UK/EU GDPR, many US state statutes explicitly exclude publicly available information (such as data lawfully made available from government records or widely distributed media) from their definition of personal data.
 - **Sectoral federal laws**: HIPAA (health data), FERPA (education records), COPPA (children's data), and others apply in specific contexts.
 - **FTC Act**: The Federal Trade Commission can take action against unfair or deceptive practices involving personal data.
 
-When scraping data that includes personal information of US residents, be mindful of applicable state privacy laws, particularly if you are scraping data about California residents.
+When scraping data that includes personal information of US residents, be mindful of applicable state privacy laws and any sectoral federal regulations that may govern the specific type of data collected.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
