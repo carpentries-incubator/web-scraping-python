@@ -1,26 +1,37 @@
-# This CITATION.cff file was generated with cffinit.
-# Visit https://bit.ly/cffinit to generate yours today!
-
 cff-version: 1.2.0
-title: Web Scraping with Python
 message: >-
   Please cite this lesson using the information in this file
   when you refer to it in publications, and/or if you
   re-use, adapt, or expand on the content in your own
   training material.
+title: 'Web Scraping with Python'
 type: dataset
 authors:
   - given-names: Jose David
     family-names: Niño Muriel
     email: jose_nino@ucsb.edu
     affiliation: 'University of California, Santa Barbara'
+    orcid: 'https://orcid.org/0000-0002-1841-8355'
+  - given-names: Louise
+    family-names: Brown
+    email: l.p.brown@bham.ac.uk
+    affiliation: 'University of Birmingham, Advanced Research Computing'
+    orcid: 'https://orcid.org/0000-0001-6493-6850'
+  # Contributed specifically for the UK ethics and legal section
+  - given-names: Lisa
+    family-names: Bird
+    email: l.s.bird@bham.ac.uk
+    affiliation: 'University of Birmingham'
+    website: 'https://www.linkedin.com/in/lisa-bird-81aa2253/'
   - name: DREAM Lab - UCSB Library
-    address: Bldg. 525 UCEN Road
+    address: 'Bldg. 525 UCEN Road'
     city: Santa Barbara
     country: US
     post-code: '93106'
     email: dreamlab@library.ucsb.edu
     website: 'https://www.library.ucsb.edu/dreamlab'
+repository-code: 'https://github.com/carpentries-incubator/web-scraping-python'
+url: 'https://carpentries-incubator.github.io/web-scraping-python/'
 abstract: >-
   This lesson teaches people with basic Python knowledge the
   tools and libraries to do web scraping, which means
@@ -29,9 +40,9 @@ keywords:
   - web scraping
   - python
   - BeautifulSoup
-  - b4s
+  - bs4
   - Selenium
   - requests
 license: CC-BY-4.0
-version: '1.0'
+version: '2.0'
 date-released: '2025-06-11'
