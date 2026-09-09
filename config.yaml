@@ -15,32 +15,32 @@
 carpentry: 'incubator'
 
 # Alt-text description of the lesson.
-carpentry_description: 'Lesson Description'
+carpentry_description: 'In this workshop, you’ll learn how to extract data from websites using Python, a process known as web scraping.'
 
 # Overall title for pages.
-title: 'Web Scraping with Python' # FIXME
+title: 'Web Scraping with Python'
 
 # Date the lesson was created (YYYY-MM-DD, this is empty by default)
 created: 2024-09-23
 
 # Comma-separated list of keywords for the lesson
-keywords: 'web scraping, data, python, The Carpentries' # FIXME
+keywords: 'web scraping, data, python, The Carpentries'
 
 # Life cycle stage of the lesson
 # possible values: pre-alpha, alpha, beta, stable
-life_cycle: 'pre-alpha' # FIXME
+life_cycle: 'pre-alpha'
 
 # License of the lesson
 license: 'CC-BY 4.0'
 
 # Link to the source repository for this lesson
-source: 'https://github.com/carpentries-incubator/web-scraping-python' # FIXME
+source: 'https://github.com/carpentries-incubator/web-scraping-python'
 
 # Default branch of your lesson
 branch: 'main'
 
 # Who to contact if there are any issues
-contact: 'jose_nino@ucsb.edu' # FIXME
+contact: 'jose_nino@ucsb.edu'
 
 # Navigation ------------------------------------------------
 #
