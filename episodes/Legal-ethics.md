@@ -106,6 +106,8 @@ In the United States, the primary copyright exception is the doctrine of **Fair 
 
 Courts have found copying and indexing of web content to be fair use in some cases (e.g. *Authors Guild v. Google*), particularly when the use is transformative. Commercial use can make relying on fair use more challenging, but does not automatically preclude it, as all four factors are weighed together. However, fair use is fact-specific and there is no guarantee that any particular scraping activity will qualify.
 
+The [US Copyright Office website on Fair Use](https://www.copyright.gov/fair-use/) provides additional information on the topic.
+
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Scraping and copying
@@ -171,14 +173,17 @@ The Computer Misuse Act 1990 makes it a criminal offence to access data or a com
 
 ### US: Computer Fraud and Abuse Act (CFAA)
 
-The Computer Fraud and Abuse Act (18 USC 1030) makes it illegal to access a computer "without authorization" or in a way that "exceeds authorized access." 
+The Computer Fraud and Abuse Act (CFAA) is the primary federal anti-hacking law in the United States. It makes it illegal to access a computer system "without authorization."
 
-Two key court decisions have shaped how the CFAA applies to web scraping:
+For years, website owners argued that violating their Terms of Service (such as a rule prohibiting automated scraping) amounted to illegal hacking under this law. However, key court rulings have clarified this:
 
-- *Van Buren v. United States* (2021): The Supreme Court narrowed the interpretation of "exceeds authorized access," holding that it applies to accessing files or databases that an individual is not entitled to access, rather than using authorized access for an improper purpose or in violation of terms of service.
-- *HiQ Labs v. LinkedIn* (2022): On remand following *Van Buren*, the Ninth Circuit reaffirmed that scraping publicly available data on the open web—where no password or authentication gate exists—generally does not constitute access "without authorization" under the CFAA. 
+- **Public data is generally not hacking:** In the *hiQ Labs v. LinkedIn* (2022) and *Van Buren v. United States* (2021) cases, courts established that accessing data on the open web, where anyone can view the pages without logging in, is generally not considered "unauthorized access" under the CFAA. Simply browsing or collecting publicly available information does not automatically make you a hacker, even if the website's terms discourage it.
+- **Where the legal line is drawn:** This does not give scrapers free rein. You can still run into serious trouble under the CFAA and contract law if you:
+  - Scrape content hidden behind a login screen or account barrier.
+  - Circumvent security barriers such as CAPTCHAs, IP bans, or paywalls.
+  - Continue scraping after receiving an explicit cease-and-desist notice revoking your access.
 
-However, *HiQ* did not make all web scraping legal: scraping behind login barriers, bypassing CAPTCHAs or technical access controls, or ignoring formal cease-and-desist revocations can still trigger liability under the CFAA or state breach-of-contract and common-law doctrines.
+**The practical takeaway:** If information is freely visible to anyone on the open web, scraping it is generally not treated as hacking under federal law. But if you have to bypass a digital lock, crack a password, or sneak past a barrier to get it, you are stepping into serious legal risk.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::
 
