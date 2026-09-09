@@ -24,11 +24,11 @@ title: 'Web Scraping with Python'
 created: 2024-09-23
 
 # Comma-separated list of keywords for the lesson
-keywords: 'web scraping, data, python, The Carpentries'
+keywords: 'web scraping, python, BeautifulSoup, Selenium'
 
 # Life cycle stage of the lesson
 # possible values: pre-alpha, alpha, beta, stable
-life_cycle: 'pre-alpha'
+life_cycle: 'beta'
 
 # License of the lesson
 license: 'CC-BY 4.0'
