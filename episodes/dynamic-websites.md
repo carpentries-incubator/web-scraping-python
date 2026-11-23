@@ -140,7 +140,7 @@ While we could continue using Selenium’s `.find_element()` and `.find_elements
 For example, if we search for the first element with the class attribute "film" and retrieve its text, we’ll see that the HTML now includes the movie “Spotlight.”
 
 ```python
-# Parse HTML and 
+# Parse HTML and return those with the 'film' class
 soup = BeautifulSoup(html_2015, 'html.parser')
 print(soup.find(class_='film').prettify())
 ```
@@ -182,6 +182,9 @@ sleep(3)
 # Get the post JavaScript execution HTML and close the webdriver
 html_2015 = driver.page_source
 driver.quit()
+
+# Parse HTML
+soup = BeautifulSoup(html_2015, 'html.parser')
 
 # Extract all of the 2015 film titles
 titles = []
