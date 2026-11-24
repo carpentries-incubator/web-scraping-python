@@ -18,3 +18,4 @@ This workshop is intended for learners who already have a basic understanding of
 - Use conditional statements (`if`, `else`, `elif`)
 - Use `for` loops
 - Calling functions, understanding parameters/arguments and return values
+
