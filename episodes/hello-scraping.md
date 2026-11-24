@@ -33,6 +33,17 @@ We'll begin with simple examples and gradually move on to scraping more complex,
 ## HTML quick overview
 
 All websites have a Hypertext Markup Language (HTML) document behind them.
+
+:::::::::::::::::::::::::::::::::: spoiler
+
+### What is a Markup language?
+
+There are many markup languages, and HTML is the one the web is built on. In general, a markup language is a way to take plain text and add special labels or symbols that tell a computer how to structure and format that text. For example, in HTML, markup tells a web browser which words should be a large heading, a bold phrase, or a clickable link.
+
+Besides HTML, other popular markup languages include Markdown (often used in notes and online forums), XML, and LaTeX (commonly used for academic papers).
+
+::::::::::::::::::::::::::::::::::::::::::
+
 Below is an example of HTML for a very simple webpage that contains just three sentences.
 As you look through it, try to imagine how the website would appear in a browser.
 
